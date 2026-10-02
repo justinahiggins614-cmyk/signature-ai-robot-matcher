@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """STEP 1: Extract the 260 embedded AIs from the phone-book catalog into
-data/ai_pool.json = [{"id","name","family","tags":[]}].
+data/ai_pool.json.
+
+Each record carries the phone-book canon profile VERBATIM (id, name,
+description, role, kind) plus the derived match-engine fields (family, tags).
+The canon is ~/workspace/jah-ai-models/ai-catalog.json — the single source of
+truth. code/check_coherence.py asserts the pool never drifts from canon.
 
 Tags are derived deterministically from each AI's name+description via a fixed
 keyword->capability mapping (tag vocabulary shared with the robot bodies so the
@@ -244,7 +249,12 @@ def main():
         tags = derive_tags(name, r.get("DESCRIPTION", ""))
         if not tags:
             tags = FAMILY_FALLBACK[family]
-        pool.append({"id": ai_id, "name": name, "family": family, "tags": tags})
+        # Canon profile carried verbatim — coherence with the phone book.
+        pool.append({"id": ai_id, "name": name,
+                     "description": r.get("DESCRIPTION", ""),
+                     "role": r.get("ROLE", ""),
+                     "kind": r.get("TYPE", ""),
+                     "family": family, "tags": tags})
     # deterministic order: by id
     pool.sort(key=lambda x: x["id"])
     out_path = os.path.join(ROOT, "data", "ai_pool.json")

@@ -220,6 +220,83 @@ CLASSES = {
     },
 }
 
+# Per-class compute + interfaces + operating envelope.
+# Deterministic: new hash keys only — existing fields are untouched.
+CLASS_SYSTEMS = {
+    "domestic-helper": {
+        "compute": ["Signature Cortex-S2 home module · 12 TOPS",
+                    "Signature Cortex-S2 home module · 24 TOPS"],
+        "interfaces": ["JAH-Link home mesh", "USB-C service port",
+                       "voice-array API", "companion-app pairing"],
+        "temp": (-10, 40), "ip": "IP20", "extra": "max 1.2 m/s · under 45 dB"},
+    "industrial-arm": {
+        "compute": ["Signature Forge-X4 cell controller · 60 TOPS",
+                    "Signature Forge-X4 cell controller · 120 TOPS"],
+        "interfaces": ["EtherCAT fieldbus", "JAH-Link factory mesh",
+                       "safety-rated I/O", "USB-C service port"],
+        "temp": (0, 55), "ip": "IP54", "extra": "repeatability ±0.05 mm · 24/7 duty"},
+    "medical-assistant": {
+        "compute": ["Signature Care-M3 clinical module · 30 TOPS",
+                    "Signature Care-M3 clinical module · 48 TOPS"],
+        "interfaces": ["HL7/FHIR ward link", "JAH-Link clinical mesh",
+                       "USB-C service port", "nurse-call integration"],
+        "temp": (10, 40), "ip": "IP42", "extra": "max 0.8 m/s · wipe-down safe"},
+    "exploration-rover": {
+        "compute": ["Signature Trail-R5 field computer · 40 TOPS",
+                    "Signature Trail-R5 field computer · 80 TOPS"],
+        "interfaces": ["JAH-Link long-range mesh", "satellite uplink",
+                       "USB-C service port", "payload CAN bus"],
+        "temp": (-40, 60), "ip": "IP67", "extra": "multi-day autonomy · dust-sealed"},
+    "humanoid-companion": {
+        "compute": ["Signature Hearth-C2 social module · 20 TOPS",
+                    "Signature Hearth-C2 social module · 36 TOPS"],
+        "interfaces": ["JAH-Link home mesh", "companion-app pairing",
+                       "voice-array API", "USB-C service port"],
+        "temp": (0, 40), "ip": "IP20", "extra": "max 1.0 m/s · soft-touch safe"},
+    "aerial-drone": {
+        "compute": ["Signature Sky-A6 flight computer · 25 TOPS",
+                    "Signature Sky-A6 flight computer · 50 TOPS"],
+        "interfaces": ["JAH-Link swarm mesh", "ground-station link",
+                       "USB-C service port", "payload quick-release bus"],
+        "temp": (-20, 50), "ip": "IP43", "extra": "wind tolerance 12 m/s · geofenced"},
+    "underwater-drone": {
+        "compute": ["Signature Depth-U4 marine computer · 25 TOPS",
+                    "Signature Depth-U4 marine computer · 50 TOPS"],
+        "interfaces": ["acoustic modem link", "tether comms",
+                       "USB-C service port (deck)", "payload CAN bus"],
+        "temp": (-2, 35), "ip": "IP68", "extra": "rated 300 m depth · 18 h dive"},
+    "construction-rig": {
+        "compute": ["Signature Site-C8 heavy controller · 70 TOPS",
+                    "Signature Site-C8 heavy controller · 140 TOPS"],
+        "interfaces": ["JAH-Link site mesh", "fleet telematics",
+                       "CAN bus", "USB-C service port"],
+        "temp": (-25, 55), "ip": "IP65", "extra": "all-terrain · rollover protected"},
+    "agricultural-bot": {
+        "compute": ["Signature Field-G4 agri computer · 30 TOPS",
+                    "Signature Field-G4 agri computer · 60 TOPS"],
+        "interfaces": ["JAH-Link field mesh", "farm-management API",
+                       "USB-C service port", "implement ISOBUS"],
+        "temp": (-10, 50), "ip": "IP65", "extra": "washdown safe · full-day shift"},
+    "security-sentinel": {
+        "compute": ["Signature Watch-S5 sentinel module · 40 TOPS",
+                    "Signature Watch-S5 sentinel module · 80 TOPS"],
+        "interfaces": ["JAH-Link security mesh", "VMS integration",
+                       "USB-C service port", "alarm-panel relay"],
+        "temp": (-30, 55), "ip": "IP55", "extra": "20 h patrol · night-vision standard"},
+}
+
+
+def build_systems(class_key, body_id):
+    sys = CLASS_SYSTEMS[class_key]
+    compute = sys["compute"][h_int(body_id + ":cpu", len(sys["compute"]))]
+    interfaces = pick(body_id + ":if", sys["interfaces"],
+                      k=3)
+    tlo, thi = sys["temp"]
+    operating_limits = ("%d°C to %d°C · %s · %s"
+                        % (tlo, thi, sys["ip"], sys["extra"]))
+    return compute, interfaces, operating_limits
+
+
 FEATURE_VERB = {
     "domestic-helper": [("soft-touch polymer shell", "tidy, cook, and organize"),
                         ("tactile fingertip array", "handle fragile dishes and laundry"),
@@ -277,18 +354,26 @@ def build_body(class_key, idx, seq):
     feat, verb = FEATURE_VERB[class_key][h_int(body_id + ":feat", len(FEATURE_VERB[class_key]))]
     blurb = (spec["blurb1"].format(name=name) + " " +
              spec["blurb2"].format(name=name, feat=feat, verb=verb))
+    compute, interfaces, operating_limits = build_systems(class_key, body_id)
+    width_cm = round(height * (0.45 + h_int(body_id + ":w", 30) / 100.0), 1)
+    depth_cm = round(height * (0.35 + h_int(body_id + ":d", 25) / 100.0), 1)
     return {
         "id": body_id,
         "name": name,
         "class": class_key,
         "height_cm": height,
+        "width_cm": width_cm,
+        "depth_cm": depth_cm,
         "mass_kg": mass,
         "materials": materials,
         "actuators": act_list,
         "sensors": sensors,
         "power": power,
+        "compute": compute,
         "mobility": mobility,
         "payload_kg": payload,
+        "interfaces": interfaces,
+        "operating_limits": operating_limits,
         "tags": tags,
         "blurb": blurb,
         "svg_seed": int(hashlib.sha256(("svg" + body_id).encode()).hexdigest(), 16) % (2 ** 31),

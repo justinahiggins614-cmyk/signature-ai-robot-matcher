@@ -17,6 +17,7 @@ import gzip
 import io
 import json
 import os
+import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -66,6 +67,15 @@ def main():
     if args.n <= 0:
         print("nothing to do")
         return
+
+    # coherence gate: AI profiles must match the phone-book canon verbatim
+    chk = subprocess.run([sys.executable,
+                          os.path.join(HERE, "check_coherence.py")],
+                         capture_output=True, text=True)
+    print(chk.stdout.strip())
+    if chk.returncode != 0:
+        print("COHERENCE GATE FAILED — refusing to drip", file=sys.stderr)
+        sys.exit(2)
 
     state_path = os.path.join(ROOT, "data", "state.json")
     with open(state_path, encoding="utf-8") as f:
