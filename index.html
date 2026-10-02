@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Signature AI Robot Matcher — Best-Match Pairs of Signature AIs &amp; Robot Bodies</title>
+<meta name="description" content="The Signature AI Robot Matcher pairs every Signature AI with Signature robot bodies into documented best-match pairs — 1,000,000 pairs, each with match rationale, shell-aware AI demo, read-aloud, and download.">
+<link rel="canonical" href="https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"The Signature AI Robot Matcher","url":"https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/","description":"Best-match pairs of Signature AIs and Signature robot bodies, marching to 1,000,000 documented pairs."}
+</script>
+<style>
+:root{--bg:#0d1117;--panel:#161d27;--line:#2a3444;--amber:#f5a623;--amber2:#ffcf6e;--txt:#e8edf4;--dim:#9aa7ba;--green:#3ddc84;--red:#ff5d5d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+a{color:var(--amber2)}header.top{border-bottom:1px solid var(--line);padding:10px 16px;background:#0a0e14}
+.jahnet{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px}
+.jahnet .t{color:var(--dim);font-weight:700;letter-spacing:1px;margin-right:6px}
+.jahnet a{color:var(--dim);text-decoration:none;padding:3px 8px;border:1px solid var(--line);border-radius:20px}
+.jahnet a:hover{color:var(--amber2);border-color:var(--amber)}
+.jahnet a.here{color:#0a0e14;background:var(--amber);border-color:var(--amber);font-weight:700}
+.jahnet a.soon{opacity:.55;border-style:dashed}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.hero{padding:34px 0 10px;text-align:center}
+.hero h1{font-size:clamp(26px,5vw,44px);margin:0 0 6px;color:var(--amber2)}
+.hero p{color:var(--dim);max-width:720px;margin:8px auto}
+.counter{display:inline-block;margin:14px 0;padding:10px 22px;border:1px solid var(--amber);border-radius:12px;font-size:20px;background:var(--panel)}
+.counter b{color:var(--amber2);font-size:26px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+.tabs a,.tabs button{background:var(--panel);border:1px solid var(--line);color:var(--txt);padding:9px 18px;border-radius:10px;text-decoration:none;font-size:15px;cursor:pointer}
+.tabs a.on,.tabs button.on{border-color:var(--amber);color:var(--amber2)}
+.finder{margin:6px auto 18px;max-width:760px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.finder .row{display:flex;gap:8px}
+.finder input{flex:1;background:#0a0e14;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:11px 14px;font-size:15px}
+.finder button{background:var(--amber);border:0;color:#0a0e14;font-weight:700;border-radius:10px;padding:11px 18px;font-size:15px;cursor:pointer}
+.finder .hits{margin-top:10px;display:grid;gap:8px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+.card h3{margin:0 0 6px;color:var(--amber2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.pill{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:20px;padding:2px 10px;color:var(--dim);margin:2px 4px 2px 0}
+.score{width:120px;height:120px}
+.btn{display:inline-block;background:var(--amber);color:#0a0e14;font-weight:700;border:0;border-radius:10px;padding:10px 18px;font-size:15px;cursor:pointer;text-decoration:none;margin:4px 6px 4px 0}
+.btn.ghost{background:transparent;color:var(--amber2);border:1px solid var(--amber)}
+.btn.sm{padding:6px 12px;font-size:13px}
+table.spec{width:100%;border-collapse:collapse;font-size:14px}
+table.spec td,table.spec th{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+table.spec th{background:#0a0e14;color:var(--amber2);width:34%}
+.chatlog{background:#0a0e14;border:1px solid var(--line);border-radius:10px;padding:12px;max-height:300px;overflow-y:auto;margin:10px 0}
+.chatlog .u{text-align:right;margin:6px 0}.chatlog .u span{background:#243144;border-radius:12px;padding:7px 12px;display:inline-block}
+.chatlog .a{margin:6px 0}.chatlog .a span{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:7px 12px;display:inline-block}
+.qlog{font-size:14px}.qlog .qq{color:var(--amber2);font-weight:700;margin:8px 0 2px}
+#floatbar{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--amber);border-radius:30px;padding:8px 18px;display:none;z-index:50;font-size:14px}
+#floatbar button{background:none;border:0;color:var(--amber2);font-size:16px;cursor:pointer;margin:0 6px}
+select,input[type=text]{background:#0a0e14;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:10px 12px;font-size:15px;width:100%}
+label{display:block;color:var(--dim);font-size:13px;margin:12px 0 4px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 16px;color:var(--dim);font-size:13px;text-align:center}
+.notice{background:#1a1408;border:1px solid var(--amber);border-radius:10px;padding:10px 14px;font-size:14px;margin:12px 0}
+body{font-size:16px}
+@media(max-width:600px){.finder .row{flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="top"><nav class="jahnet" id="jahnet" aria-label="The JAH Network"></nav></header>
+<div class="wrap">
+<div class="hero" id="hero">
+<h1>🤖 The Signature AI Robot Matcher</h1>
+<p>Every Signature AI finds its perfect shell. Documented best-match pairs of <b>Signature AIs</b> and <b>Signature robot bodies</b> — each with a match score, a written rationale, and a live demo where the AI speaks <i>aware of its own body</i>. Marching to <b>1,000,000 pairs</b>.</p>
+<div class="counter"><b id="paircount">…</b> / 1,000,000 pairs matched</div>
+<div class="notice">⚠️ <b>Title provisional</b> — "The Signature AI Robot Matcher" is a working title until Manon confirms the final name.</div>
+</div>
+<div class="tabs" id="tabs">
+<a href="#/" data-v="home">🏠 Home</a>
+<a href="#/pairs" data-v="pairs">🔗 Pairs A–Z</a>
+<a href="#/bodies" data-v="bodies">🦾 Robot Bodies</a>
+<a href="#/mix" data-v="mix">🧪 Mix Lab</a>
+</div>
+<div class="finder" id="finderbox">
+<div class="row"><input id="fq" type="text" placeholder="Describe what you need… e.g. gentle helper for grandma, warehouse lifter, underwater inspector" aria-label="Find a pair"><button id="fgo">Find my match</button></div>
+<div class="hits" id="fhits"></div>
+</div>
+<main id="app"></main>
+</div>
+<div id="floatbar"><span id="fb-t">Reading…</span><button id="fb-x" aria-label="Stop">⏹</button></div>
+<footer>
+<div class="jahnet" id="jahnet2" style="justify-content:center;margin-bottom:12px"></div>
+The Signature AI Robot Matcher · all AIs, bodies, pairs and text are original Signature creations · marches to 1,000,000 pairs<br>
+Sister sites: <a href="https://justinahiggins614-cmyk.github.io/jah-ai-models/">AI Phone Book</a> (parent AIs) · <a href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">3D Print Depository</a> (printable shells)
+</footer>
+<script>
+"use strict";
+/* ============ 22-SITE NAV ============ */
+const SITES=[
+["jah-ai-models","Telephone Book"],["jah-calculator","Calculator"],["jah-dictionary","Dictionary"],
+["jah-wiki","JAH Wiki"],["jah-n-wiki-leaks","JAH-N Wiki"],["cyber-patent-catalog","Patent Catalog"],
+["signature-one-archive","Spec Catalog"],["signature-llama","Signature Llama"],["jah-computer-systems","PC Depository"],
+["signature-cyber-mega-mall","Mega-Mall"],["signature-university","University"],["signature-books","Book Depository"],
+["signature-comics","Comic Store"],["signature-newspapers","Newspaper Archive"],["signature-3d-print","3D Print Depository"],
+["signature-backend","Backend"],["signature-boundless-generators","Generator Archive"],["signature-ai-mixlab","AI Mix Lab"],
+["signature-ai-olypics","AI Olypics"],["signature-chip-maker","Chip Maker"],["signature-app-archive","App Archive"]];
+const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":false};
+function navHTML(){
+ let h='<span class="t">THE JAH NETWORK</span>';
+ SITES.forEach((s,i)=>{const n=i+1;
+  if(n===22){h+='<a class="here" aria-current="page" href="./">22 Robot Matcher ★ YOU ARE HERE</a>';return;}
+  const soon=(n>=18&&!LIVE18[s[0]]);
+  h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
+ return h;}
+document.getElementById('jahnet').innerHTML=navHTML();
+document.getElementById('jahnet2').innerHTML=navHTML();
+/* sibling liveness verified server-side at push time; "(soon)" badge marks not-yet-live */
+/* ============ DATA ============ */
+const DB={idx:null,bodies:null,pool:null,chunks:{},state:0};
+async function gz(url){const r=await fetch(url);if(!r.ok)throw new Error('fetch '+url);
+ const ds=new DecompressionStream('gzip');const s=await new Response(r.body.pipeThrough(ds)).text();return s;}
+async function loadAll(){
+ const [idxT,bodies,pool,state]=await Promise.all([
+  gz('data/index/pairs.idx.json.gz'),fetch('data/bodies.json').then(r=>r.json()),
+  fetch('data/ai_pool.json').then(r=>r.json()),fetch('data/state.json').then(r=>r.json()).catch(()=>({next_index:1}))]);
+ DB.idx=JSON.parse(idxT);DB.bodies=bodies;DB.pool=pool;DB.state=state.next_index-1;
+ document.getElementById('paircount').textContent=DB.state.toLocaleString();
+}
+async function getPair(id){
+ const m=/JAH-PAIR-(\d{6})/.exec(id);if(!m)return null;const n=+m[1];
+ const row=DB.idx[n-1];if(!row||row[0]!==id)return null;
+ const cn=row[4];
+ if(!DB.chunks[cn]){const t=await gz('data/pairs/pairs-c'+String(cn).padStart(5,'0')+'.jsonl.gz');
+  DB.chunks[cn]={};t.trim().split('\n').forEach(l=>{const o=JSON.parse(l);DB.chunks[cn][o.id]=o;});}
+ return DB.chunks[cn][id]||null;
+}
+function getBody(id){return DB.bodies.find(b=>b.id===id);}
+/* ============ SVG BODY ART ============ */
+function bodySVG(b,w){
+ w=w||220;const seed=b.svg_seed;const hue=seed%360;
+ const pal='hsl('+hue+',55%,55%)',pal2='hsl('+((hue+40)%360)+',45%,38%)';
+ const cls=b.class;let inner='';
+ const head='<rect x="88" y="18" width="44" height="34" rx="10" fill="'+pal+'"/><circle cx="100" cy="35" r="6" fill="#0d1117"/><circle cx="120" cy="35" r="6" fill="#0d1117"/>';
+ const torso='<rect x="78" y="56" width="64" height="70" rx="14" fill="'+pal2+'"/>';
+ if(cls==='industrial-arm'||cls==='construction-rig'){inner='<rect x="90" y="40" width="40" height="90" rx="8" fill="'+pal2+'"/><rect x="60" y="60" width="100" height="22" rx="11" fill="'+pal+'"/><circle cx="110" cy="150" r="26" fill="'+pal+'"/><rect x="60" y="170" width="100" height="16" rx="6" fill="'+pal2+'"/>';}
+ else if(cls==='aerial-drone'){inner='<ellipse cx="110" cy="110" rx="46" ry="30" fill="'+pal2+'"/><circle cx="110" cy="110" r="14" fill="'+pal+'"/><rect x="30" y="60" width="60" height="8" rx="4" fill="'+pal+'"/><rect x="130" y="60" width="60" height="8" rx="4" fill="'+pal+'"/><rect x="30" y="152" width="60" height="8" rx="4" fill="'+pal+'"/><rect x="130" y="152" width="60" height="8" rx="4" fill="'+pal+'"/><circle cx="30" cy="64" r="10" fill="none" stroke="'+pal+'" stroke-width="3"/><circle cx="190" cy="64" r="10" fill="none" stroke="'+pal+'" stroke-width="3"/><circle cx="30" cy="156" r="10" fill="none" stroke="'+pal+'" stroke-width="3"/><circle cx="190" cy="156" r="10" fill="none" stroke="'+pal+'" stroke-width="3"/>';}
+ else if(cls==='underwater-drone'){inner='<ellipse cx="110" cy="110" rx="60" ry="34" fill="'+pal2+'"/><circle cx="150" cy="110" r="12" fill="'+pal+'"/><rect x="40" y="100" width="26" height="20" rx="6" fill="'+pal+'"/><path d="M50 110 l-24 -14 v28 z" fill="'+pal+'"/><circle cx="110" cy="150" r="8" fill="'+pal+'"/>';}
+ else if(cls==='exploration-rover'){inner='<rect x="70" y="80" width="80" height="50" rx="12" fill="'+pal2+'"/>'+head.replace('y="18"','y="46"').replace('cy="35"','cy="63"')+'<circle cx="70" cy="150" r="22" fill="'+pal+'"/><circle cx="150" cy="150" r="22" fill="'+pal+'"/><circle cx="70" cy="150" r="9" fill="#0d1117"/><circle cx="150" cy="150" r="9" fill="#0d1117"/><rect x="100" y="60" width="20" height="24" fill="'+pal+'"/>';}
+ else{inner=head+torso+'<rect x="52" y="62" width="22" height="56" rx="11" fill="'+pal+'"/><rect x="146" y="62" width="22" height="56" rx="11" fill="'+pal+'"/><rect x="86" y="128" width="20" height="52" rx="10" fill="'+pal+'"/><rect x="114" y="128" width="20" height="52" rx="10" fill="'+pal+'"/>';}
+ return '<svg viewBox="0 0 220 200" width="'+w+'" role="img" aria-label="'+b.name+' robot body illustration"><title>'+b.name+' — '+b.class+'</title>'+inner+'<text x="110" y="196" text-anchor="middle" fill="#9aa7ba" font-size="11">'+b.id+'</text></svg>';
+}
+function scoreDial(s){const c=2*Math.PI*44,off=c*(1-s/100);
+ return '<svg class="score" viewBox="0 0 110 110"><circle cx="55" cy="55" r="44" fill="none" stroke="#2a3444" stroke-width="10"/><circle cx="55" cy="55" r="44" fill="none" stroke="#f5a623" stroke-width="10" stroke-dasharray="'+c+'" stroke-dashoffset="'+off+'" transform="rotate(-90 55 55)"/><text x="55" y="62" text-anchor="middle" fill="#e8edf4" font-size="22" font-weight="bold">'+s+'</text><text x="55" y="80" text-anchor="middle" fill="#9aa7ba" font-size="11">/ 100</text></svg>';}
+</script>
+<script>
+"use strict";
+/* ============ VIEWS ============ */
+const app=document.getElementById('app');
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function pairCard(r){return '<div class="card"><h3>'+esc(r[0])+' · '+r[2]+'</h3><div><span class="pill">🧠 '+esc(r[1])+'</span><span class="pill">🦾 '+esc(r[2])+'</span><span class="pill">🎯 '+esc(r[3])+'</span></div><a class="btn sm" href="?pair='+r[0]+'">Open pair →</a></div>';}
+function vHome(){
+ const feat=[DB.idx[0],DB.idx[499],DB.idx[1499],DB.idx[2999]].filter(Boolean);
+ app.innerHTML='<div class="card"><h2>How matching works</h2><p>Each pair is <b>deterministic</b>: pair <i>n</i> of 1,000,000 always resolves to the same AI + body + mission. A match score (0–100) is computed from real capability-tag overlap between the AI\u2019s skills and the body\u2019s hardware, plus a documented rationale: <b>capability fit</b>, <b>temperament fit</b>, and <b>task fit</b>. New pairs are forged every 2 hours until the million mark.</p><p>🦾 <b>'+DB.bodies.length+' robot bodies</b> · 🧠 <b>'+DB.pool.length+' Signature AIs</b> · 🔗 <b>'+DB.state.toLocaleString()+' pairs</b> so far</p><p><a class="btn" href="#/mix">Open the Mix Lab</a><a class="btn ghost" href="#/bodies">Browse robot bodies</a></p></div>'
+ +'<h2>Featured pairs</h2>'+feat.map(pairCard).join('');
+}
+let azLetter='A',azPage=0;
+function vPairs(){
+ const letters=[...new Set(DB.idx.map(r=>r[1][0].toUpperCase()))].sort();
+ const rows=DB.idx.filter(r=>r[1][0].toUpperCase()===azLetter);
+ const per=24,pages=Math.ceil(rows.length/per),pg=Math.min(azPage,pages-1);
+ const slice=rows.slice(pg*per,pg*per+per);
+ app.innerHTML='<h2>Pairs A–Z <span class="pill">'+DB.idx.length.toLocaleString()+' pairs</span></h2>'
+ +'<div class="tabs">'+letters.map(l=>'<button class="'+(l===azLetter?'on':'')+'" data-az="'+l+'">'+l+'</button>').join('')+'</div>'
+ +'<div class="grid">'+slice.map(pairCard).join('')+'</div>'
+ +'<p style="text-align:center">Page '+(pg+1)+' of '+pages+' <button class="btn sm ghost" id="azp" '+(pg<=0?'disabled':'')+'>← Prev</button> <button class="btn sm ghost" id="azn" '+(pg>=pages-1?'disabled':'')+'>Next →</button></p>';
+ app.querySelectorAll('[data-az]').forEach(b=>b.onclick=()=>{azLetter=b.dataset.az;azPage=0;vPairs();});
+ const p=document.getElementById('azp'),n=document.getElementById('azn');
+ if(p)p.onclick=()=>{azPage=Math.max(0,azPage-1);vPairs();};
+ if(n)n.onclick=()=>{azPage=azPage+1;vPairs();};
+}
+function vBodies(){
+ const cls=[...new Set(DB.bodies.map(b=>b.class))];
+ app.innerHTML='<h2>Robot Body Catalog <span class="pill">'+DB.bodies.length+' bodies</span></h2><p style="color:var(--dim)">Original Signature robot bodies. Open one for full specs — or send its shell to the 3D Print Depository for a printable keepsake emblem.</p>'
+ +cls.map(c=>'<h3 style="color:var(--amber2);margin-top:22px">'+esc(c.replace(/-/g,' '))+'</h3><div class="grid">'
+  +DB.bodies.filter(b=>b.class===c).map(b=>'<div class="card" style="text-align:center">'+bodySVG(b,150)+'<h3>'+esc(b.name)+'</h3><div><span class="pill">'+b.id+'</span><span class="pill">'+b.height_cm+' cm</span><span class="pill">'+b.mass_kg+' kg</span></div><a class="btn sm" href="?body='+b.id+'">Full specs →</a></div>').join('')+'</div>').join('');
+}
+async function vPair(id){
+ const p=await getPair(id);
+ if(!p){app.innerHTML='<div class="card"><h2>Pair not found</h2><p>'+esc(id)+' is not forged yet — the march is at '+DB.state.toLocaleString()+' of 1,000,000.</p></div>';return;}
+ const b=getBody(p.body_id);
+ document.title=p.id+' — '+p.ai_name+' × '+p.body_name+' | The Signature AI Robot Matcher';
+ const ld={"@context":"https://schema.org","@type":"TechArticle","headline":"Robot match "+p.id+": "+p.ai_name+" in "+p.body_name,"identifier":p.id,"about":[p.ai_name,p.body_name,p.mission]};
+ let lds=document.getElementById('pairld');if(lds)lds.remove();
+ lds=document.createElement('script');lds.id='pairld';lds.type='application/ld+json';lds.textContent=JSON.stringify(ld);document.head.appendChild(lds);
+ app.innerHTML='<div class="card"><a href="#/pairs">← all pairs</a><h2>'+p.id+'</h2>'
+ +'<div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center">'+scoreDial(p.score)
+ +'<div><h3 style="margin:0">🧠 '+esc(p.ai_name)+' <span class="pill">'+esc(p.ai_family)+'</span></h3>'
+ +'<h3 style="margin:6px 0">🦾 '+esc(p.body_name)+' <span class="pill">'+esc(b['class'])+'</span> <span class="pill">'+p.body_id+'</span></h3>'
+ +'<div><span class="pill">🎯 mission: '+esc(p.mission)+'</span></div></div></div>'
+ +'<h3>Match rationale</h3><p><b>Capability fit.</b> '+esc(p.rationale.capability)+'</p><p><b>Temperament fit.</b> '+esc(p.rationale.temperament)+'</p><p><b>Task fit.</b> '+esc(p.rationale.task)+'</p>'
+ +'<p><a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/jah-ai-models/#'+encodeURIComponent(p.ai_id)+'">🧠 Parent AI in the Phone Book →</a>'
+ +(b?'<a class="btn sm ghost" href="?body='+b.id+'">🦾 Body specs →</a><a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+b.id+'">🖨️ Print this shell →</a>':'')+'</p></div>'
+ +'<div class="card"><h3>🎙️ Shell-aware demo — talk to this pair</h3><p style="color:var(--dim);font-size:14px">This AI answers <i>aware of the body it runs in</i>. Tries the live Signature Backend first, falls back quietly to the on-board demo.</p><div class="chatlog" id="dlog"></div><div class="row" style="display:flex;gap:8px"><input id="din" type="text" placeholder="Ask it anything…" aria-label="Talk to the pair"><button class="btn" id="dgo">Send</button></div></div>'
+ +'<div class="card"><h3>❓ Pair helper</h3><div class="qlog" id="qlog"></div><div class="row" style="display:flex;gap:8px"><input id="qin" type="text" placeholder="Ask about this pair…" aria-label="Ask about the pair"><button class="btn" id="qgo">Ask</button></div></div>'
+ +'<div class="card"><h3>📦 Take this pair</h3><button class="btn sm" id="cpair">📋 Copy</button><button class="btn sm ghost" id="dpair">⬇ Download .txt</button><button class="btn sm ghost" id="jpair">⬇ Download .json</button> <button class="btn sm ghost" id="rp">🔊 Read aloud</button></div>';
+ wirePair(p,b);
+}
+function vBody(id){
+ const b=getBody(id);
+ if(!b){app.innerHTML='<div class="card"><h2>Body not found</h2></div>';return;}
+ document.title=b.id+' — '+b.name+' | The Signature AI Robot Matcher';
+ const pairs=DB.idx.filter(r=>r[2]===b.name).slice(0,6);
+ app.innerHTML='<div class="card"><a href="#/bodies">← all bodies</a><div style="display:flex;gap:20px;flex-wrap:wrap"><div>'+bodySVG(b,260)+'</div><div style="flex:1;min-width:260px"><h2>'+esc(b.name)+' <span class="pill">'+b.id+'</span></h2><p>'+esc(b.blurb)+'</p><p><a class="btn sm" href="#/mix?body='+b.id+'">🧪 Match an AI to this body →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+b.id+'">🖨️ Print this shell →</a></p></div></div>'
+ +'<h3>Full specification</h3><table class="spec"><tr><th>Class</th><td>'+esc(b.class)+'</td></tr><tr><th>Dimensions</th><td>'+b.height_cm+' cm tall · '+b.mass_kg+' kg · payload '+b.payload_kg+' kg</td></tr><tr><th>Materials</th><td>'+b.materials.map(esc).join(', ')+'</td></tr><tr><th>Actuators</th><td>'+b.actuators.map(esc).join('; ')+'</td></tr><tr><th>Sensors</th><td>'+b.sensors.map(esc).join(', ')+'</td></tr><tr><th>Power</th><td>'+esc(b.power)+'</td></tr><tr><th>Mobility</th><td>'+esc(b.mobility)+'</td></tr><tr><th>Capability tags</th><td>'+b.tags.map(t=>'<span class="pill">'+esc(t)+'</span>').join('')+'</td></tr></table>'
+ +'<p><button class="btn sm ghost" id="rb">🔊 Read aloud</button> <button class="btn sm" id="cb">📋 Copy specs</button></p></div>'
+ +(pairs.length?'<h2>Pairs using this body</h2><div class="grid">'+pairs.map(pairCard).join('')+'</div>':'');
+ const txt=b.id+' '+b.name+' ('+b.class+')\n'+b.blurb+'\n'+b.height_cm+'cm, '+b.mass_kg+'kg, payload '+b.payload_kg+'kg. Power: '+b.power+'. Mobility: '+b.mobility+'.';
+ document.getElementById('rb').onclick=()=>speak(b.name+'. '+b.blurb+' '+b.height_cm+' centimeters tall, '+b.mass_kg+' kilograms.');
+ document.getElementById('cb').onclick=()=>{navigator.clipboard.writeText(txt);toast('Specs copied');};
+}
+</script>
+<script>
+"use strict";
+/* ============ TTS (tiered) + floating bar ============ */
+let ttsMode=null,fbTimer=null;
+function toast(m){const f=document.getElementById('floatbar');document.getElementById('fb-t').textContent=m;f.style.display='block';clearTimeout(fbTimer);fbTimer=setTimeout(()=>f.style.display='none',2200);}
+document.getElementById('fb-x').onclick=()=>{stopSpeak();};
+function stopSpeak(){try{speechSynthesis.cancel();}catch(e){}try{window._rv&&responsiveVoice.cancel();}catch(e){}const a=document.getElementById('fb-a');if(a){a.pause();a.remove();}document.getElementById('floatbar').style.display='none';}
+function speak(text){
+ stopSpeak();document.getElementById('fb-t').textContent='Reading…';document.getElementById('floatbar').style.display='block';
+ const chunks=text.match(/[^.!?]+[.!?]+/g)||[text];
+ let ci=0;
+ function next(){
+  if(ci>=chunks.length){document.getElementById('floatbar').style.display='none';return;}
+  const c=chunks[ci++].trim();if(!c){next();return;}
+  if('speechSynthesis' in window){try{const u=new SpeechSynthesisUtterance(c);u.onend=next;u.onerror=()=>rv(c,next);speechSynthesis.speak(u);return;}catch(e){}}
+  rv(c,next);
+ }
+ function rv(c,cb){
+  function gTTS(host,ok){const a=document.createElement('audio');a.id='fb-a';a.style.display='none';document.body.appendChild(a);
+   a.onerror=()=>{a.remove();ok(false);};a.onended=()=>{a.remove();ok(true);};
+   a.src='https://'+host+'/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q='+encodeURIComponent(c.slice(0,180));a.play().catch(()=>{a.remove();ok(false);});
+   setTimeout(()=>{if(document.body.contains(a)){a.remove();ok(false);}},12000);}
+  if(window.responsiveVoice){try{responsiveVoice.speak(c,'US English Female',{onend:cb,onerror:()=>gTTS('translate.google.com',s=>s?cb():gTTS('translate.google.co.uk',s2=>s2?cb():cb()))});return;}catch(e){}}
+  gTTS('translate.google.com',s=>s?cb():gTTS('translate.google.co.uk',s2=>s2?cb():cb()));
+ }
+ next();
+}
+/* ============ PAIR WIRING ============ */
+function pairText(p,b){
+ return p.id+': '+p.ai_name+' ('+p.ai_family+' AI) matched with '+p.body_name+' ('+p.body_id+', '+(b?b['class']:'')+') at '+p.score+' of 100 for mission: '+p.mission+'.\nCapability fit: '+p.rationale.capability+'\nTemperament fit: '+p.rationale.temperament+'\nTask fit: '+p.rationale.task;
+}
+function wirePair(p,b){
+ const log=document.getElementById('dlog');
+ function say(who,txt){const d=document.createElement('div');d.className=who;const s=document.createElement('span');s.textContent=txt;d.appendChild(s);log.appendChild(d);log.scrollTop=log.scrollHeight;}
+ say('a',p.demo_lines[0]);
+ let li=1;
+ async function backendTry(q){
+  try{
+   if(!document.querySelector('script[data-sb]')){const s=document.createElement('script');s.dataset.sb='1';s.src='https://justinahiggins614-cmyk.github.io/signature-backend/signature-backend.js';document.head.appendChild(s);await new Promise(r=>setTimeout(r,1500));}
+   const SB=window.SignatureBackend||window.sigBackend;
+   if(SB&&(SB.chat||SB.runDemo)){const fn=SB.chat||SB.runDemo;const out=await Promise.race([Promise.resolve(fn({ai:p.ai_name,body:p.body_name,message:q})),new Promise((_,rj)=>setTimeout(()=>rj(0),4000))]);
+    if(out&&(out.text||out.reply||typeof out==='string'))return out.text||out.reply||out;}
+  }catch(e){}
+  return null;
+ }
+ async function ask(){
+  const inp=document.getElementById('din'),q=inp.value.trim();if(!q)return;inp.value='';say('u',q);
+  say('a','…');const dots=log.lastChild;
+  const live=await backendTry(q);
+  dots.remove();
+  if(live){say('a',live);return;}
+  const line=p.demo_lines[li%p.demo_lines.length];li++;
+  const extra=/who are you|your name/i.test(q)?' I am '+p.ai_name+', running in the '+p.body_name+' body.':
+   /mission|job|task/i.test(q)?' My current mission: '+p.mission+'.':
+   /score|match|why/i.test(q)?' We matched at '+p.score+' of 100. '+p.rationale.capability:'';
+  say('a',line+extra);
+ }
+ document.getElementById('dgo').onclick=ask;
+ document.getElementById('din').addEventListener('keydown',e=>{if(e.key==='Enter')ask();});
+ /* Q&A — data-grounded */
+ const ql=document.getElementById('qlog');
+ function qask(){
+  const inp=document.getElementById('qin'),q=inp.value.trim().toLowerCase();if(!q)return;inp.value='';
+  const d1=document.createElement('div');d1.className='qq';d1.textContent='Q: '+q;ql.appendChild(d1);
+  const d2=document.createElement('div');let a;
+  if(/score|good|match/.test(q))a='This pair scores '+p.score+' of 100. '+p.rationale.capability;
+  else if(/mission|do|job|task/.test(q))a='Mission: '+p.mission+'. '+p.rationale.task;
+  else if(/body|robot|shell|spec/.test(q)&&b)a=b.name+' ('+b.id+', '+b['class']+'): '+b.height_cm+' cm, '+b.mass_kg+' kg, powered by '+b.power+', moves via '+b.mobility+'.';
+  else if(/ai|brain|mind/.test(q))a=p.ai_name+' is a '+p.ai_family+'-family Signature AI (ID '+p.ai_id+'). '+p.rationale.temperament;
+  else if(/print|3d/.test(q))a='You can get a printable keepsake emblem of the '+p.body_name+' shell at the 3D Print Depository — use the "Print this shell" link above.';
+  else if(/real|actually work/.test(q))a='Pairs are documented match concepts: the rationale, demo and specs describe the pairing honestly. The demo runs in your browser.';
+  else a='From this pair\u2019s record: '+p.ai_name+' × '+p.body_name+', mission "'+p.mission+'", score '+p.score+'/100. Ask about the score, mission, body, or AI.';
+  d2.textContent='A: '+a;ql.appendChild(d2);
+ }
+ document.getElementById('qgo').onclick=qask;
+ document.getElementById('qin').addEventListener('keydown',e=>{if(e.key==='Enter')qask();});
+ /* copy / download / read */
+ const t=pairText(p,b);
+ document.getElementById('cpair').onclick=()=>{navigator.clipboard.writeText(t);toast('Pair copied');};
+ document.getElementById('dpair').onclick=()=>dl(p.id+'.txt',t);
+ document.getElementById('jpair').onclick=()=>dl(p.id+'.json',JSON.stringify(p,null,2));
+ document.getElementById('rp').onclick=()=>speak(p.id+'. '+p.ai_name+' matched with '+p.body_name+' at '+p.score+' of 100. Mission: '+p.mission+'. '+p.rationale.capability+' '+p.rationale.temperament+' '+p.rationale.task);
+}
+function dl(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}
+/* ============ MIX LAB (deterministic custom pairs) ============ */
+const MISSIONS=["harbor cargo survey","home elder companionship","greenhouse pollination run","night warehouse patrol","riverbank erosion mapping","hospital linen delivery","solar farm panel inspection","orchard harvest sweep","subway tunnel safety check","school hallway monitor duty","offshore rig bolt audit","forest fire watch","pharmacy restock round","construction site material lift","museum after-hours guard","wheat field pest scouting","airport runway debris scan","nursing home evening rounds","dam intake grate cleaning","vineyard frost alert patrol","data center thermal sweep","playground safety inspection","oil pipeline leak survey","library book reshelving","marina hull cleaning","bakery dawn prep shift","mountain trail rescue standby","aquarium tank maintenance","stadium post-game cleanup","observatory dome night watch","grain silo level sounding","coastal cliff nest census"];
+function cyrb(s){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677);}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return(4294967296*(2097151&h2)+(h1>>>0))%1000000;}
+function mixPair(ai,body,mission){
+ const key=ai.id+'|'+body.id+'|'+mission;
+ const pick=(k,opts)=>opts[cyrb(k)%opts.length];
+ const overlap=ai.tags.filter(t=>body.tags.includes(t));
+ const union=[...new Set([...ai.tags,...body.tags])];
+ let score=Math.min(100,55+Math.round(25*(overlap.length/Math.max(1,union.length)))+(cyrb('s'+key)%20));
+ const clsSp=body['class'].replace(/-/g,' ');
+ let cap;
+ if(overlap.length){const shared=[...new Set(overlap)].sort().slice(0,3).join(', ');
+  cap=ai.name+"'s strengths ("+ai.tags.slice(0,3).join(', ')+') meet the '+body.name+'\u2019s '+clsSp+'-class build head-on: they share '+shared+', so the mind and the shell pull in the same direction from the first boot.';}
+ else cap=ai.name+' brings '+ai.tags[0]+' expertise to the '+body.name+'\u2019s '+clsSp+'-class frame \u2014 a deliberate mismatch that covers more ground than either could alone.';
+ const temp=ai.family==='system'?'As a system mind, '+ai.name+' treats every mission as a formal problem: steady, rule-bound execution.':ai.family==='persona'?'As a persona interpretation, '+ai.name+' carries a presence people feel the moment the shell moves.':'As a working specialist, '+ai.name+' stays focused on the job and narrates its work in plain words.';
+ const act=body.actuators[0].split(' (')[0],sen=body.sensors[cyrb('se'+key)%body.sensors.length];
+ const task='On the '+mission+', the '+body.name+' puts its '+act+' and '+sen+' to work \u2014 the mission\u2019s demands and the body\u2019s hardware line up actuator for actuator.';
+ const hex=cyrb('id'+key).toString(16).padStart(6,'0').slice(0,6).toUpperCase();
+ return {id:'JAH-MIX-'+hex,custom:true,ai_id:ai.id,ai_name:ai.name,ai_family:ai.family,body_id:body.id,body_name:body.name,mission,score,
+  rationale:{capability:cap,temperament:temp,task},
+  demo_lines:['I am '+ai.name+', and I run inside the '+body.name+' body \u2014 '+clsSp+'-class, built for real work.','My '+act+' is ready for the '+mission+'.','Through my '+sen+', I read the field before I act.','Matched at '+score+' of 100 in the Mix Lab \u2014 ask me anything.','With '+body.mobility+' under me, the '+mission+' is already underway.'],created:'2026-10-02'};
+}
+function vMix(pre){
+ const aiOpts=DB.pool.map((a,i)=>'<option value="'+i+'">'+esc(a.name)+' ('+a.family+')</option>').join('');
+ const bOpts=DB.bodies.map((b,i)=>'<option value="'+i+'">'+esc(b.name)+' — '+esc(b['class'])+'</option>').join('');
+ const mOpts=MISSIONS.map(m=>'<option>'+esc(m)+'</option>').join('');
+ app.innerHTML='<div class="card"><h2>🧪 Mix Lab — forge your own pair</h2><p style="color:var(--dim)">Pick any AI and any robot body. The match documentation is generated deterministically \u2014 the same combo always forges the same pair.</p>'
+ +'<label>Signature AI</label><input type="text" id="mai" list="ailist" placeholder="Type to search 260 AIs…"><datalist id="ailist">'+DB.pool.map((a,i)=>'<option data-i="'+i+'" value="'+esc(a.name)+'">').join('')+'</datalist>'
+ +'<label>Robot body</label><select id="mbody">'+bOpts+'</select>'
+ +'<label>Mission</label><select id="mmis">'+mOpts+'</select>'
+ +'<p><button class="btn" id="mforge">⚗️ Forge pair</button></p><div id="mout"></div></div>';
+ if(pre&&pre.body){const bi=DB.bodies.findIndex(b=>b.id===pre.body);if(bi>=0)document.getElementById('mbody').value=bi;}
+ document.getElementById('mforge').onclick=()=>{
+  const an=document.getElementById('mai').value.trim();
+  let ai=DB.pool.find(a=>a.name.toLowerCase()===an.toLowerCase());
+  if(!ai){const c=DB.pool.filter(a=>a.name.toLowerCase().includes(an.toLowerCase()));if(!c.length){toast('No AI matches "'+an+'"');return;}ai=c[0];}
+  const body=DB.bodies[+document.getElementById('mbody').value];
+  const mission=document.getElementById('mmis').value;
+  const p=mixPair(ai,body,mission);const out=document.getElementById('mout');
+  out.innerHTML='<div class="card"><h3>'+p.id+' — forged in the Mix Lab</h3><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">'+scoreDial(p.score)+'<div><b>🧠 '+esc(p.ai_name)+'</b><br><b>🦾 '+esc(p.body_name)+'</b> <span class="pill">'+p.body_id+'</span><br><span class="pill">🎯 '+esc(p.mission)+'</span></div></div>'
+  +'<p><b>Capability fit.</b> '+esc(p.rationale.capability)+'</p><p><b>Temperament fit.</b> '+esc(p.rationale.temperament)+'</p><p><b>Task fit.</b> '+esc(p.rationale.task)+'</p>'
+  +'<p><i>"'+esc(p.demo_lines[0])+'"</i></p>'
+  +'<p><button class="btn sm" id="mcp">📋 Copy</button><button class="btn sm ghost" id="mdj">⬇ .json</button><button class="btn sm ghost" id="mrd">🔊 Read aloud</button> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+body.id+'">🖨️ Print this shell →</a></p></div>';
+  const t=pairText(p,body);
+  document.getElementById('mcp').onclick=()=>{navigator.clipboard.writeText(t);toast('Pair copied');};
+  document.getElementById('mdj').onclick=()=>dl(p.id+'.json',JSON.stringify(p,null,2));
+  document.getElementById('mrd').onclick=()=>speak(p.id+'. '+p.ai_name+' matched with '+p.body_name+' at '+p.score+' of 100. '+p.rationale.capability+' '+p.rationale.task);
+  out.scrollIntoView({behavior:'smooth'});
+ };
+}
+/* ============ FINDER ============ */
+const STOP=new Set('the a an and or of to in for on with what which who want need looking find get me my is are be as at by from'.split(' '));
+function finderGo(){
+ const q=document.getElementById('fq').value.toLowerCase().replace(/[^a-z0-9 ]/g,' ');
+ const words=[...new Set(q.split(/\s+/).filter(w=>w.length>=3&&!STOP.has(w)))];
+ const box=document.getElementById('fhits');
+ if(!words.length){box.innerHTML='<div class="card">Describe what you need in plain words — e.g. "gentle helper for grandma".</div>';return;}
+ const scored=DB.idx.map(r=>{const hay=(r[1]+' '+r[2]+' '+r[3]).toLowerCase();let s=0;words.forEach(w=>{if(hay.includes(w))s+=w.length;});return[s,r];})
+  .filter(x=>x[0]>0).sort((a,b)=>b[0]-a[0]||(a[1][0]<b[1][0]?-1:1)).slice(0,5);
+ box.innerHTML=scored.length?scored.map(x=>pairCard(x[1])).join(''):'<div class="card">No pair matches those words yet — try fewer, simpler words, or forge one in the <a href="#/mix">Mix Lab</a>.</div>';
+}
+document.getElementById('fgo').onclick=finderGo;
+document.getElementById('fq').addEventListener('keydown',e=>{if(e.key==='Enter')finderGo();});
+/* ============ ROUTER ============ */
+function route(){
+ const qs=new URLSearchParams(location.search);
+ const pair=qs.get('pair'),body=qs.get('body');
+ document.querySelectorAll('#tabs a').forEach(a=>a.classList.remove('on'));
+ if(pair){vPair(pair);return;}
+ if(body){const h=location.hash;if(h.startsWith('#/mix')){vMix({body});}else{vBody(body);}return;}
+ const h=(location.hash||'#/').split('?')[0];
+ const tab=document.querySelector('#tabs a[href="'+h+'"]');if(tab)tab.classList.add('on');
+ if(h==='#/pairs')vPairs();else if(h==='#/bodies')vBodies();else if(h==='#/mix')vMix();else vHome();
+ window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+/* ============ BOOT ============ */
+(async function(){
+ try{await loadAll();}catch(e){app.innerHTML='<div class="card"><h2>Loading…</h2><p>Could not load the pair index. Check your connection and reload.</p></div>';return;}
+ route();
+})();
+</script>
+</body>
+</html>
