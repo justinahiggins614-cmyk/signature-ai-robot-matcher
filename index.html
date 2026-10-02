@@ -87,20 +87,22 @@ Sister sites: <a href="https://justinahiggins614-cmyk.github.io/jah-ai-models/">
 </footer>
 <script>
 "use strict";
-/* ============ 22-SITE NAV ============ */
+/* ============ 25-SITE NAV ============ */
 const SITES=[
-["jah-ai-models","Telephone Book"],["jah-calculator","Calculator"],["jah-dictionary","Dictionary"],
+["jah-ai-models","The Signature AI Phone Book"],["jah-calculator","Calculator"],["jah-dictionary","Dictionary"],
 ["jah-wiki","JAH Wiki"],["jah-n-wiki-leaks","JAH-N Wiki"],["cyber-patent-catalog","Patent Catalog"],
-["signature-one-archive","Spec Catalog"],["signature-llama","Signature Llama"],["jah-computer-systems","PC Depository"],
-["signature-cyber-mega-mall","Mega-Mall"],["signature-university","University"],["signature-books","Book Depository"],
-["signature-comics","Comic Store"],["signature-newspapers","Newspaper Archive"],["signature-3d-print","3D Print Depository"],
-["signature-backend","Backend"],["signature-boundless-generators","Generator Archive"],["signature-ai-mixlab","AI Mix Lab"],
-["signature-ai-olypics","AI Olypics"],["signature-chip-maker","Chip Maker and Archive"],["signature-app-archive","App Archive"]];
-const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":false};
+["signature-one-archive/specs.html","Spec Catalog"],["signature-llama","Signature Llama"],["jah-computer-systems","PC Depository"],
+["signature-cyber-mega-mall","Cyber Mega-Mall"],["signature-university","Signature University"],["signature-books","Book Depository"],
+["signature-comics","Comic Store"],["signature-newspapers","Global Newspaper Archive"],["signature-3d-print","3D Print Depository"],
+["signature-backend","Signature Backend"],["signature-boundless-generators","Boundless Generator Archive"],["signature-ai-mixlab","AI Mix Lab"],
+["signature-ai-olypics","AI Olypics"],["signature-chip-maker","Chip Maker and Archive"],["signature-app-archive","App Archive"],
+["signature-ai-robot-matcher","AI Robot Matcher"],["signature-experiment-solver","Experiment Solver"],
+["signature-ai-image-video-maker","Signature AI Pixel"],["signature-ai-video-maker","Video Maker AI"]];
+const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true};
 function navHTML(){
  let h='<span class="t">THE JAH NETWORK</span>';
  SITES.forEach((s,i)=>{const n=i+1;
-  if(n===22){h+='<a class="here" aria-current="page" href="./">22 Robot Matcher ★ YOU ARE HERE</a>';return;}
+  if(n===22){h+='<a class="here" aria-current="page" href="./">22 AI Robot Matcher ★ YOU ARE HERE</a>';return;}
   const soon=(n>=18&&!LIVE18[s[0]]);
   h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
  return h;}
