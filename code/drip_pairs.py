@@ -112,6 +112,15 @@ def main():
     with open(state_path, "w", encoding="utf-8") as f:
         json.dump({"next_index": next_index + args.n}, f, separators=(",", ":"))
 
+    # refresh machine-readable feed, modular sitemaps, and static bot tables
+    for script in ("build_pairs_feed.py", "build_sitemap.py", "build_pairs_table.py"):
+        r = subprocess.run([sys.executable, os.path.join(HERE, script)],
+                           capture_output=True, text=True)
+        if r.returncode != 0:
+            print("WARNING: %s failed: %s" % (script, (r.stderr or r.stdout).strip()))
+        else:
+            print(r.stdout.strip())
+
     print("drip +%d pairs (JAH-PAIR-%06d..JAH-PAIR-%06d), %d chunk(s) written, "
           "index rows: %d, next_index=%d"
           % (args.n, next_index, next_index + args.n - 1,
