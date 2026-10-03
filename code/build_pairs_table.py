@@ -43,7 +43,7 @@ def main():
         n += 1
 
     pages = (len(pairs) + PAGE_SIZE - 1) // PAGE_SIZE
-    idx = HEAD.format(t="Pair tables") + "<h1>The Signature AI Robot Matcher — static pair tables</h1>"
+    idx = HEAD.replace("{t}", "Pair tables") + "<h1>The Signature AI Robot Matcher — static pair tables</h1>"
     idx += ("<p>" + str(len(pairs)) + " documented best-match pairs of Signature AIs and "
             "Signature robot bodies, marching to 1,000,000. Pre-rendered static tables for "
             "bots and scrapers.</p><div class=\"nav\">")
@@ -57,7 +57,7 @@ def main():
 
     for pg in range(1, pages + 1):
         seg = pairs[(pg - 1) * PAGE_SIZE:pg * PAGE_SIZE]
-        h = HEAD.format(t="Pairs %d–%d" % ((pg - 1) * PAGE_SIZE + 1, (pg - 1) * PAGE_SIZE + len(seg)))
+        h = HEAD.replace("{t}", "Pairs %d–%d" % ((pg - 1) * PAGE_SIZE + 1, (pg - 1) * PAGE_SIZE + len(seg)))
         h += "<h1>Robot pairs %d–%d</h1>" % ((pg - 1) * PAGE_SIZE + 1, (pg - 1) * PAGE_SIZE + len(seg))
         h += ("<div class=\"nav\"><a href=\"pairs-index.html\">All tables</a>"
               + ("<a href=\"pairs-static-%d.html\">← prev</a>" % (pg - 1) if pg > 1 else "")

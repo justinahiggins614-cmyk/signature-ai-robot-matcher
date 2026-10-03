@@ -62,6 +62,18 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 16px;color:
 .notice{background:#1a1408;border:1px solid var(--amber);border-radius:10px;padding:10px 14px;font-size:14px;margin:12px 0}
 body{font-size:16px}
 @media(max-width:600px){.finder .row{flex-direction:column}}
+/* Site-22 diagnostic: loading spinners, filter bar, 44px tap targets */
+.spin{display:inline-block;width:18px;height:18px;border:3px solid var(--line);border-top-color:var(--amber);border-radius:50%;animation:rmrot .8s linear infinite;vertical-align:-4px;margin-right:8px}
+@keyframes rmrot{to{transform:rotate(360deg)}}
+.loadcard{text-align:center;padding:34px 16px}
+.pairfilter{display:flex;gap:8px;margin:4px 0 12px;flex-wrap:wrap}
+.pairfilter input{flex:1;min-width:200px;background:#0a0e14;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:11px 14px;font-size:15px}
+.btn:disabled{opacity:.65;cursor:wait}
+@media(max-width:600px){
+ .tabs a,.tabs button{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+ .btn{min-height:44px}
+ a.btn{display:inline-flex;align-items:center}
+}
 </style>
 </head>
 <body>
@@ -199,13 +211,36 @@ function vPairs(){
  const per=24,pages=Math.ceil(rows.length/per),pg=Math.min(azPage,pages-1);
  const slice=rows.slice(pg*per,pg*per+per);
  app.innerHTML='<h2>Pairs A–Z <span class="pill">'+DB.idx.length.toLocaleString()+' pairs</span></h2>'
+ +'<div class="pairfilter"><input id="pfq" type="text" placeholder="Filter pairs — pair ID, AI name, body, or mission…" aria-label="Filter pairs"><button class="btn sm" id="pfx" style="display:none">✕ Clear</button></div>'
+ +'<div id="pfhits"></div><div id="azwrap">'
  +'<div class="tabs azsticky">'+letters.map(l=>'<button class="'+(l===azLetter?'on':'')+'" data-az="'+l+'">'+l+'</button>').join('')+'</div>'
  +'<div class="grid">'+slice.map(pairCard).join('')+'</div>'
- +'<p style="text-align:center">Page '+(pg+1)+' of '+pages+' <button class="btn sm ghost" id="azp" '+(pg<=0?'disabled':'')+'>← Prev</button> <button class="btn sm ghost" id="azn" '+(pg>=pages-1?'disabled':'')+'>Next →</button></p>';
+ +'<p style="text-align:center">Page '+(pg+1)+' of '+pages+' <button class="btn sm ghost" id="azp" '+(pg<=0?'disabled':'')+'>← Prev</button> <button class="btn sm ghost" id="azn" '+(pg>=pages-1?'disabled':'')+'>Next →</button></p></div>';
  app.querySelectorAll('[data-az]').forEach(b=>b.onclick=()=>{azLetter=b.dataset.az;azPage=0;vPairs();});
  const p=document.getElementById('azp'),n=document.getElementById('azn');
  if(p)p.onclick=()=>{azPage=Math.max(0,azPage-1);vPairs();};
  if(n)n.onclick=()=>{azPage=azPage+1;vPairs();};
+ /* persistent live pair filter — instant keyword search across all pairs */
+ const fq=document.getElementById('pfq'),fx=document.getElementById('pfx'),
+       hits=document.getElementById('pfhits'),wrap=document.getElementById('azwrap');
+ let pft=null;
+ function clearFilter(){fq.value='';hits.innerHTML='';wrap.style.display='';fx.style.display='none';}
+ fx.onclick=clearFilter;
+ fq.addEventListener('input',function(){
+  clearTimeout(pft);
+  pft=setTimeout(function(){
+   const q=fq.value.toLowerCase().trim();
+   if(!q){clearFilter();return;}
+   fx.style.display='';
+   hits.innerHTML='<p style="color:var(--dim)"><span class="spin" aria-hidden="true"></span>Searching '+DB.idx.length.toLocaleString()+' pairs…</p>';
+   setTimeout(function(){
+    const m=DB.idx.filter(function(r){return (r[0]+' '+r[1]+' '+r[2]+' '+r[3]).toLowerCase().indexOf(q)>=0;}).slice(0,48);
+    wrap.style.display='none';
+    hits.innerHTML='<p><b>'+m.length+'</b> match'+(m.length===1?'':'es')+' for &ldquo;'+esc(fq.value.trim())+'&rdquo;'+(m.length===48?' (first 48 shown — refine your search)':'')+'</p>'
+     +'<div class="grid">'+m.map(pairCard).join('')+'</div>';
+   },30);
+  },200);
+ });
 }
 function vBodies(){
  const cls=[...new Set(DB.bodies.map(b=>b.class))];
@@ -214,12 +249,23 @@ function vBodies(){
   +DB.bodies.filter(b=>b.class===c).map(b=>'<div class="card" style="text-align:center">'+bodySVG(b,150)+'<h3>'+esc(b.name)+'</h3><div><span class="pill">'+b.id+'</span><span class="pill">'+b.height_cm+' cm</span><span class="pill">'+b.mass_kg+' kg</span></div><a class="btn sm" href="?body='+b.id+'">Full specs →</a></div>').join('')+'</div>').join('');
 }
 async function vPair(id){
+ app.innerHTML='<div class="card loadcard"><h2><span class="spin" aria-hidden="true"></span>Loading pair…</h2><p>Fetching the pair record.</p></div>';
  const p=await getPair(id);
  if(!p){app.innerHTML='<div class="card"><h2>Pair not found</h2><p>'+esc(id)+' is not forged yet — the march is at '+DB.state.toLocaleString()+' of 1,000,000.</p></div>';return;}
  const b=getBody(p.body_id);
  const ai=getAI(p.ai_id)||{id:p.ai_id,name:p.ai_name,description:'',role:'',kind:'',family:p.ai_family,tags:[]};
  document.title=p.id+' — '+p.ai_name+' × '+p.body_name+' | The Signature AI Robot Matcher';
- const ld={"@context":"https://schema.org","@type":"TechArticle","headline":"Robot match "+p.id+": "+p.ai_name+" in "+p.body_name,"identifier":p.id,"about":[p.ai_name,p.body_name,p.mission]};
+ const ld={"@context":"https://schema.org","@type":"TechArticle",
+  "headline":"Robot match "+p.id+": "+p.ai_name+" in "+p.body_name,
+  "identifier":p.id,
+  "author":{"@type":"Person","name":"Justin Addam Higgins"},
+  "creator":{"@type":"Person","name":"Justin Addam Higgins"},
+  "about":[
+   {"@type":"Thing","name":p.ai_name,"identifier":p.ai_id,"additionalType":"Signature AI, family "+p.ai_family},
+   {"@type":"Product","name":p.body_name,"identifier":p.body_id,"category":b?b['class']:"",
+    "description":b?("Robot body: "+b.height_cm+" cm H × "+b.width_cm+" cm W × "+b.depth_cm+" cm D, "+b.mass_kg+" kg, "+b.power):""}],
+  "abstract":"Best-fit rationale. Capability fit: "+p.rationale.capability+" Temperament fit: "+p.rationale.temperament+" Task fit: "+p.rationale.task,
+  "keywords":["robot match",p.ai_family,"robot body",b?b['class']:"",p.mission]};
  let lds=document.getElementById('pairld');if(lds)lds.remove();
  lds=document.createElement('script');lds.id='pairld';lds.type='application/ld+json';lds.textContent=JSON.stringify(ld);document.head.appendChild(lds);
  app.innerHTML='<div class="card"><a href="#/pairs">← all pairs</a><h2>'+p.id+'</h2>'
@@ -367,7 +413,9 @@ function wirePair(p,b){
  async function ask(){
   const inp=document.getElementById('din'),q=inp.value.trim();if(!q)return;inp.value='';say('u',q);
   say('a','…');const dots=log.lastChild;
+  const btn=document.getElementById('dgo');btn.disabled=true;btn.textContent='Sending…';
   const live=await backendAsk(q,p);
+  btn.disabled=false;btn.textContent='Send';
   dots.remove();
   if(live){say('a',live);return;}
   const r=demoReply(q,p,b,ai,li);li=r.li;
@@ -438,9 +486,12 @@ function vMix(pre){
  +'<p><button class="btn" id="mforge">⚗️ Forge pair</button></p><div id="mout"></div></div>';
  if(pre&&pre.body){const bi=DB.bodies.findIndex(b=>b.id===pre.body);if(bi>=0)document.getElementById('mbody').value=bi;}
  document.getElementById('mforge').onclick=()=>{
-  const an=document.getElementById('mai').value.trim();
-  let ai=DB.pool.find(a=>a.name.toLowerCase()===an.toLowerCase());
-  if(!ai){const c=DB.pool.filter(a=>a.name.toLowerCase().includes(an.toLowerCase()));if(!c.length){toast('No AI matches "'+an+'"');return;}ai=c[0];}
+  const btn=document.getElementById('mforge');
+  btn.disabled=true;btn.innerHTML='<span class="spin" aria-hidden="true"></span>Forging…';
+  setTimeout(()=>{
+   const an=document.getElementById('mai').value.trim();
+   let ai=DB.pool.find(a=>a.name.toLowerCase()===an.toLowerCase());
+   if(!ai){const c=DB.pool.filter(a=>a.name.toLowerCase().includes(an.toLowerCase()));if(!c.length){toast('No AI matches "'+an+'"');btn.disabled=false;btn.textContent='⚗️ Forge pair';return;}ai=c[0];}
   const body=DB.bodies[+document.getElementById('mbody').value];
   const mission=document.getElementById('mmis').value;
   const p=mixPair(ai,body,mission);const out=document.getElementById('mout');
@@ -453,6 +504,8 @@ function vMix(pre){
   document.getElementById('mdj').onclick=()=>dl(p.id+'.json',JSON.stringify(p,null,2));
   document.getElementById('mrd').onclick=()=>speak(p.id+'. '+p.ai_name+' matched with '+p.body_name+' at '+p.score+' of 100. '+p.rationale.capability+' '+p.rationale.task);
   out.scrollIntoView({behavior:'smooth'});
+  btn.disabled=false;btn.textContent='⚗️ Forge pair';
+  },60);
  };
 }
 /* ============ FINDER ============ */
@@ -462,9 +515,12 @@ function finderGo(){
  const words=[...new Set(q.split(/\s+/).filter(w=>w.length>=3&&!STOP.has(w)))];
  const box=document.getElementById('fhits');
  if(!words.length){box.innerHTML='<div class="card">Describe what you need in plain words — e.g. "gentle helper for grandma".</div>';return;}
- const scored=DB.idx.map(r=>{const hay=(r[1]+' '+r[2]+' '+r[3]).toLowerCase();let s=0;words.forEach(w=>{if(hay.includes(w))s+=w.length;});return[s,r];})
-  .filter(x=>x[0]>0).sort((a,b)=>b[0]-a[0]||(a[1][0]<b[1][0]?-1:1)).slice(0,5);
- box.innerHTML=scored.length?scored.map(x=>pairCard(x[1])).join(''):'<div class="card">No pair matches those words yet — try fewer, simpler words, or forge one in the <a href="#/mix">Mix Lab</a>.</div>';
+ box.innerHTML='<div class="card"><span class="spin" aria-hidden="true"></span>Searching '+DB.idx.length.toLocaleString()+' pairs…</div>';
+ setTimeout(function(){
+  const scored=DB.idx.map(r=>{const hay=(r[1]+' '+r[2]+' '+r[3]).toLowerCase();let s=0;words.forEach(w=>{if(hay.includes(w))s+=w.length;});return[s,r];})
+   .filter(x=>x[0]>0).sort((a,b)=>b[0]-a[0]||(a[1][0]<b[1][0]?-1:1)).slice(0,5);
+  box.innerHTML=scored.length?scored.map(x=>pairCard(x[1])).join(''):'<div class="card">No pair matches those words yet — try fewer, simpler words, or forge one in the <a href="#/mix">Mix Lab</a>.</div>';
+ },30);
 }
 document.getElementById('fgo').onclick=finderGo;
 document.getElementById('fq').addEventListener('keydown',e=>{if(e.key==='Enter')finderGo();});
