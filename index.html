@@ -9,6 +9,9 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"The Signature AI Robot Matcher","url":"https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/","description":"Best-match pairs of Signature AIs and Signature robot bodies, marching to 1,000,000 documented pairs."}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Dataset","name":"The Signature AI Robot Matcher","creator":{"@type":"Person","name":"Justin Addam Higgins"}}
+</script>
 <style>
 :root{--bg:#0d1117;--panel:#161d27;--line:#2a3444;--amber:#f5a623;--amber2:#ffcf6e;--txt:#e8edf4;--dim:#9aa7ba;--green:#3ddc84;--red:#ff5d5d}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
@@ -24,6 +27,9 @@ a{color:var(--amber2)}header.top{border-bottom:1px solid var(--line);padding:10p
 .hero h1{font-size:clamp(26px,5vw,44px);margin:0 0 6px;color:var(--amber2)}
 .hero p{color:var(--dim);max-width:720px;margin:8px auto}
 .counter{display:inline-block;margin:14px 0;padding:10px 22px;border:1px solid var(--amber);border-radius:12px;font-size:20px;background:var(--panel)}
+.statscoll{margin:0}.statscoll>summary{display:none}
+@media(max-width:767px){.statscoll>summary{display:list-item;cursor:pointer;color:var(--dim);font-size:13px;text-align:center;margin:10px 0 0}}
+.tabs.azsticky{position:sticky;top:0;z-index:30;background:var(--bg);padding:8px 4px}
 .counter b{color:var(--amber2);font-size:26px}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:18px 0}
 .tabs a,.tabs button{background:var(--panel);border:1px solid var(--line);color:var(--txt);padding:9px 18px;border-radius:10px;text-decoration:none;font-size:15px;cursor:pointer}
@@ -59,12 +65,12 @@ body{font-size:16px}
 </style>
 </head>
 <body>
-<header class="top"><nav class="jahnet" id="jahnet" aria-label="The JAH Network"></nav></header>
+<header class="top"><nav class="jahnet" id="jahnet" aria-label="JAH Network Global Ecosystem" role="navigation"></nav></header>
 <div class="wrap">
 <div class="hero" id="hero">
 <h1>🤖 The Signature AI Robot Matcher</h1>
 <p>Every Signature AI finds its perfect shell. Documented best-match pairs of <b>Signature AIs</b> and <b>Signature robot bodies</b> — each with a match score, a written rationale, and a live demo where the AI speaks <i>aware of its own body</i>. Marching to <b>1,000,000 pairs</b>.</p>
-<div class="counter"><b id="paircount">…</b> / 1,000,000 pairs matched</div>
+<details class="statscoll" open><summary>Archive statistics</summary><div class="counter"><b id="paircount">…</b> / 1,000,000 pairs matched</div></details>
 <div class="notice">⚠️ <b>Title provisional</b> — "The Signature AI Robot Matcher" is a working title until Manon confirms the final name.</div>
 </div>
 <div class="tabs" id="tabs">
@@ -81,7 +87,7 @@ body{font-size:16px}
 </div>
 <div id="floatbar"><span id="fb-t">Reading…</span><button id="fb-x" aria-label="Stop">⏹</button></div>
 <footer>
-<div class="jahnet" id="jahnet2" style="justify-content:center;margin-bottom:12px"></div>
+<nav class="jahnet" id="jahnet2" style="justify-content:center;margin-bottom:12px" aria-label="JAH Network Global Ecosystem" role="navigation"></nav>
 The Signature AI Robot Matcher · all AIs, bodies, pairs and text are original Signature creations · marches to 1,000,000 pairs<br>
 Sister sites: <a href="https://justinahiggins614-cmyk.github.io/jah-ai-models/">AI Phone Book</a> (parent AIs) · <a href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">3D Print Depository</a> (printable shells)
 </footer>
@@ -108,6 +114,7 @@ function navHTML(){
  return h;}
 document.getElementById('jahnet').innerHTML=navHTML();
 document.getElementById('jahnet2').innerHTML=navHTML();
+if(window.innerWidth<768){var sc=document.querySelector('.statscoll');if(sc)sc.removeAttribute('open');}
 /* sibling liveness verified server-side at push time; "(soon)" badge marks not-yet-live */
 /* ============ DATA ============ */
 const DB={idx:null,bodies:null,pool:null,chunks:{},state:0};
@@ -192,7 +199,7 @@ function vPairs(){
  const per=24,pages=Math.ceil(rows.length/per),pg=Math.min(azPage,pages-1);
  const slice=rows.slice(pg*per,pg*per+per);
  app.innerHTML='<h2>Pairs A–Z <span class="pill">'+DB.idx.length.toLocaleString()+' pairs</span></h2>'
- +'<div class="tabs">'+letters.map(l=>'<button class="'+(l===azLetter?'on':'')+'" data-az="'+l+'">'+l+'</button>').join('')+'</div>'
+ +'<div class="tabs azsticky">'+letters.map(l=>'<button class="'+(l===azLetter?'on':'')+'" data-az="'+l+'">'+l+'</button>').join('')+'</div>'
  +'<div class="grid">'+slice.map(pairCard).join('')+'</div>'
  +'<p style="text-align:center">Page '+(pg+1)+' of '+pages+' <button class="btn sm ghost" id="azp" '+(pg<=0?'disabled':'')+'>← Prev</button> <button class="btn sm ghost" id="azn" '+(pg>=pages-1?'disabled':'')+'>Next →</button></p>';
  app.querySelectorAll('[data-az]').forEach(b=>b.onclick=()=>{azLetter=b.dataset.az;azPage=0;vPairs();});
