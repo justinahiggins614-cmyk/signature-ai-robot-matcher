@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Methodology | The Signature AI Robot Matcher</title>
+<meta name="description" content="How the Signature AI Robot Matcher computes concept-fit scores, what a pair means, and what it does not mean.">
+<link rel="canonical" href="https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/methodology.html">
+<style>body{margin:0;background:#0d1117;color:#e8edf4;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}.w{max-width:900px;margin:0 auto;padding:24px 16px}h1,h2{color:#ffcf6e}a{color:#ffcf6e}code{background:#161d27;padding:2px 6px;border-radius:4px}.card{background:#11161f;border:1px solid #2a3444;border-radius:10px;padding:16px;margin:14px 0}.warn{border-color:#8a5a00;background:#1d1503}table{border-collapse:collapse;width:100%;font-size:.92em}th,td{border:1px solid #2a3444;padding:7px 10px;text-align:left}th{background:#0a0e14;color:#ffcf6e}</style>
+</head><body><div class="w">
+<p><a href="./">← Back to the Matcher</a></p>
+<h1>Matcher Methodology</h1>
+<p>The Signature AI Robot Matcher archives <b>documented concept pairings</b> between Signature AIs and Signature robot bodies. This page defines exactly what a pair, a score, and a status mean — and what they do not mean.</p>
+
+<h2>What a pair is</h2>
+<div class="card"><p><b>Pair = one deterministic record</b>: an identified AI + an identified robot body + a documented mission + a match score + a written rationale + a shell-aware speaking demo. Pair <i>n</i> of 1,000,000 always resolves to the same AI, body, and mission. Same inputs + same matcher version = same pair, same score, same hash.</p></div>
+
+<h2>The match score (0–100)</h2>
+<div class="card">
+<p><b>Formula:</b> <code>55 + int(25 × shared_tags ÷ union_tags) + pair_factor(0–19)</code>, capped at 100.</p>
+<ul>
+<li><b>Base 55</b> — every documented pairing starts here.</li>
+<li><b>Capability-tag overlap (up to +25)</b> — shared capability tags between the AI's skills and the robot body's hardware, as a fraction of their union.</li>
+<li><b>Deterministic pair factor (0–19)</b> — derived from the pair number; breaks ties reproducibly.</li>
+</ul>
+<p>The score measures <b>documented concept fit only</b>.</p>
+</div>
+
+<div class="card warn"><h2 style="margin-top:0">What the score is NOT</h2>
+<p>The score is <b>never</b>: engineering feasibility, a safety rating, production readiness, market readiness, certification, or physical compatibility. <b>A high concept-fit score is never approval to build, deploy, or certify a robot.</b> No physical build or testing has been performed on these pairings.</p></div>
+
+<h2>Three independent statuses</h2>
+<table>
+<tr><th>Status axis</th><th>Values</th><th>Meaning</th></tr>
+<tr><td><b>Concept match</b></td><td>CONCEPT / DOCUMENTED</td><td>The AI's role and capabilities fit the robot concept on paper.</td></tr>
+<tr><td><b>Technical compatibility</b></td><td>NOT_CALCULATED / DOCUMENTED</td><td>Interfaces, power, compute, and dimensions checked against records.</td></tr>
+<tr><td><b>Physical validation</b></td><td>NOT_TESTED / PROTOTYPE / TESTED / VALIDATED</td><td>A physical build was actually tested. All archive pairs are NOT_TESTED unless stated.</td></tr>
+</table>
+<p>These axes are independent. A high concept score says nothing about the other two.</p>
+
+<h2>Robot gear</h2>
+<p>Every robot body record carries its full hardware gear: form factor, dimensions, mass, payload, materials, actuators, sensors, power system, compute, mobility, interfaces, operating limits, environment, safety assumptions, and supervision requirements. Where data is genuinely absent the record says <b>NOT SPECIFIED</b> — never an invented specification. Every body carries a SHA-256 content hash, a version, and a canonical URL.</p>
+
+<h2>AI identity</h2>
+<p>Every AI in a pair is identified by its canonical <b>Signature AI Phone Book ID</b> (e.g. <code>JAH-AI-DOM-001</code>). The phone book's <code>ai-catalog.json</code> is the single source of truth for AI identity; this archive links to it and never maintains a competing copy. A coherence check asserts the pool never drifts from the canon.</p>
+
+<h2>Find vs Generate</h2>
+<p><b>Find</b> searches the existing archive and existing records. <b>Generate</b> (the Mix Lab) creates a new deterministic custom pair with its own <code>JAH-MIX-XXXXXX</code> ID and status — it is never presented as an already-archived catalog pair.</p>
+
+<h2>Determinism &amp; verification</h2>
+<p>Pair generation is fully deterministic: re-running the generator produces byte-identical records. Every body and AI record carries a SHA-256 content hash. The pair index carries a manifest-level hash. Build gates fail the release on duplicate IDs, broken references, count mismatches, or hash failures.</p>
+
+<h2>Machine-readable</h2>
+<p>Schemas: <a href="data/schemas/pair.schema.json">pair</a> · <a href="data/schemas/robot.schema.json">robot</a> · <a href="data/schemas/ai.schema.json">ai</a> · <a href="data/schemas/manifest.schema.json">manifest</a><br>
+Manifest: <a href="matcher-manifest.json">matcher-manifest.json</a> (authoritative counts) · <a href="api.json">api.json</a> · <a href="llms.txt">llms.txt</a> · <a href="ai-manifest.json">ai-manifest.json</a></p>
+
+<p><a href="./">← Back to the Matcher</a></p>
+</div></body></html>

@@ -27,6 +27,7 @@ def pick(key, options, k=1):
 
 
 # 10 classes x 12 invented names each. All names are original coinages.
+# FAM_IDX gives each class a permanent family ID (JAH-BOTFAM-01..10).
 CLASSES = {
     "domestic-helper": {
         "names": ["Hearthward", "Tidymantle", "Homesteadix", "Larderlane",
@@ -370,6 +371,19 @@ SUPERVISION = {
     "underwater-drone": "A surface attendant must supervise every dive and maintain the tether or tracking link.",
 }
 
+FAM_IDX = {
+    "domestic-helper": 1,
+    "industrial-arm": 2,
+    "medical-assistant": 3,
+    "exploration-rover": 4,
+    "humanoid-companion": 5,
+    "aerial-drone": 6,
+    "underwater-drone": 7,
+    "construction-rig": 8,
+    "agricultural-bot": 9,
+    "security-sentinel": 10,
+}
+
 
 def build_body(class_key, idx, seq):
     spec = CLASSES[class_key]
@@ -397,7 +411,7 @@ def build_body(class_key, idx, seq):
     compute, interfaces, operating_limits = build_systems(class_key, body_id)
     width_cm = round(height * (0.45 + h_int(body_id + ":w", 30) / 100.0), 1)
     depth_cm = round(height * (0.35 + h_int(body_id + ":d", 25) / 100.0), 1)
-    return {
+    rec = {
         "id": body_id,
         "name": name,
         "class": class_key,
@@ -420,7 +434,22 @@ def build_body(class_key, idx, seq):
         "tags": tags,
         "blurb": blurb,
         "svg_seed": int(hashlib.sha256(("svg" + body_id).encode()).hexdigest(), 16) % (2 ** 31),
+        # --- record identity & honest status (added 2026-10-03; additive only) ---
+        "family_id": "JAH-BOTFAM-%02d" % FAM_IDX[class_key],
+        "form_factor": class_key,
+        "version": "1.0",
+        "design_status": "CONCEPT",
+        "simulation_status": "NOT_SIMULATED",
+        "manufacturing_status": "NOT_MANUFACTURED",
+        "physical_validation": "NOT_TESTED",
+        "created": "2026-10-02",
+        "canonical_url": ("https://justinahiggins614-cmyk.github.io/"
+                          "signature-ai-robot-matcher/?body=" + body_id),
     }
+    rec["content_hash"] = hashlib.sha256(
+        json.dumps(rec, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    return rec
 
 
 def main():

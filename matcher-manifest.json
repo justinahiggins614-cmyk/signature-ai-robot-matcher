@@ -1,0 +1,68 @@
+{
+ "manifest": "matcher-manifest",
+ "site_id": "SIGNATURE-AI-ROBOT-MATCHER",
+ "site_name": "The Signature AI Robot Matcher",
+ "site_url": "https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/",
+ "site_version": "1.0",
+ "archive_version": "2026-10-03",
+ "schema_version": "JAH-PAIR-RECORD/1.0",
+ "total_pairs": 13000,
+ "earliest_pair_id": "JAH-PAIR-000001",
+ "latest_pair_id": "JAH-PAIR-013000",
+ "pair_id_scheme": "JAH-PAIR-###### (catalog) / JAH-MIX-XXXXXX (user-forged)",
+ "total_ais": 270,
+ "ai_id_scheme": "JAH-AI-###-### (canonical Signature AI Phone Book IDs)",
+ "ai_families": {
+  "domain": 253,
+  "persona": 6,
+  "system": 11
+ },
+ "total_robot_bodies": 120,
+ "body_id_scheme": "JAH-BOT-######",
+ "body_family_scheme": "JAH-BOTFAM-##",
+ "body_classes": {
+  "domestic-helper": 12,
+  "industrial-arm": 12,
+  "medical-assistant": 12,
+  "exploration-rover": 12,
+  "humanoid-companion": 12,
+  "aerial-drone": 12,
+  "underwater-drone": 12,
+  "construction-rig": 12,
+  "agricultural-bot": 12,
+  "security-sentinel": 12
+ },
+ "goal_pairs": 1000000,
+ "pairs_remaining": 987000,
+ "index_version": "pairs.idx/1.0",
+ "index_hash": "fd78a5d08495bd2984bb644d7a33640308d69820f5e28819ab0f7195da2ecd96",
+ "index_rows": 13000,
+ "matcher_version": "pair-engine/1.0",
+ "generator_version": "gen_pairs/1.0",
+ "score_method": {
+  "range": [
+   0,
+   100
+  ],
+  "meaning": "documented concept fit only \u2014 NOT engineering feasibility, safety rating, production readiness, certification, or physical compatibility",
+  "formula": "55 + int(25 * shared_tags / union_tags) + pair_factor(0..19), capped at 100",
+  "factors": [
+   "capability-tag overlap (AI skills vs body hardware)",
+   "temperament fit (documented rationale)",
+   "task fit (mission vs body hardware)",
+   "deterministic pair factor 0-19"
+  ],
+  "deterministic": true
+ },
+ "status_vocabulary": [
+  "CONCEPT",
+  "NOT_SIMULATED",
+  "NOT_MANUFACTURED",
+  "NOT_TESTED",
+  "DOCUMENTED",
+  "RETIRED"
+ ],
+ "concept_fit_boundary": "A high concept-fit score is never approval to build, deploy, or certify a robot. Concept match, technical compatibility, and physical validation are independent statuses.",
+ "last_updated": "2026-10-03",
+ "generated_at": "2026-10-03T15:48:52+00:00"
+}

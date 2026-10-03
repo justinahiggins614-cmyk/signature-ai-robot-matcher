@@ -1,0 +1,62 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/data/schemas/manifest.schema.json",
+ "title": "JAH-MATCHER-MANIFEST/1.0",
+ "description": "The single authoritative count source. Every visible count on the site reads this file.",
+ "type": "object",
+ "required": [
+  "total_pairs",
+  "total_ais",
+  "total_robot_bodies",
+  "earliest_pair_id",
+  "latest_pair_id",
+  "index_hash",
+  "last_updated",
+  "generated_at"
+ ],
+ "properties": {
+  "total_pairs": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "total_ais": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "total_robot_bodies": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "earliest_pair_id": {
+   "type": "string"
+  },
+  "latest_pair_id": {
+   "type": "string"
+  },
+  "goal_pairs": {
+   "type": "integer"
+  },
+  "pairs_remaining": {
+   "type": "integer"
+  },
+  "index_hash": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
+  },
+  "schema_version": {
+   "type": "string"
+  },
+  "matcher_version": {
+   "type": "string"
+  },
+  "generator_version": {
+   "type": "string"
+  },
+  "last_updated": {
+   "type": "string"
+  },
+  "generated_at": {
+   "type": "string"
+  }
+ }
+}

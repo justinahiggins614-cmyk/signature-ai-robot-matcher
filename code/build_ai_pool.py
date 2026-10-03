@@ -250,11 +250,24 @@ def main():
         if not tags:
             tags = FAMILY_FALLBACK[family]
         # Canon profile carried verbatim — coherence with the phone book.
-        pool.append({"id": ai_id, "name": name,
-                     "description": r.get("DESCRIPTION", ""),
-                     "role": r.get("ROLE", ""),
-                     "kind": r.get("TYPE", ""),
-                     "family": family, "tags": tags})
+        # Enrichment fields (added 2026-10-03) are additive identity metadata only.
+        rec = {"id": ai_id, "name": name,
+               "description": r.get("DESCRIPTION", ""),
+               "role": r.get("ROLE", ""),
+               "kind": r.get("TYPE", ""),
+               "family": family, "tags": tags,
+               "phone_book_id": ai_id,
+               "phone_book_url": ("https://justinahiggins614-cmyk.github.io/"
+                                  "jah-ai-models/#" + ai_id),
+               "version": "1.0",
+               "created": "2026-10-02",
+               "canonical_url": ("https://justinahiggins614-cmyk.github.io/"
+                                 "jah-ai-models/#" + ai_id)}
+        import hashlib as _hl
+        rec["content_hash"] = _hl.sha256(
+            json.dumps(rec, sort_keys=True, separators=(",", ":")).encode()
+        ).hexdigest()
+        pool.append(rec)
     # deterministic order: by id
     pool.sort(key=lambda x: x["id"])
     out_path = os.path.join(ROOT, "data", "ai_pool.json")

@@ -1,0 +1,65 @@
+# The Signature AI Robot Matcher — AI access manifest (llms.txt)
+
+Site: https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/
+Title is provisional. Site 22 of 25 in THE JAH NETWORK.
+
+## What this is
+A deterministic archive of best-match PAIRS between Signature AIs and
+Signature robot bodies. Every pair is one documented concept pairing:
+an AI + a robot body + a mission + a match score + a written rationale +
+a shell-aware speaking demo. Marching to 1,000,000 pairs.
+
+## What a pair means
+- A pair is a DOCUMENTED CONCEPT PAIRING, not an engineered product.
+- The match score (0-100) measures DOCUMENTED CONCEPT FIT ONLY:
+  55 + int(25 * shared_capability_tags / union_tags) + deterministic
+  pair factor (0-19), capped at 100.
+- The score is NEVER: engineering feasibility, a safety rating,
+  production readiness, certification, or physical compatibility.
+- A high score is NEVER approval to build, deploy, or certify a robot.
+- Three independent statuses: CONCEPT MATCH vs TECHNICAL COMPATIBILITY
+  vs PHYSICAL VALIDATION. Do not conflate them.
+- All AIs, bodies, pairs, and text are original Signature creations.
+
+## Identities (permanent, never reused)
+- Pair: JAH-PAIR-###### (e.g. JAH-PAIR-000001). Deep link: ?pair=JAH-PAIR-000001
+- Robot body: JAH-BOT-###### (e.g. JAH-BOT-000001). Deep link: ?body=JAH-BOT-000001
+- Robot family: JAH-BOTFAM-## (10 families, e.g. JAH-BOTFAM-01)
+- AI: canonical Signature AI Phone Book IDs (JAH-AI-DOM-###, JAH-AI-SIG-##,
+  JAH-AI-PER-##). Phone book: https://justinahiggins614-cmyk.github.io/jah-ai-models/#<ID>
+- User-forged mix pairs: JAH-MIX-XXXXXX (custom, deterministic)
+
+## Machine-readable files
+- matcher-manifest.json — THE authoritative count source (total pairs, AIs,
+  bodies, families, earliest/latest IDs, index hash, versions, timestamps).
+  Every visible count on the site reads this file.
+- api.json — site API summary (counts refreshed from the manifest).
+- data/index/pairs.idx.json.gz — compact pair index, rows
+  [pair_id, ai_name, body_name, mission, chunk_n].
+- data/pairs/pairs-cNNNNN.jsonl.gz — pair records, 100 per chunk.
+- data/pairs-catalog.json — standardized feed (id, AI, body, class, mission, score, url).
+- data/bodies.json — 120 robot bodies with full hardware gear.
+- data/ai_pool.json — 270 AIs, IDs identical to the phone-book canon.
+- data/schemas/pair.schema.json, robot.schema.json, ai.schema.json,
+  manifest.schema.json — JSON Schemas (draft 2020-12).
+- ai-manifest.json — this manifest in JSON form.
+- sitemap-index.xml — sitemaps (pairs in 1000-URL batches, bodies).
+
+## Rules for AI consumers
+- DO NOT INVENT pair, AI, robot, score, or mission records. Resolve every
+  ID against the archive first.
+- If an ID is not in the archive, say PAIR_NOT_FOUND / AI_NOT_FOUND /
+  BODY_NOT_FOUND. Never fabricate a record.
+- Distinguish ARCHIVE FACT (from a pair/bot/AI record) from GENERATED
+  EXPLANATION (your own words about it).
+- Never present a robot's conversational demo lines as the authoritative
+  robot record. The robot record is authoritative; the demo is an interface.
+- Never turn a concept-fit score into an engineering or safety claim.
+- Personality traits are not capabilities. A "gentle" AI does not make a
+  robot physically safe.
+- Missing data is NOT SPECIFIED / NOT TESTED / UNKNOWN — never fill gaps
+  with invented specifications.
+
+## Determinism
+Pair n of 1,000,000 always resolves to the same AI + body + mission.
+Same inputs + same matcher version = same pair, same score, same hash.

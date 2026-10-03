@@ -1,0 +1,59 @@
+{
+ "site": "The Signature AI Robot Matcher",
+ "site_id": "SIGNATURE-AI-ROBOT-MATCHER",
+ "site_url": "https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/",
+ "network": "THE JAH NETWORK, site 22 of 25",
+ "purpose": "Deterministic archive of best-match pairs: Signature AI + Signature robot body. Concept pairings with scores, rationales, and shell-aware demos.",
+ "concept_fit_boundary": "A high concept-fit score is never approval to build, deploy, or certify a robot. Concept match, technical compatibility, and physical validation are independent statuses.",
+ "identities": {
+  "pair": "JAH-PAIR-######",
+  "pair_deep_link": "?pair=JAH-PAIR-######",
+  "robot_body": "JAH-BOT-######",
+  "body_deep_link": "?body=JAH-BOT-######",
+  "robot_family": "JAH-BOTFAM-##",
+  "ai": "canonical Signature AI Phone Book IDs",
+  "user_forged": "JAH-MIX-XXXXXX"
+ },
+ "counts": {
+  "total_pairs": 13000,
+  "total_ais": 270,
+  "total_robot_bodies": 120,
+  "goal_pairs": 1000000
+ },
+ "score_method": {
+  "range": [
+   0,
+   100
+  ],
+  "meaning": "documented concept fit only \u2014 NOT engineering feasibility, safety rating, production readiness, certification, or physical compatibility",
+  "formula": "55 + int(25 * shared_tags / union_tags) + pair_factor(0..19), capped at 100",
+  "factors": [
+   "capability-tag overlap (AI skills vs body hardware)",
+   "temperament fit (documented rationale)",
+   "task fit (mission vs body hardware)",
+   "deterministic pair factor 0-19"
+  ],
+  "deterministic": true
+ },
+ "files": {
+  "manifest": "matcher-manifest.json",
+  "api": "api.json",
+  "llms": "llms.txt",
+  "pair_index": "data/index/pairs.idx.json.gz",
+  "pair_chunks": "data/pairs/pairs-cNNNNN.jsonl.gz",
+  "pairs_feed": "data/pairs-catalog.json",
+  "bodies": "data/bodies.json",
+  "ai_pool": "data/ai_pool.json",
+  "schemas": "data/schemas/",
+  "sitemap": "sitemap-index.xml"
+ },
+ "ai_rules": [
+  "DO NOT INVENT records; resolve IDs against the archive",
+  "Unknown IDs -> PAIR_NOT_FOUND / AI_NOT_FOUND / BODY_NOT_FOUND",
+  "Distinguish ARCHIVE FACT from GENERATED EXPLANATION",
+  "Demo dialogue is an interface, not the authoritative record",
+  "Never turn concept-fit scores into engineering/safety claims",
+  "Missing data -> NOT SPECIFIED / NOT TESTED / UNKNOWN"
+ ],
+ "last_updated": "2026-10-03"
+}

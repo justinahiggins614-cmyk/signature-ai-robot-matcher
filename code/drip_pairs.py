@@ -112,8 +112,10 @@ def main():
     with open(state_path, "w", encoding="utf-8") as f:
         json.dump({"next_index": next_index + args.n}, f, separators=(",", ":"))
 
-    # refresh machine-readable feed, modular sitemaps, and static bot tables
-    for script in ("build_pairs_feed.py", "build_sitemap.py", "build_pairs_table.py"):
+    # refresh machine-readable feed, modular sitemaps, static bot tables,
+    # and the authoritative manifest (counts) — all must stay in sync
+    for script in ("build_pairs_feed.py", "build_sitemap.py",
+                   "build_pairs_table.py", "build_manifest.py"):
         r = subprocess.run([sys.executable, os.path.join(HERE, script)],
                            capture_output=True, text=True)
         if r.returncode != 0:

@@ -1,0 +1,169 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/data/schemas/pair.schema.json",
+ "title": "JAH-PAIR-RECORD/1.0",
+ "description": "One documented best-match pair: a Signature AI + a Signature robot body. Match score measures documented concept fit ONLY \u2014 never engineering feasibility, safety, production readiness, certification, or physical compatibility.",
+ "type": "object",
+ "required": [
+  "id",
+  "ai_id",
+  "ai_name",
+  "ai_family",
+  "body_id",
+  "body_name",
+  "mission",
+  "score",
+  "pair_version",
+  "matcher_version",
+  "score_scale",
+  "score_method",
+  "concept_fit_boundary",
+  "status",
+  "provenance",
+  "content_hash",
+  "canonical_url",
+  "created"
+ ],
+ "properties": {
+  "id": {
+   "type": "string",
+   "pattern": "^JAH-PAIR-\\d{6}$",
+   "description": "Permanent pair ID. Never reused; retired records become tombstones."
+  },
+  "ai_id": {
+   "type": "string",
+   "description": "Canonical Signature AI Phone Book ID (e.g. JAH-AI-DOM-001). Links to the phone-book record; never a copied duplicate."
+  },
+  "ai_name": {
+   "type": "string"
+  },
+  "ai_family": {
+   "enum": [
+    "system",
+    "persona",
+    "domain"
+   ]
+  },
+  "body_id": {
+   "type": "string",
+   "pattern": "^JAH-BOT-\\d{6}$",
+   "description": "Robot body ID. The robot side of every pair is ALWAYS a genuine robot body record."
+  },
+  "body_name": {
+   "type": "string"
+  },
+  "mission": {
+   "type": "string",
+   "description": "Documented evaluation mission for this pairing."
+  },
+  "score": {
+   "type": "integer",
+   "minimum": 0,
+   "maximum": 100
+  },
+  "score_scale": {
+   "const": "0-100"
+  },
+  "score_method": {
+   "const": "55 + int(25 * shared_tags / union_tags) + pair_factor(0..19), capped at 100"
+  },
+  "concept_fit_boundary": {
+   "const": "Documented concept fit only. Not engineering feasibility, safety rating, production readiness, certification, or physical compatibility. A high score is never approval to build or deploy."
+  },
+  "status": {
+   "enum": [
+    "CONCEPT",
+    "DOCUMENTED",
+    "SIMULATED",
+    "NOT_SIMULATED",
+    "NOT_TESTED",
+    "RETIRED",
+    "SUPERSEDED"
+   ]
+  },
+  "technical_compatibility": {
+   "enum": [
+    "NOT_CALCULATED",
+    "DOCUMENTED",
+    "UNKNOWN"
+   ]
+  },
+  "physical_validation": {
+   "enum": [
+    "NOT_TESTED",
+    "PROTOTYPE",
+    "TESTED",
+    "VALIDATED"
+   ]
+  },
+  "rationale": {
+   "type": "object",
+   "properties": {
+    "capability": {
+     "type": "string"
+    },
+    "temperament": {
+     "type": "string"
+    },
+    "task": {
+     "type": "string"
+    }
+   }
+  },
+  "match_strengths": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "match_limitations": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "demo_status": {
+   "enum": [
+    "AVAILABLE",
+    "NOT_AVAILABLE"
+   ]
+  },
+  "pair_version": {
+   "type": "string"
+  },
+  "matcher_version": {
+   "type": "string"
+  },
+  "provenance": {
+   "type": "object",
+   "properties": {
+    "generator": {
+     "type": "string"
+    },
+    "seed": {
+     "type": "string"
+    },
+    "ai_data_version": {
+     "type": "string"
+    },
+    "body_data_version": {
+     "type": "string"
+    }
+   }
+  },
+  "content_hash": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
+  },
+  "canonical_url": {
+   "type": "string",
+   "format": "uri"
+  },
+  "created": {
+   "type": "string"
+  },
+  "updated": {
+   "type": "string"
+  }
+ }
+}

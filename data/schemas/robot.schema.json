@@ -1,0 +1,148 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/data/schemas/robot.schema.json",
+ "title": "JAH-ROBOT-RECORD/1.0",
+ "description": "One Signature robot body: full hardware gear. Missing data is NOT SPECIFIED / NOT TESTED \u2014 never invented.",
+ "type": "object",
+ "required": [
+  "id",
+  "name",
+  "family_id",
+  "form_factor",
+  "version",
+  "design_status",
+  "simulation_status",
+  "manufacturing_status",
+  "physical_validation",
+  "content_hash",
+  "canonical_url",
+  "created"
+ ],
+ "properties": {
+  "id": {
+   "type": "string",
+   "pattern": "^JAH-BOT-\\d{6}$"
+  },
+  "name": {
+   "type": "string"
+  },
+  "family_id": {
+   "type": "string",
+   "pattern": "^JAH-BOTFAM-\\d{2}$"
+  },
+  "form_factor": {
+   "type": "string"
+  },
+  "class": {
+   "type": "string"
+  },
+  "height_cm": {
+   "type": "number"
+  },
+  "width_cm": {
+   "type": "number"
+  },
+  "depth_cm": {
+   "type": "number"
+  },
+  "mass_kg": {
+   "type": "number"
+  },
+  "payload_kg": {
+   "type": "number"
+  },
+  "materials": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "actuators": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "sensors": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "power": {
+   "type": "string"
+  },
+  "compute": {
+   "type": "string"
+  },
+  "mobility": {
+   "type": "string"
+  },
+  "interfaces": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "operating_limits": {
+   "type": "string"
+  },
+  "environment": {
+   "type": "string"
+  },
+  "safety_assumptions": {
+   "type": "string"
+  },
+  "supervision": {
+   "type": "string"
+  },
+  "design_status": {
+   "enum": [
+    "CONCEPT"
+   ]
+  },
+  "simulation_status": {
+   "enum": [
+    "NOT_SIMULATED",
+    "SIMULATED"
+   ]
+  },
+  "manufacturing_status": {
+   "enum": [
+    "NOT_MANUFACTURED",
+    "PROTOTYPE",
+    "MANUFACTURED"
+   ]
+  },
+  "physical_validation": {
+   "enum": [
+    "NOT_TESTED",
+    "TESTED",
+    "VALIDATED"
+   ]
+  },
+  "version": {
+   "type": "string"
+  },
+  "tags": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "blurb": {
+   "type": "string"
+  },
+  "content_hash": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
+  },
+  "canonical_url": {
+   "type": "string",
+   "format": "uri"
+  },
+  "created": {
+   "type": "string"
+  }
+ }
+}

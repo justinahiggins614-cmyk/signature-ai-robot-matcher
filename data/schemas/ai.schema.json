@@ -1,0 +1,68 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/data/schemas/ai.schema.json",
+ "title": "JAH-MATCHER-AI-RECORD/1.0",
+ "description": "AI side of a pair. Identity comes from the Signature AI Phone Book (ai-catalog.json) \u2014 the single source of truth. This record links it; it never competes with it.",
+ "type": "object",
+ "required": [
+  "id",
+  "name",
+  "phone_book_id",
+  "phone_book_url",
+  "version",
+  "content_hash",
+  "canonical_url"
+ ],
+ "properties": {
+  "id": {
+   "type": "string",
+   "description": "Canonical Signature AI Phone Book ID."
+  },
+  "name": {
+   "type": "string"
+  },
+  "description": {
+   "type": "string"
+  },
+  "role": {
+   "type": "string"
+  },
+  "kind": {
+   "type": "string"
+  },
+  "family": {
+   "enum": [
+    "system",
+    "persona",
+    "domain"
+   ]
+  },
+  "tags": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "phone_book_id": {
+   "type": "string"
+  },
+  "phone_book_url": {
+   "type": "string",
+   "format": "uri"
+  },
+  "version": {
+   "type": "string"
+  },
+  "content_hash": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
+  },
+  "canonical_url": {
+   "type": "string",
+   "format": "uri"
+  },
+  "created": {
+   "type": "string"
+  }
+ }
+}
