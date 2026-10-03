@@ -81,7 +81,7 @@ body{font-size:16px}
 <div class="wrap">
 <div class="hero" id="hero">
 <h1>🤖 The Signature AI Robot Matcher</h1>
-<p>Every Signature AI finds its perfect shell. Documented best-match pairs of <b>Signature AIs</b> and <b>Signature robot bodies</b> — each with a match score, a written rationale, and a live demo where the AI speaks <i>aware of its own body</i>. Marching to <b>1,000,000 pairs</b>.</p>
+<p>Every Signature AI is documented with its best-matching shell. These are documented <b>concept pairings</b> of <b>Signature AIs</b> and <b>Signature robot bodies</b> — each with a match score, a written rationale, and a live demo where the AI speaks <i>aware of its own body</i>. Match scores measure documented concept fit only, never a real-world engineering recommendation. Marching to <b>1,000,000 pairs</b>.</p>
 <details class="statscoll" open><summary>Archive statistics</summary><div class="counter"><b id="paircount">…</b> / 1,000,000 pairs matched</div></details>
 <div class="notice">⚠️ <b>Title provisional</b> — "The Signature AI Robot Matcher" is a working title until Manon confirms the final name.</div>
 </div>
@@ -161,6 +161,9 @@ function bodySpecText(b){
  'Mobility: '+b.mobility,
  'Interfaces: '+b.interfaces.join(', '),
  'Operating limits: '+b.operating_limits,
+ 'Environment: '+(b.environment||''),
+ 'Safety assumptions: '+(b.safety_assumptions||''),
+ 'Human supervision: '+(b.supervision||''),
  'Capability tags: '+b.tags.join(', ')].join('\n');
 }
 /* Best-fit breakdown: shared tags + score math + rationale */
@@ -201,7 +204,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','
 function pairCard(r){return '<div class="card"><h3>'+esc(r[0])+' · '+r[2]+'</h3><div><span class="pill">🧠 '+esc(r[1])+'</span><span class="pill">🦾 '+esc(r[2])+'</span><span class="pill">🎯 '+esc(r[3])+'</span></div><a class="btn sm" href="?pair='+r[0]+'">Open pair →</a></div>';}
 function vHome(){
  const feat=[DB.idx[0],DB.idx[499],DB.idx[1499],DB.idx[2999]].filter(Boolean);
- app.innerHTML='<div class="card"><h2>How matching works</h2><p>Each pair is <b>deterministic</b>: pair <i>n</i> of 1,000,000 always resolves to the same AI + body + mission. A match score (0–100) is computed from real capability-tag overlap between the AI\u2019s skills and the body\u2019s hardware, plus a documented rationale: <b>capability fit</b>, <b>temperament fit</b>, and <b>task fit</b>. New pairs are forged every 2 hours until the million mark.</p><p>🦾 <b>'+DB.bodies.length+' robot bodies</b> · 🧠 <b>'+DB.pool.length+' Signature AIs</b> · 🔗 <b>'+DB.state.toLocaleString()+' pairs</b> so far</p><p><a class="btn" href="#/mix">Open the Mix Lab</a><a class="btn ghost" href="#/bodies">Browse robot bodies</a></p></div>'
+ app.innerHTML='<div class="card"><h2>How matching works</h2><p>Each pair is <b>deterministic</b>: pair <i>n</i> of 1,000,000 always resolves to the same AI + body + mission. A match score (0–100) is computed from real capability-tag overlap between the AI\u2019s skills and the body\u2019s hardware, plus a documented rationale: <b>capability fit</b>, <b>temperament fit</b>, and <b>task fit</b>. The <b>match score (0–100)</b> measures documented concept fit only — base 55 + a bonus for shared capability tags between the AI\u2019s skills and the body\u2019s hardware + a deterministic pair factor. It is <b>not</b> a real-world engineering recommendation: no physical build or testing has been performed. New pairs are forged every 2 hours until the million mark.</p><p>🦾 <b>'+DB.bodies.length+' robot bodies</b> · 🧠 <b>'+DB.pool.length+' Signature AIs</b> · 🔗 <b>'+DB.state.toLocaleString()+' pairs</b> so far</p><p><a class="btn" href="#/mix">Open the Mix Lab</a><a class="btn ghost" href="#/bodies">Browse robot bodies</a></p></div>'
  +'<h2>Featured pairs</h2>'+feat.map(pairCard).join('');
 }
 let azLetter='A',azPage=0;
@@ -263,7 +266,7 @@ async function vPair(id){
   "about":[
    {"@type":"Thing","name":p.ai_name,"identifier":p.ai_id,"additionalType":"Signature AI, family "+p.ai_family},
    {"@type":"Product","name":p.body_name,"identifier":p.body_id,"category":b?b['class']:"",
-    "description":b?("Robot body: "+b.height_cm+" cm H × "+b.width_cm+" cm W × "+b.depth_cm+" cm D, "+b.mass_kg+" kg, "+b.power):""}],
+    "description":b?("Robot body: "+b.height_cm+" cm H, "+b.mass_kg+" kg, payload "+b.payload_kg+" kg, "+b.power+". Environment: "+(b.environment||"")+" Supervision: "+(b.supervision||"")):""}],
   "abstract":"Best-fit rationale. Capability fit: "+p.rationale.capability+" Temperament fit: "+p.rationale.temperament+" Task fit: "+p.rationale.task,
   "keywords":["robot match",p.ai_family,"robot body",b?b['class']:"",p.mission]};
  let lds=document.getElementById('pairld');if(lds)lds.remove();
@@ -294,10 +297,19 @@ async function vPair(id){
  +'<tr><th>Mobility</th><td>'+esc(b.mobility)+'</td></tr>'
  +'<tr><th>Interfaces</th><td>'+b.interfaces.map(esc).join(', ')+'</td></tr>'
  +'<tr><th>Operating limits</th><td>'+esc(b.operating_limits)+'</td></tr>'
+ +'<tr><th>Environment</th><td>'+esc(b.environment||'')+'</td></tr>'
+ +'<tr><th>Safety assumptions</th><td>'+esc(b.safety_assumptions||'')+'</td></tr>'
+ +'<tr><th>Human supervision</th><td>'+esc(b.supervision||'')+'</td></tr>'
  +'<tr><th>Capability tags</th><td>'+b.tags.map(t=>'<span class="pill">'+esc(t)+'</span>').join(' ')+'</td></tr>'
  +'</table>'
  +'<p><button class="btn sm" id="cbs">📋 Copy full specs</button> <button class="btn sm ghost" id="dbs">⬇ Download specs .txt</button> <button class="btn sm ghost" id="jbs">⬇ Download specs .json</button></p></div>'
+ +'<div class="card"><h3>📋 Match criteria</h3><p>This pairing was scored on three documented criteria: <b>capability fit</b> (shared capability tags between the AI\u2019s skills and the body\u2019s hardware), <b>temperament fit</b> (how the AI\u2019s family and role suit the mission), and <b>task fit</b> (how the body\u2019s actuators and sensors serve the mission). The match score ('+p.score+'/100) measures documented concept fit only — it is not a real-world engineering recommendation.</p></div>'
  +'<div class="card">'+fitBreakdown(p,b,ai)+'</div>'
+ +'<div class="card"><h3>⚠️ Match limitations</h3><ul style="margin:6px 0;padding-left:20px">'
+ +'<li>Pairs are <b>documented concepts</b>: no physical build or real-world testing has been performed.</li>'
+ +'<li>The score does not certify safety, reliability, or fitness for any real task — always honor the body\u2019s <b>operating limits</b> and <b>safety assumptions</b> above.</li>'
+ +'<li>'+esc(b.supervision||'Human supervision is required during any real-world operation.')+'</li>'
+ +'</ul></div>'
  +'<div class="card"><h3>🎙️ Shell-aware demo — talk to this pair</h3><p style="color:var(--dim);font-size:14px">This AI answers <i>aware of the body it runs in</i>. Replies come from the on-board demo instantly; the live Signature Backend is used when it has already loaded.</p><div class="chatlog" id="dlog"></div><div class="row" style="display:flex;gap:8px"><input id="din" type="text" placeholder="Ask it anything…" aria-label="Talk to the pair"><button class="btn" id="dgo">Send</button></div></div>'
  +'<div class="card"><h3>❓ Pair helper</h3><div class="qlog" id="qlog"></div><div class="row" style="display:flex;gap:8px"><input id="qin" type="text" placeholder="Ask about this pair…" aria-label="Ask about the pair"><button class="btn" id="qgo">Ask</button></div></div>'
  +'<div class="card"><h3>📦 Take this pair</h3><button class="btn sm" id="cpair">📋 Copy</button><button class="btn sm ghost" id="dpair">⬇ Download .txt</button><button class="btn sm ghost" id="jpair">⬇ Download .json</button> <button class="btn sm ghost" id="rp">🔊 Read aloud</button></div>';
@@ -309,7 +321,7 @@ function vBody(id){
  document.title=b.id+' — '+b.name+' | The Signature AI Robot Matcher';
  const pairs=DB.idx.filter(r=>r[2]===b.name).slice(0,6);
  app.innerHTML='<div class="card"><a href="#/bodies">← all bodies</a><div style="display:flex;gap:20px;flex-wrap:wrap"><div>'+bodySVG(b,260)+'</div><div style="flex:1;min-width:260px"><h2>'+esc(b.name)+' <span class="pill">'+b.id+'</span></h2><p>'+esc(b.blurb)+'</p><p><a class="btn sm" href="#/mix?body='+b.id+'">🧪 Match an AI to this body →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+b.id+'">🖨️ Print this shell →</a></p></div></div>'
- +'<h3>Full specification</h3><table class="spec"><tr><th>Class</th><td>'+esc(b.class)+'</td></tr><tr><th>Dimensions</th><td>'+b.height_cm+' cm H × '+b.width_cm+' cm W × '+b.depth_cm+' cm D</td></tr><tr><th>Mass / Payload</th><td>'+b.mass_kg+' kg · payload '+b.payload_kg+' kg</td></tr><tr><th>Materials</th><td>'+b.materials.map(esc).join(', ')+'</td></tr><tr><th>Actuators</th><td>'+b.actuators.map(esc).join('; ')+'</td></tr><tr><th>Sensors</th><td>'+b.sensors.map(esc).join(', ')+'</td></tr><tr><th>Power</th><td>'+esc(b.power)+'</td></tr><tr><th>Compute</th><td>'+esc(b.compute)+'</td></tr><tr><th>Mobility</th><td>'+esc(b.mobility)+'</td></tr><tr><th>Interfaces</th><td>'+b.interfaces.map(esc).join(', ')+'</td></tr><tr><th>Operating limits</th><td>'+esc(b.operating_limits)+'</td></tr><tr><th>Capability tags</th><td>'+b.tags.map(t=>'<span class="pill">'+esc(t)+'</span>').join('')+'</td></tr></table>'
+ +'<h3>Full specification</h3><table class="spec"><tr><th>Class</th><td>'+esc(b.class)+'</td></tr><tr><th>Dimensions</th><td>'+b.height_cm+' cm H × '+b.width_cm+' cm W × '+b.depth_cm+' cm D</td></tr><tr><th>Mass / Payload</th><td>'+b.mass_kg+' kg · payload '+b.payload_kg+' kg</td></tr><tr><th>Materials</th><td>'+b.materials.map(esc).join(', ')+'</td></tr><tr><th>Actuators</th><td>'+b.actuators.map(esc).join('; ')+'</td></tr><tr><th>Sensors</th><td>'+b.sensors.map(esc).join(', ')+'</td></tr><tr><th>Power</th><td>'+esc(b.power)+'</td></tr><tr><th>Compute</th><td>'+esc(b.compute)+'</td></tr><tr><th>Mobility</th><td>'+esc(b.mobility)+'</td></tr><tr><th>Interfaces</th><td>'+b.interfaces.map(esc).join(', ')+'</td></tr><tr><th>Operating limits</th><td>'+esc(b.operating_limits)+'</td></tr><tr><th>Environment</th><td>'+esc(b.environment||'')+'</td></tr><tr><th>Safety assumptions</th><td>'+esc(b.safety_assumptions||'')+'</td></tr><tr><th>Human supervision</th><td>'+esc(b.supervision||'')+'</td></tr><tr><th>Capability tags</th><td>'+b.tags.map(t=>'<span class="pill">'+esc(t)+'</span>').join('')+'</td></tr></table>'
  +'<p><button class="btn sm ghost" id="rb">🔊 Read aloud</button> <button class="btn sm" id="cb">📋 Copy specs</button> <button class="btn sm ghost" id="db2">⬇ Download specs .txt</button> <button class="btn sm ghost" id="jb2">⬇ Download specs .json</button></p></div>'
  +(pairs.length?'<h2>Pairs using this body</h2><div class="grid">'+pairs.map(pairCard).join('')+'</div>':'');
  const txt=bodySpecText(b);
@@ -402,7 +414,7 @@ function demoReply(q,p,b,ai,li){
  return {text:line,li:li+1};
 }
 function pairText(p,b){
- return p.id+': '+p.ai_name+' ('+p.ai_family+' AI) matched with '+p.body_name+' ('+p.body_id+', '+(b?b['class']:'')+') at '+p.score+' of 100 for mission: '+p.mission+'.\nCapability fit: '+p.rationale.capability+'\nTemperament fit: '+p.rationale.temperament+'\nTask fit: '+p.rationale.task;
+ return p.id+': '+p.ai_name+' ('+p.ai_family+' AI) matched with '+p.body_name+' ('+p.body_id+', '+(b?b['class']:'')+') at '+p.score+' of 100 for mission: '+p.mission+'.\nCapability fit: '+p.rationale.capability+'\nTemperament fit: '+p.rationale.temperament+'\nTask fit: '+p.rationale.task+'\nLimitations: documented concept match only — the score is not a real-world engineering recommendation. Human supervision required.';
 }
 function wirePair(p,b){
  const ai=getAI(p.ai_id)||{id:p.ai_id,name:p.ai_name,description:'',role:'',kind:'',family:p.ai_family,tags:[]};
@@ -498,7 +510,7 @@ function vMix(pre){
   out.innerHTML='<div class="card"><h3>'+p.id+' — forged in the Mix Lab</h3><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">'+scoreDial(p.score)+'<div><b>🧠 '+esc(p.ai_name)+'</b><br><b>🦾 '+esc(p.body_name)+'</b> <span class="pill">'+p.body_id+'</span><br><span class="pill">🎯 '+esc(p.mission)+'</span></div></div>'
   +'<p><b>Capability fit.</b> '+esc(p.rationale.capability)+'</p><p><b>Temperament fit.</b> '+esc(p.rationale.temperament)+'</p><p><b>Task fit.</b> '+esc(p.rationale.task)+'</p>'
   +'<p><i>"'+esc(p.demo_lines[0])+'"</i></p>'
-  +'<p><button class="btn sm" id="mcp">📋 Copy</button><button class="btn sm ghost" id="mdj">⬇ .json</button><button class="btn sm ghost" id="mrd">🔊 Read aloud</button> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+body.id+'">🖨️ Print this shell →</a></p></div>';
+  +'<p><button class="btn sm" id="mcp">📋 Copy</button><button class="btn sm ghost" id="mdj">⬇ .json</button><button class="btn sm ghost" id="mrd">🔊 Read aloud</button> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/jah-ai-models/#'+encodeURIComponent(ai.id)+'">🧠 AI in the Phone Book →</a> <a class="btn sm ghost" href="?body='+body.id+'">🦾 Body page →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+body.id+'">🖨️ Print this shell →</a></p></div>';
   const t=pairText(p,body);
   document.getElementById('mcp').onclick=()=>{navigator.clipboard.writeText(t);toast('Pair copied');};
   document.getElementById('mdj').onclick=()=>dl(p.id+'.json',JSON.stringify(p,null,2));

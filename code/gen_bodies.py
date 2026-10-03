@@ -331,6 +331,46 @@ FEATURE_VERB = {
 }
 
 
+# Real-world robotics context per class: operating environment, safety
+# assumptions, and the human-supervision requirement. Plain, honest, generic.
+ENVIRONMENT = {
+    "aerial-drone": "Outdoor open-sky zones with maintained line of sight; fair weather within rated wind limits.",
+    "agricultural-bot": "Outdoor farm fields, orchards, and greenhouses; uneven soil and crop rows.",
+    "construction-rig": "Construction sites and outdoor industrial zones; dust, debris, and uneven ground.",
+    "domestic-helper": "Indoor homes and small offices; flat floors, standard doorways.",
+    "exploration-rover": "Outdoor off-road terrain; survey zones, trails, and rough ground.",
+    "humanoid-companion": "Indoor homes, care facilities, and public lobbies; around people daily.",
+    "industrial-arm": "Fixed work cells on factory floors, workshops, and warehouses.",
+    "medical-assistant": "Clinical settings — hospitals, clinics, and care wards; near patients.",
+    "security-sentinel": "Indoor and outdoor patrol routes; perimeters, hallways, and parking areas.",
+    "underwater-drone": "Pools, tanks, and shallow coastal water within rated depth.",
+}
+SAFETY_ASSUMPTIONS = {
+    "aerial-drone": "Assumes clear airspace with no bystanders beneath the flight path. Never fly over crowds; abort on unexpected wind or signal loss.",
+    "agricultural-bot": "Assumes fields are clear of people and livestock during operation. Any spray or chemical payload must be handled per its label by a qualified operator.",
+    "construction-rig": "Assumes a controlled site with marked exclusion zones. Heavy lifts require a spotter; never operate near unprotected workers.",
+    "domestic-helper": "Assumes a tidy indoor space; small objects, cords, and stairs are trip and pinch hazards. Keep away from unsupervised children and pets.",
+    "exploration-rover": "Assumes survey zones are checked for hazards (cliffs, water). Operate within radio range; recover the unit manually if it gets stuck.",
+    "humanoid-companion": "Assumes gentle indoor interaction; the body is not rated to restrain, lift, or catch people. Physical contact with vulnerable individuals must be supervised.",
+    "industrial-arm": "Assumes a fenced or light-curtained work cell. Never reach into the cell while powered; lockout/tagout before any service.",
+    "medical-assistant": "Assumes clinical oversight. This is a concept record — no medical claims are made, and no patient contact should occur without qualified professionals and approved devices.",
+    "security-sentinel": "Assumes patrol routes are clear of the public where local rules require it. Recording and alerting must follow local privacy law.",
+    "underwater-drone": "Assumes water within rated depth and temperature. Tethered or tracked operation only; never dive without a surface attendant.",
+}
+SUPERVISION = {
+    "aerial-drone": "A human operator must keep visual line of sight and be ready to take manual control at all times.",
+    "agricultural-bot": "A responsible adult must supervise every run and be able to stop the machine immediately.",
+    "construction-rig": "A qualified spotter must supervise all lifts; remote operation requires a trained operator at the controls.",
+    "domestic-helper": "An adult in the home must supervise operation around children, elderly, and pets.",
+    "exploration-rover": "A human operator must monitor telemetry and remain able to recall or recover the unit.",
+    "humanoid-companion": "A responsible adult must supervise all interaction with children, elderly, or vulnerable individuals.",
+    "industrial-arm": "A trained operator must supervise the work cell; only qualified personnel may program or service it.",
+    "medical-assistant": "Qualified clinical staff must supervise at all times; this concept is not a medical device.",
+    "security-sentinel": "A human reviewer must verify alerts before any action is taken; the unit must not confront intruders.",
+    "underwater-drone": "A surface attendant must supervise every dive and maintain the tether or tracking link.",
+}
+
+
 def build_body(class_key, idx, seq):
     spec = CLASSES[class_key]
     name = spec["names"][idx]
@@ -374,6 +414,9 @@ def build_body(class_key, idx, seq):
         "payload_kg": payload,
         "interfaces": interfaces,
         "operating_limits": operating_limits,
+        "environment": ENVIRONMENT[class_key],
+        "safety_assumptions": SAFETY_ASSUMPTIONS[class_key],
+        "supervision": SUPERVISION[class_key],
         "tags": tags,
         "blurb": blurb,
         "svg_seed": int(hashlib.sha256(("svg" + body_id).encode()).hexdigest(), 16) % (2 ** 31),
