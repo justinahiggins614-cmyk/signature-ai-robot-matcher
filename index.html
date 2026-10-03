@@ -47,6 +47,17 @@ a{color:var(--amber2)}header.top{border-bottom:1px solid var(--line);padding:10p
 .btn{display:inline-block;background:var(--amber);color:#0a0e14;font-weight:700;border:0;border-radius:10px;padding:10px 18px;font-size:15px;cursor:pointer;text-decoration:none;margin:4px 6px 4px 0}
 .btn.ghost{background:transparent;color:var(--amber2);border:1px solid var(--amber)}
 .btn.sm{padding:6px 12px;font-size:13px}
+/* ---- batch-E 10-fix pass: status badges, record panel, AI identity, sim badge ---- */
+.pill.stat{font-weight:700}
+.pill.st-gen{color:#ffcf6e;border-color:#f5a623}
+.pill.st-orig{color:#3ddc84;border-color:#3ddc84}
+.pill.st-user{color:#b9a8e0;border-color:#9d7bff}
+.pill.sim{background:#3a1414;color:#ff8a8a;border-color:#7a2a2a;font-weight:700}
+.prov{color:var(--dim);font-size:13px;margin:8px 0}
+.recpanel{display:flex;flex-wrap:wrap;gap:6px 16px;background:#0a0e14;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:12px 0;font-size:13px;color:var(--dim);align-items:center}
+.recpanel .rp b{color:var(--amber2);font-weight:700;margin-right:4px}
+.aicard{background:#0a0e14;border:1px solid var(--amber);border-radius:10px;padding:12px 14px;margin:0 0 12px;font-size:14px}
+.aicard b{color:var(--amber2)}
 table.spec{width:100%;border-collapse:collapse;font-size:14px}
 table.spec td,table.spec th{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
 table.spec th{background:#0a0e14;color:var(--amber2);width:34%}
@@ -95,7 +106,7 @@ body{font-size:16px}
 <div class="row"><input id="fq" type="text" placeholder="Describe what you need… e.g. gentle helper for grandma, warehouse lifter, underwater inspector" aria-label="Find a pair"><button id="fgo">Find my match</button></div>
 <div class="hits" id="fhits"></div>
 </div>
-<main id="app"></main>
+<main id="app"><div class="card loadcard"><h2><span class="spin" aria-hidden="true"></span>Loading…</h2><p>Fetching the pair index.</p></div></main>
 </div>
 <div id="floatbar"><span id="fb-t">Reading…</span><button id="fb-x" aria-label="Stop">⏹</button></div>
 <footer>
@@ -116,11 +127,11 @@ const SITES=[
 ["signature-ai-olypics","AI Olypics"],["signature-chip-maker","Chip Maker and Archive"],["signature-app-archive","App Archive"],
 ["signature-ai-robot-matcher","AI Robot Matcher"],["signature-experiment-solver","Experiment Solver"],
 ["signature-ai-image-video-maker","Signature AI Pixel"],["signature-ai-song-maker","Signature Music Studio"]];
-const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true};
+const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true,"signature-ai-song-maker":true};
 function navHTML(){
  let h='<span class="t">THE JAH NETWORK</span>';
  SITES.forEach((s,i)=>{const n=i+1;
-  if(n===22){h+='<a class="here" aria-current="page" href="./">22 AI Robot Matcher ★ YOU ARE HERE</a>';return;}
+  if(n===22){h+='<a class="here" aria-current="page" href="./">SITE 22 OF 25 · AI Robot Matcher ★ YOU ARE HERE</a>';return;}
   const soon=(n>=18&&!LIVE18[s[0]]);
   h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
  return h;}
@@ -201,7 +212,13 @@ function scoreDial(s){const c=2*Math.PI*44,off=c*(1-s/100);
 /* ============ VIEWS ============ */
 const app=document.getElementById('app');
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function pairCard(r){return '<div class="card"><h3>'+esc(r[0])+' · '+r[2]+'</h3><div><span class="pill">🧠 '+esc(r[1])+'</span><span class="pill">🦾 '+esc(r[2])+'</span><span class="pill">🎯 '+esc(r[3])+'</span></div><a class="btn sm" href="?pair='+r[0]+'">Open pair →</a></div>';}
+function pairCard(r){return '<div class="card"><h3>'+esc(r[0])+' · '+r[2]+'</h3><div><span class="pill stat st-gen">GENERATED</span><span class="pill">🧠 '+esc(r[1])+'</span><span class="pill">🦾 '+esc(r[2])+'</span><span class="pill">🎯 '+esc(r[3])+'</span></div><a class="btn sm" href="?pair='+r[0]+'">Open pair →</a></div>';}
+/* ---- batch-E: share helper for record panels ---- */
+function shareRec(qs,title){
+ var url=location.origin+location.pathname+qs;
+ if(navigator.share){try{navigator.share({title:title,url:url});}catch(e){}return;}
+ if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){toast('Link copied — share it anywhere.');});}
+}
 function vHome(){
  const feat=[DB.idx[0],DB.idx[499],DB.idx[1499],DB.idx[2999]].filter(Boolean);
  app.innerHTML='<div class="card"><h2>How matching works</h2><p>Each pair is <b>deterministic</b>: pair <i>n</i> of 1,000,000 always resolves to the same AI + body + mission. A match score (0–100) is computed from real capability-tag overlap between the AI\u2019s skills and the body\u2019s hardware, plus a documented rationale: <b>capability fit</b>, <b>temperament fit</b>, and <b>task fit</b>. The <b>match score (0–100)</b> measures documented concept fit only — base 55 + a bonus for shared capability tags between the AI\u2019s skills and the body\u2019s hardware + a deterministic pair factor. It is <b>not</b> a real-world engineering recommendation: no physical build or testing has been performed. New pairs are forged every 2 hours until the million mark.</p><p>🦾 <b>'+DB.bodies.length+' robot bodies</b> · 🧠 <b>'+DB.pool.length+' Signature AIs</b> · 🔗 <b>'+DB.state.toLocaleString()+' pairs</b> so far</p><p><a class="btn" href="#/mix">Open the Mix Lab</a><a class="btn ghost" href="#/bodies">Browse robot bodies</a></p></div>'
@@ -257,6 +274,7 @@ async function vPair(id){
  if(!p){app.innerHTML='<div class="card"><h2>Pair not found</h2><p>'+esc(id)+' is not forged yet — the march is at '+DB.state.toLocaleString()+' of 1,000,000.</p></div>';return;}
  const b=getBody(p.body_id);
  const ai=getAI(p.ai_id)||{id:p.ai_id,name:p.ai_name,description:'',role:'',kind:'',family:p.ai_family,tags:[]};
+ const nm=/JAH-PAIR-(\d{6})/.exec(id);const seedN=nm?+nm[1]:0;
  document.title=p.id+' — '+p.ai_name+' × '+p.body_name+' | The Signature AI Robot Matcher';
  const ld={"@context":"https://schema.org","@type":"TechArticle",
   "headline":"Robot match "+p.id+": "+p.ai_name+" in "+p.body_name,
@@ -271,7 +289,7 @@ async function vPair(id){
   "keywords":["robot match",p.ai_family,"robot body",b?b['class']:"",p.mission]};
  let lds=document.getElementById('pairld');if(lds)lds.remove();
  lds=document.createElement('script');lds.id='pairld';lds.type='application/ld+json';lds.textContent=JSON.stringify(ld);document.head.appendChild(lds);
- app.innerHTML='<div class="card"><a href="#/pairs">← all pairs</a><h2>'+p.id+'</h2>'
+ app.innerHTML='<div class="card"><a href="#/pairs">← all pairs</a><h2>'+p.id+' <span class="pill stat st-gen">GENERATED</span></h2>'
  +'<div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center">'+scoreDial(p.score)
  +'<div><h3 style="margin:0">🧠 '+esc(p.ai_name)+' <span class="pill">'+esc(p.ai_family)+'</span></h3>'
  +'<h3 style="margin:6px 0">🦾 '+esc(p.body_name)+' <span class="pill">'+esc(b['class'])+'</span> <span class="pill">'+p.body_id+'</span></h3>'
@@ -282,6 +300,9 @@ async function vPair(id){
  +'<p><b>'+esc(ai.name)+'</b> <span class="pill">'+esc(p.ai_id)+'</span> <span class="pill">'+esc(p.ai_family)+'</span>'+(ai.role?'<span class="pill">'+esc(ai.role)+'</span>':'')+'</p>'
  +(ai.description?'<p>'+esc(ai.description)+'</p>':'')
  +'<p>'+ai.tags.map(t=>'<span class="pill">'+esc(t)+'</span>').join(' ')+'</p>'
+ +'<div class="aicard" aria-label="AI identity card">🤖 <b>'+esc(ai.name)+'</b> — the AI that talks in the shell-aware demo below.<br>'
+ +'<span style="color:var(--dim)"><b>Duties:</b> speaks aware of the '+esc(p.body_name)+' shell; answers questions about its mission, its body, and the match score, staying inside this pair\u2019s record. '
+ +'<b>Engine:</b> on-board scripted demo engine (concept simulation), with the live Signature Backend used only when it has already loaded. It claims no canon Phone-Book ID beyond the linked parent AI.</span></div>'
  +'<p><a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/jah-ai-models/#'+encodeURIComponent(p.ai_id)+'">🧠 Parent AI in the Phone Book →</a></p></div>'
  +'<div class="card"><h3>🦾 Full robot body specs — the best-fit shell</h3><div style="display:flex;gap:20px;flex-wrap:wrap"><div>'+bodySVG(b,220)+'</div><div style="flex:1;min-width:260px"><p>'+esc(b.blurb)+'</p><p><a class="btn sm ghost" href="?body='+b.id+'">🦾 Open body page →</a></p></div></div>'
  +'<table class="spec">'
@@ -310,9 +331,19 @@ async function vPair(id){
  +'<li>The score does not certify safety, reliability, or fitness for any real task — always honor the body\u2019s <b>operating limits</b> and <b>safety assumptions</b> above.</li>'
  +'<li>'+esc(b.supervision||'Human supervision is required during any real-world operation.')+'</li>'
  +'</ul></div>'
- +'<div class="card"><h3>🎙️ Shell-aware demo — talk to this pair</h3><p style="color:var(--dim);font-size:14px">This AI answers <i>aware of the body it runs in</i>. Replies come from the on-board demo instantly; the live Signature Backend is used when it has already loaded.</p><div class="chatlog" id="dlog"></div><div class="row" style="display:flex;gap:8px"><input id="din" type="text" placeholder="Ask it anything…" aria-label="Talk to the pair"><button class="btn" id="dgo">Send</button></div></div>'
+ +'<div class="card"><h3>🎙️ Shell-aware demo — talk to this pair <span class="pill sim">SIMULATION</span></h3><p style="color:var(--dim);font-size:14px">This AI answers <i>aware of the body it runs in</i>. Replies come from the on-board demo instantly; the live Signature Backend is used when it has already loaded. <b>Demo replies are scripted simulations of the pairing concept — not a live AI, not a physical robot.</b></p><div class="chatlog" id="dlog"></div><div class="row" style="display:flex;gap:8px"><input id="din" type="text" placeholder="Ask it anything…" aria-label="Talk to the pair"><button class="btn" id="dgo">Send</button></div></div>'
  +'<div class="card"><h3>❓ Pair helper</h3><div class="qlog" id="qlog"></div><div class="row" style="display:flex;gap:8px"><input id="qin" type="text" placeholder="Ask about this pair…" aria-label="Ask about the pair"><button class="btn" id="qgo">Ask</button></div></div>'
- +'<div class="card"><h3>📦 Take this pair</h3><button class="btn sm" id="cpair">📋 Copy</button><button class="btn sm ghost" id="dpair">⬇ Download .txt</button><button class="btn sm ghost" id="jpair">⬇ Download .json</button> <button class="btn sm ghost" id="rp">🔊 Read aloud</button></div>';
+ +'<div class="card"><h3>📋 Record panel</h3><div class="recpanel" aria-label="Record panel">'
+ +'<span class="rp"><b>STATUS</b> <span class="pill stat st-gen">GENERATED</span></span>'
+ +'<span class="rp"><b>ID</b> '+esc(p.id)+'</span>'
+ +'<span class="rp"><b>VERSION</b> v1.0</span>'
+ +'<span class="rp"><b>SOURCE</b> Signature AI Robot Matcher · deterministic pair engine</span>'
+ +'<span class="rp"><b>OPEN</b> <button class="btn sm ghost" id="opair">open ↗</button></span>'
+ +'<span class="rp"><b>SHARE</b> <button class="btn sm ghost" id="spair">share</button></span>'
+ +'<span class="rp"><b>COPY</b> <button class="btn sm" id="cpair">📋 Copy</button></span>'
+ +'<span class="rp"><b>DOWNLOAD</b> <button class="btn sm ghost" id="dpair">⬇ .txt</button> <button class="btn sm ghost" id="jpair">⬇ .json</button></span>'
+ +'<span class="rp"><b>READ ALOUD</b> <button class="btn sm ghost" id="rp">🔊 Read aloud</button></span></div>'
+ +'<p class="prov">⚙️ <b>Provenance:</b> forged by the Signature pair engine · deterministic pair #'+seedN+' of 1,000,000 — the same ID always forges this exact pair.</p></div>';
  wirePair(p,b);
 }
 function vBody(id){
@@ -320,12 +351,21 @@ function vBody(id){
  if(!b){app.innerHTML='<div class="card"><h2>Body not found</h2></div>';return;}
  document.title=b.id+' — '+b.name+' | The Signature AI Robot Matcher';
  const pairs=DB.idx.filter(r=>r[2]===b.name).slice(0,6);
- app.innerHTML='<div class="card"><a href="#/bodies">← all bodies</a><div style="display:flex;gap:20px;flex-wrap:wrap"><div>'+bodySVG(b,260)+'</div><div style="flex:1;min-width:260px"><h2>'+esc(b.name)+' <span class="pill">'+b.id+'</span></h2><p>'+esc(b.blurb)+'</p><p><a class="btn sm" href="#/mix?body='+b.id+'">🧪 Match an AI to this body →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+b.id+'">🖨️ Print this shell →</a></p></div></div>'
+ app.innerHTML='<div class="card"><a href="#/bodies">← all bodies</a><div style="display:flex;gap:20px;flex-wrap:wrap"><div>'+bodySVG(b,260)+'</div><div style="flex:1;min-width:260px"><h2>'+esc(b.name)+' <span class="pill">'+b.id+'</span> <span class="pill stat st-orig">SIGNATURE ORIGINAL</span></h2><p>'+esc(b.blurb)+'</p><p><a class="btn sm" href="#/mix?body='+b.id+'">🧪 Match an AI to this body →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+b.id+'">🖨️ Print this shell →</a></p></div></div>'
+ +'<div class="recpanel" aria-label="Record panel">'
+ +'<span class="rp"><b>STATUS</b> <span class="pill stat st-orig">SIGNATURE ORIGINAL</span></span>'
+ +'<span class="rp"><b>ID</b> '+esc(b.id)+'</span>'
+ +'<span class="rp"><b>VERSION</b> v1.0</span>'
+ +'<span class="rp"><b>SOURCE</b> Signature AI Robot Matcher · original Signature body design</span>'
+ +'<span class="rp"><b>OPEN</b> <button class="btn sm ghost" id="ob2">open ↗</button></span>'
+ +'<span class="rp"><b>SHARE</b> <button class="btn sm ghost" id="sb2">share</button></span></div>'
  +'<h3>Full specification</h3><table class="spec"><tr><th>Class</th><td>'+esc(b.class)+'</td></tr><tr><th>Dimensions</th><td>'+b.height_cm+' cm H × '+b.width_cm+' cm W × '+b.depth_cm+' cm D</td></tr><tr><th>Mass / Payload</th><td>'+b.mass_kg+' kg · payload '+b.payload_kg+' kg</td></tr><tr><th>Materials</th><td>'+b.materials.map(esc).join(', ')+'</td></tr><tr><th>Actuators</th><td>'+b.actuators.map(esc).join('; ')+'</td></tr><tr><th>Sensors</th><td>'+b.sensors.map(esc).join(', ')+'</td></tr><tr><th>Power</th><td>'+esc(b.power)+'</td></tr><tr><th>Compute</th><td>'+esc(b.compute)+'</td></tr><tr><th>Mobility</th><td>'+esc(b.mobility)+'</td></tr><tr><th>Interfaces</th><td>'+b.interfaces.map(esc).join(', ')+'</td></tr><tr><th>Operating limits</th><td>'+esc(b.operating_limits)+'</td></tr><tr><th>Environment</th><td>'+esc(b.environment||'')+'</td></tr><tr><th>Safety assumptions</th><td>'+esc(b.safety_assumptions||'')+'</td></tr><tr><th>Human supervision</th><td>'+esc(b.supervision||'')+'</td></tr><tr><th>Capability tags</th><td>'+b.tags.map(t=>'<span class="pill">'+esc(t)+'</span>').join('')+'</td></tr></table>'
  +'<p><button class="btn sm ghost" id="rb">🔊 Read aloud</button> <button class="btn sm" id="cb">📋 Copy specs</button> <button class="btn sm ghost" id="db2">⬇ Download specs .txt</button> <button class="btn sm ghost" id="jb2">⬇ Download specs .json</button></p></div>'
  +(pairs.length?'<h2>Pairs using this body</h2><div class="grid">'+pairs.map(pairCard).join('')+'</div>':'');
  const txt=bodySpecText(b);
  document.getElementById('rb').onclick=()=>speak(b.name+'. '+b.blurb+' '+b.height_cm+' centimeters tall, '+b.mass_kg+' kilograms.');
+ document.getElementById('ob2').onclick=()=>window.open('?body='+encodeURIComponent(b.id),'_blank','noopener');
+ document.getElementById('sb2').onclick=()=>shareRec('?body='+encodeURIComponent(b.id),b.id+' — '+b.name);
  document.getElementById('cb').onclick=()=>{navigator.clipboard.writeText(txt);toast('Specs copied');};
  document.getElementById('db2').onclick=()=>dl(b.id+'-specs.txt',txt);
  document.getElementById('jb2').onclick=()=>dl(b.id+'-specs.json',JSON.stringify(b,null,2));
@@ -452,11 +492,13 @@ function wirePair(p,b){
  }
  document.getElementById('qgo').onclick=qask;
  document.getElementById('qin').addEventListener('keydown',e=>{if(e.key==='Enter')qask();});
- /* copy / download / read — pair record */
+ /* copy / download / read / open / share — pair record */
  const t=pairText(p,b);
  document.getElementById('cpair').onclick=()=>{navigator.clipboard.writeText(t);toast('Pair copied');};
  document.getElementById('dpair').onclick=()=>dl(p.id+'.txt',t);
  document.getElementById('jpair').onclick=()=>dl(p.id+'.json',JSON.stringify(p,null,2));
+ document.getElementById('opair').onclick=()=>window.open('?pair='+encodeURIComponent(p.id),'_blank','noopener');
+ document.getElementById('spair').onclick=()=>shareRec('?pair='+encodeURIComponent(p.id),p.id+' — '+p.ai_name+' × '+p.body_name);
  document.getElementById('rp').onclick=()=>speak(p.id+'. '+p.ai_name+' matched with '+p.body_name+' at '+p.score+' of 100. Mission: '+p.mission+'. '+p.rationale.capability+' '+p.rationale.temperament+' '+p.rationale.task);
  /* full body spec sheet — copy / download */
  const st=bodySpecText(b);
@@ -507,12 +549,24 @@ function vMix(pre){
   const body=DB.bodies[+document.getElementById('mbody').value];
   const mission=document.getElementById('mmis').value;
   const p=mixPair(ai,body,mission);const out=document.getElementById('mout');
-  out.innerHTML='<div class="card"><h3>'+p.id+' — forged in the Mix Lab</h3><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">'+scoreDial(p.score)+'<div><b>🧠 '+esc(p.ai_name)+'</b><br><b>🦾 '+esc(p.body_name)+'</b> <span class="pill">'+p.body_id+'</span><br><span class="pill">🎯 '+esc(p.mission)+'</span></div></div>'
+  out.innerHTML='<div class="card"><h3>'+p.id+' — forged in the Mix Lab <span class="pill stat st-user">USER CREATED</span></h3><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">'+scoreDial(p.score)+'<div><b>🧠 '+esc(p.ai_name)+'</b><br><b>🦾 '+esc(p.body_name)+'</b> <span class="pill">'+p.body_id+'</span><br><span class="pill">🎯 '+esc(p.mission)+'</span></div></div>'
   +'<p><b>Capability fit.</b> '+esc(p.rationale.capability)+'</p><p><b>Temperament fit.</b> '+esc(p.rationale.temperament)+'</p><p><b>Task fit.</b> '+esc(p.rationale.task)+'</p>'
   +'<p><i>"'+esc(p.demo_lines[0])+'"</i></p>'
-  +'<p><button class="btn sm" id="mcp">📋 Copy</button><button class="btn sm ghost" id="mdj">⬇ .json</button><button class="btn sm ghost" id="mrd">🔊 Read aloud</button> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/jah-ai-models/#'+encodeURIComponent(ai.id)+'">🧠 AI in the Phone Book →</a> <a class="btn sm ghost" href="?body='+body.id+'">🦾 Body page →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+body.id+'">🖨️ Print this shell →</a></p></div>';
+  +'<div class="recpanel" aria-label="Record panel">'
+  +'<span class="rp"><b>STATUS</b> <span class="pill stat st-user">USER CREATED</span></span>'
+  +'<span class="rp"><b>ID</b> '+esc(p.id)+'</span>'
+  +'<span class="rp"><b>VERSION</b> v1.0</span>'
+  +'<span class="rp"><b>SOURCE</b> Signature AI Robot Matcher · Mix Lab — forged by you</span>'
+  +'<span class="rp"><b>OPEN</b> <a class="btn sm ghost" href="#/mix">open mix lab ↗</a></span>'
+  +'<span class="rp"><b>SHARE</b> <button class="btn sm ghost" id="msh">share</button></span>'
+  +'<span class="rp"><b>COPY</b> <button class="btn sm" id="mcp">📋 Copy</button></span>'
+  +'<span class="rp"><b>DOWNLOAD</b> <button class="btn sm ghost" id="mdj">⬇ .json</button></span>'
+  +'<span class="rp"><b>READ ALOUD</b> <button class="btn sm ghost" id="mrd">🔊 Read aloud</button></span></div>'
+  +'<p class="prov">⚙️ <b>Provenance:</b> forged by you in the Mix Lab on '+esc(p.created)+' · deterministic from this exact AI + body + mission — forging the same combo again always forges this same pair. Custom pairs are not stored in the archive.</p>'
+  +'<p><a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/jah-ai-models/#'+encodeURIComponent(ai.id)+'">🧠 AI in the Phone Book →</a> <a class="btn sm ghost" href="?body='+body.id+'">🦾 Body page →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/?print='+body.id+'">🖨️ Print this shell →</a></p></div>';
   const t=pairText(p,body);
   document.getElementById('mcp').onclick=()=>{navigator.clipboard.writeText(t);toast('Pair copied');};
+  document.getElementById('msh').onclick=()=>{if(navigator.share){try{navigator.share({title:p.id+' — custom Mix Lab pair',text:t});}catch(e){}}else{navigator.clipboard.writeText(t).then(function(){toast('Custom pair copied — paste it anywhere to share.');});}};
   document.getElementById('mdj').onclick=()=>dl(p.id+'.json',JSON.stringify(p,null,2));
   document.getElementById('mrd').onclick=()=>speak(p.id+'. '+p.ai_name+' matched with '+p.body_name+' at '+p.score+' of 100. '+p.rationale.capability+' '+p.rationale.task);
   out.scrollIntoView({behavior:'smooth'});
