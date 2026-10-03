@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""STEP 1: Extract the 260 embedded AIs from the phone-book catalog into
+"""STEP 1: Extract the 270 embedded AIs from the phone-book catalog into
 data/ai_pool.json.
 
 Each record carries the phone-book canon profile VERBATIM (id, name,
@@ -261,8 +261,8 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(pool, f, separators=(",", ":"))
     print("wrote", out_path, len(pool), "AIs")
-    assert len(pool) == 260, len(pool)
-    assert len({p["id"] for p in pool}) == 260
+    assert len(pool) == 270, len(pool)
+    assert len({p["id"] for p in pool}) == 270
 
 
 if __name__ == "__main__":
