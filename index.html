@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>try{if(localStorage.getItem("jah-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Signature AI Robot Matcher — Best-Match Pairs of Signature AIs &amp; Robot Bodies</title>
@@ -101,7 +100,7 @@ body{font-size:16px}
 <div class="hero" id="hero">
 <h1>🤖 The Signature AI Robot Matcher</h1>
 <p>Every Signature AI is documented with its best-matching shell. These are documented <b>concept pairings</b> of <b>Signature AIs</b> and <b>Signature robot bodies</b> — each with a match score, a written rationale, and a live demo where the AI speaks <i>aware of its own body</i>. Match scores measure documented concept fit only, never a real-world engineering recommendation. Marching to <b>1,000,000 pairs</b>.</p>
-<details class="statscoll" open><summary>Archive statistics</summary><div class="counter"><b id="paircount">…</b> / <b id="pairgoal">1,000,000</b> pairs matched <span class="pill stat st-gen" id="bootstatus">LOADING</span></div><div class="prov" id="boothealth" style="text-align:center;max-width:760px;margin:8px auto 0">Loading archive status…</div></details>
+<details class="statscoll" open><summary>Archive statistics</summary><div class="counter"><b id="paircount">17,000</b> / <b id="pairgoal">1,000,000</b> pairs matched <span class="pill stat st-gen" id="bootstatus">LOADING</span></div><div class="prov" id="boothealth" style="text-align:center;max-width:760px;margin:8px auto 0">Loading archive status…</div></details>
 <div class="notice">⚠️ <b>Title provisional</b> — "The Signature AI Robot Matcher" is a working title until Manon confirms the final name.</div>
 </div>
 <div class="tabs" id="tabs">
@@ -111,7 +110,7 @@ body{font-size:16px}
 <a href="#/mix" data-v="mix">🧪 Mix Lab</a>
 </div>
 <div class="finder" id="finderbox">
-<div class="row"><input id="fq" type="text" placeholder="Describe what you need… e.g. gentle helper for grandma, warehouse lifter, underwater inspector" aria-label="Find a pair"><button id="fgo">Find my match</button></div>
+<div class="row"><input id="fq" type="text" placeholder="Describe what you need… e.g. gentle helper for grandma, warehouse lifter, underwater inspector" aria-label="Find a pair"><button id="fgo">Find my match</button><button id="frand" title="Open one real pair at random">🎲 Random pair</button></div>
 <div class="hits" id="fhits"></div>
 </div>
 <main id="app"><div class="card loadcard"><h2><span class="spin" aria-hidden="true"></span>Loading…</h2><p>Fetching the pair index.</p></div></main>
@@ -776,6 +775,13 @@ function finderGo(){
 }
 document.getElementById('fgo').onclick=finderGo;
 document.getElementById('fq').addEventListener('keydown',e=>{if(e.key==='Enter')finderGo();});
+/* random pair: always resolves to a real forged record (IDs are contiguous 1..total) */
+document.getElementById('frand').onclick=function(){
+ const total=(DB.idx&&DB.idx.length)||DB.state||0;
+ if(!total){toast('The pair index is still loading — try again in a moment.');return;}
+ const n=1+Math.floor(Math.random()*total);
+ location.href='?pair=JAH-PAIR-'+String(n).padStart(6,'0');
+};
 /* ============ ROUTER ============ */
 function route(){
  stopSpeak(); /* reading always resets between views/pairs */
@@ -796,6 +802,7 @@ window.addEventListener('hashchange',route);
  await loadAll(); /* subsystems fail independently — the counter can never stick on "…" */
  preloadBackend(); /* background only — never blocks */
  route();
+ tourBoot(); /* first-time tour / pending tour step, if any */
 })();
 </script>
 <style>
@@ -827,5 +834,163 @@ addEventListener("load",function(){setTimeout(function(){
     else if(S.last){var el=findRec(S.last);if(el)el.scrollIntoView({block:"center"})}}
 },400)})})();
 </script>
+<style>
+/* ============ FIRST-TIME TOUR + SITE GUIDE (usability layer; theme untouched) ============ */
+#jah-guide-btn{position:fixed;bottom:14px;left:14px;z-index:99990;min-width:44px;min-height:44px;border-radius:22px;border:1px solid var(--amber);background:var(--panel,#161d27);color:var(--amber2,#ffcf6e);font-weight:700;font-size:15px;padding:10px 16px;cursor:pointer}
+#jah-guide-btn:hover{background:var(--amber);color:#0a0e14}
+#jah-tour{position:fixed;inset:0;z-index:99995;pointer-events:none}
+.jah-tour-tip{pointer-events:auto;position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:min(560px,calc(100vw - 28px));max-height:44vh;overflow:auto;background:var(--panel,#161d27);border:2px solid var(--amber,#f5a623);border-radius:14px;padding:14px 16px;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+.jah-tour-tip h3{margin:0 0 6px;color:var(--amber2,#ffcf6e);font-size:17px}
+.jah-tour-k{font-size:12px;color:var(--dim,#9aa7ba);letter-spacing:1px;margin-bottom:4px}
+.jah-tour-tip p{margin:6px 0;font-size:14px}
+.jah-tour-nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.jah-tour-hl{outline:3px solid var(--amber,#f5a623)!important;outline-offset:3px;border-radius:8px}
+#jah-guide{position:fixed;inset:0;z-index:99996;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;padding:16px}
+#jah-guide[hidden]{display:none}
+.jah-guide-card{background:var(--panel,#161d27);border:2px solid var(--amber,#f5a623);border-radius:16px;max-width:680px;width:100%;max-height:86vh;overflow:auto;padding:20px 22px}
+.jah-guide-card h2{margin:0 0 8px;color:var(--amber2,#ffcf6e)}
+.jah-guide-card h3{margin:14px 0 4px;color:var(--amber2,#ffcf6e);font-size:15px}
+.jah-guide-card p,.jah-guide-card li{font-size:14px;color:var(--txt,#e8edf4)}
+.jah-guide-card ul{margin:4px 0;padding-left:20px}
+</style>
+<button id="jah-guide-btn" aria-label="Open the site guide" title="How to use this site — every feature, in plain language">❓ Guide</button>
+<div id="jah-tour" hidden>
+ <div class="jah-tour-tip" role="dialog" aria-live="polite" aria-label="Site tour">
+  <div class="jah-tour-k" id="jah-tour-k"></div>
+  <h3 id="jah-tour-t"></h3>
+  <div id="jah-tour-b"></div>
+  <div class="jah-tour-nav">
+   <button id="jah-tour-back" class="btn sm ghost">← Back</button>
+   <button id="jah-tour-skip" class="btn sm ghost">Skip tour</button>
+   <button id="jah-tour-next" class="btn sm">Next →</button>
+  </div>
+ </div>
+</div>
+<div id="jah-guide" hidden>
+ <div class="jah-guide-card" role="dialog" aria-label="Site guide — how to use this site">
+  <h2>❓ How to use the AI Robot Matcher</h2>
+  <p style="color:var(--dim)">Every pair is a <b>documented concept</b>: a Signature AI matched with a Signature robot body, with a match score (0–100, concept fit only — never an engineering recommendation), a written rationale, a live demo, and downloads. 1,000,000 pairs is the goal.</p>
+  <h3>🔎 Find my match</h3>
+  <p>Type plain words ("gentle helper for grandma", "warehouse lifter") and press <b>Find my match</b> — the top 5 archived pairs are shown. Type an exact ID like <b>JAH-PAIR-000123</b> to jump straight to that record.</p>
+  <h3>🎲 Random pair</h3>
+  <p>Opens one real forged pair at random — every tap resolves to a genuine record, never an empty or invented one.</p>
+  <h3>🔗 Pairs A–Z</h3>
+  <p>Browse every pair by the AI's first letter. The <b>filter box</b> searches pair ID, AI name, body, and mission live (type a full pair ID to jump to it). Page through results with <b>← Prev / Next →</b>. If nothing matches, the page says so plainly — never a blank screen.</p>
+  <h3>🦾 Robot Bodies</h3>
+  <p>The 120 original Signature robot bodies, grouped by class. Open one for the full spec sheet: dimensions, mass and payload, materials, actuators, sensors, power, compute, mobility, interfaces, operating limits, safety assumptions, and human supervision — plus <b>Copy / Download .txt / Download .json / Read aloud</b>.</p>
+  <h3>🧪 Mix Lab</h3>
+  <p>Pick any AI, any body, and any mission, then <b>Forge pair</b> — the same combination always forges the same pair (deterministic). Custom pairs get a <b>JAH-MIX-XXXXXX</b> ID and are not stored in the archive.</p>
+  <h3>🧬 Pair records</h3>
+  <ul>
+   <li><b>Match score dial</b> = base 55 + capability-overlap bonus + deterministic pair factor, capped at 100. Documented concept fit only.</li>
+   <li><b>Match rationale</b> — capability fit, temperament fit, task fit — plus a <b>best-fit breakdown</b> showing the shared capability tags and the score math.</li>
+   <li><b>Match criteria &amp; limitations</b> — what the score does and does not mean (DOCUMENTED concept, NOT_CALCULATED technical compatibility, NOT_TESTED physical validation).</li>
+   <li><b>Related pairs</b> — same AI or same body.</li>
+  </ul>
+  <h3>🎙️ Shell-aware demo</h3>
+  <p>Talk to the pair — the AI answers <i>aware of the body it runs in</i>. Replies come from the on-board demo instantly (honestly badged <b>SIMULATION</b>); the live Signature Backend is used only when it has already loaded. The <b>Pair helper</b> answers questions from the pair's own record.</p>
+  <h3>🔊 Read aloud, copy, download, share</h3>
+  <p>Every record panel offers <b>Read aloud</b> (tiered speech: device voice, then audio), <b>Copy</b> (record, ID, or URL), <b>Download .txt / .json</b>, <b>Share</b>, and <b>Open</b>. The floating bar's ⏸ pauses device-voice reading; ⏹ stops everything.</p>
+  <h3>📖 Trust &amp; methodology</h3>
+  <p><b>Methodology</b> explains how matching works. <b>Matcher manifest</b> and <b>AI manifest</b> are the authoritative machine-readable counts; <b>schemas</b> documents the record format; <b>llms.txt</b> is the AI-agent summary. If data ever fails to load, the page says which part failed with a <b>Reload index</b> button — never an endless spinner.</p>
+  <h3>⌨️ Keyboard</h3>
+  <p>Inside this tour: <b>→</b> next, <b>←</b> back, <b>Esc</b> end. Everywhere else: buttons are full keyboard-focusable.</p>
+  <p><button class="btn" id="jah-guide-close">Close</button> <button class="btn ghost" id="jah-guide-tour">▶ Replay the 1-minute tour</button></p>
+ </div>
+</div>
+<script>
+"use strict";
+/* ============ FIRST-TIME TOUR + GUIDE PANEL ============ */
+const TOUR_SEEN='jah-tour-seen-robots',TOUR_STEP='jah-tour-step-robots';
+const TOUR=[
+ {t:'🤖 Welcome to the AI Robot Matcher',b:'<b>WHAT:</b> every Signature AI documented with its best-matching robot body — a <b>concept pairing</b>, not an engineering blueprint.<br><b>WHAT IT DOES:</b> each pair gets a match score (0–100, concept fit only), a written rationale, a live demo, and downloads.<br><b>HOW:</b> this 1-minute tour walks you through it. Next/Back (or arrow keys); Esc or Skip ends it any time.'},
+ {sel:'#fq',t:'🔎 Find my match',b:'<b>WHAT:</b> the finder box.<br><b>WHAT IT DOES:</b> matches your plain words — "gentle helper for grandma", "warehouse lifter" — against all pairs and shows the top 5.<br><b>HOW:</b> type and press <b>Find my match</b>, or type an exact ID like JAH-PAIR-000123 to jump straight to that record.'},
+ {sel:'#frand',t:'🎲 Random pair',b:'<b>WHAT:</b> the dice button beside the finder.<br><b>WHAT IT DOES:</b> opens one real forged pair at random.<br><b>HOW:</b> tap it — every tap resolves to a genuine record.'},
+ {sel:'a[data-v="pairs"]',t:'🔗 Pairs A–Z',b:'<b>WHAT:</b> the Pairs A–Z tab.<br><b>WHAT IT DOES:</b> browses every pair by the AI\u2019s first letter, with a live filter (ID, AI, body, mission) and Prev/Next paging.<br><b>HOW:</b> tap the tab, pick a letter, or type in the filter.'},
+ {sel:'a[data-v="bodies"]',t:'🦾 Robot Bodies',b:'<b>WHAT:</b> the Robot Bodies tab.<br><b>WHAT IT DOES:</b> the 120 original Signature robot bodies, grouped by class.<br><b>HOW:</b> tap the tab, open a body for the full spec sheet — dimensions, actuators, sensors, power, limits.'},
+ {sel:'a[data-v="mix"]',t:'🧪 Mix Lab',b:'<b>WHAT:</b> the Mix Lab tab.<br><b>WHAT IT DOES:</b> pick any AI + any body + any mission and forge your own pair — deterministic, so the same combo always forges the same pair.<br><b>HOW:</b> tap the tab, choose, press <b>Forge pair</b>.'},
+ {nav:'pair',t:'🧬 Pair records',b:'<b>WHAT:</b> a full pair record — score dial, rationale, best-fit breakdown, demo, read-aloud, downloads.<br><b>WHAT IT DOES:</b> everything documented about one pairing, honestly labeled.<br><b>HOW:</b> press <b>Continue</b> and we\u2019ll open one real pair together.'},
+ {sel:'#din',t:'🎙️ Shell-aware demo',b:'<b>WHAT:</b> the demo chat on the pair record.<br><b>WHAT IT DOES:</b> the AI answers <i>aware of the body it runs in</i> — replies are on-board simulations, honestly badged SIMULATION.<br><b>HOW:</b> type a question ("what\u2019s your mission?") and press Send.'},
+ {sel:'#rp',t:'🔊 Read aloud + downloads',b:'<b>WHAT:</b> the Record panel buttons.<br><b>WHAT IT DOES:</b> reads the record aloud (tiered speech), copies it, downloads .txt/.json, shares the link.<br><b>HOW:</b> press <b>Read aloud</b>, or Copy / Download / Share.'},
+ {sel:'#jah-guide-btn',t:'❓ The Guide button',b:'<b>WHAT:</b> this button, always bottom-left.<br><b>WHAT IT DOES:</b> opens a plain-language manual of every feature on the site.<br><b>HOW:</b> tap it any time you\u2019re unsure. That\u2019s the whole tour — happy matching!'}
+];
+let tourIdx=-1;
+function tourEl(){return document.getElementById('jah-tour');}
+function tourClearHl(){document.querySelectorAll('.jah-tour-hl').forEach(e=>e.classList.remove('jah-tour-hl'));}
+function tourEnd(save){
+ tourClearHl();tourEl().hidden=true;tourIdx=-1;
+ document.removeEventListener('keydown',tourKeys,true);
+ if(save!==false){try{localStorage.setItem(TOUR_SEEN,'1');}catch(e){}}
+ try{localStorage.removeItem(TOUR_STEP);}catch(e){}
+}
+function tourKeys(e){
+ if(tourIdx<0)return;
+ if(e.key==='Escape'){e.preventDefault();tourEnd();}
+ else if(e.key==='ArrowRight'){e.preventDefault();tourNext();}
+ else if(e.key==='ArrowLeft'){e.preventDefault();tourBack();}
+}
+function tourShow(i){
+ const steps=TOUR;let guard=0;
+ while(guard++<steps.length){
+  const s=steps[i];
+  if(s.nav){break;} /* nav step always shown */
+  if(s.sel&&!document.querySelector(s.sel)){i=(i+1)%steps.length;continue;}
+  break;
+ }
+ tourIdx=i;const s=TOUR[i];
+ tourClearHl();
+ const box=tourEl();box.hidden=false;
+ document.getElementById('jah-tour-k').textContent='STEP '+(i+1)+' OF '+TOUR.length+' · AI ROBOT MATCHER TOUR';
+ document.getElementById('jah-tour-t').textContent=s.t;
+ document.getElementById('jah-tour-b').innerHTML='<p>'+s.b+'</p>';
+ document.getElementById('jah-tour-back').disabled=(i===0);
+ document.getElementById('jah-tour-next').textContent=(s.nav?'Continue in a pair record →':(i===TOUR.length-1?'Finish ✓':'Next →'));
+ let el=null;
+ if(s.sel){el=document.querySelector(s.sel);}
+ if(el){el.classList.add('jah-tour-hl');try{el.scrollIntoView({block:'center',behavior:'smooth'});}catch(e){}}
+}
+function tourNext(){
+ const s=TOUR[tourIdx];
+ if(s&&s.nav){
+  try{localStorage.setItem(TOUR_STEP,String(tourIdx+1));}catch(e){}
+  location.href='?pair=JAH-PAIR-000001';
+  return;
+ }
+ if(tourIdx>=TOUR.length-1){tourEnd();return;}
+ tourShow(tourIdx+1);
+}
+function tourBack(){if(tourIdx>0)tourShow(tourIdx-1);}
+function tourStart(i){
+ document.addEventListener('keydown',tourKeys,true);
+ document.getElementById('jah-tour-back').onclick=tourBack;
+ document.getElementById('jah-tour-skip').onclick=function(){tourEnd();};
+ document.getElementById('jah-tour-next').onclick=tourNext;
+ tourShow(i||0);
+}
+function tourBoot(){
+ let pending=-1;
+ try{pending=parseInt(localStorage.getItem(TOUR_STEP)||'-1',10);}catch(e){}
+ let seen=false;
+ try{seen=!!localStorage.getItem(TOUR_SEEN);}catch(e){}
+ if(pending>=0&&pending<TOUR.length){
+  try{localStorage.removeItem(TOUR_STEP);}catch(e){}
+  tourStart(pending);
+  return;
+ }
+ if(seen)return;
+ const qs=new URLSearchParams(location.search);
+ if(qs.get('pair')||qs.get('body'))return; /* don't auto-start inside a record */
+ tourStart(0);
+}
+document.getElementById('jah-tour-back').onclick=tourBack;
+document.getElementById('jah-tour-skip').onclick=function(){tourEnd();};
+document.getElementById('jah-tour-next').onclick=tourNext;
+document.getElementById('jah-guide-btn').onclick=function(){document.getElementById('jah-guide').hidden=false;};
+document.getElementById('jah-guide-close').onclick=function(){document.getElementById('jah-guide').hidden=true;};
+document.getElementById('jah-guide-tour').onclick=function(){document.getElementById('jah-guide').hidden=true;tourStart(0);};
+document.getElementById('jah-guide').addEventListener('click',function(e){if(e.target===this)this.hidden=true;});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!document.getElementById('jah-guide').hidden)document.getElementById('jah-guide').hidden=true;});
+</script>
+
 </body>
 </html>

@@ -10,6 +10,7 @@ import gzip
 import hashlib
 import json
 import os
+import re
 from collections import Counter
 from datetime import datetime, timezone
 
@@ -114,6 +115,22 @@ def main():
         json.dump(api, f, indent=1)
         f.write("\n")
     print("refreshed %s counts" % api_path)
+
+    # ---- stamp the last-known real pair count into index.html's raw HTML ----
+    # (universal loading pattern: counters must never boot as bare "…";
+    # JS paintCounter() overwrites this live at boot)
+    idx_path_html = os.path.join(ROOT, "index.html")
+    html = open(idx_path_html, encoding="utf-8").read()
+    stamped = re.sub(r'<b id="paircount">[^<]*</b>',
+                     '<b id="paircount">%s</b>' % f"{total_pairs:,}",
+                     html, count=1)
+    n_matches = len(re.findall(r'<b id="paircount">[^<]*</b>', html))
+    assert n_matches == 1, "paircount stamp target count=%d in index.html" % n_matches
+    if stamped == html:
+        print("index.html paircount already stamped: %s" % f"{total_pairs:,}")
+    else:
+        open(idx_path_html, "w", encoding="utf-8").write(stamped)
+        print("stamped index.html paircount: %s" % f"{total_pairs:,}")
 
 
 if __name__ == "__main__":
