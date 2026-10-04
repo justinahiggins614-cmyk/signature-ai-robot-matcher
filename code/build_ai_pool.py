@@ -274,8 +274,8 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(pool, f, separators=(",", ":"))
     print("wrote", out_path, len(pool), "AIs")
-    assert len(pool) == 270, len(pool)
-    assert len({p["id"] for p in pool}) == 270
+    assert len(pool) == len(records), len(pool)
+    assert len({p["id"] for p in pool}) == len(records)
 
 
 if __name__ == "__main__":
