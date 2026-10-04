@@ -95,7 +95,8 @@ body{font-size:16px}
 </style>
 </head>
 <body>
-<header class="top"><nav class="jahnet" id="jahnet" aria-label="JAH Network Global Ecosystem" role="navigation"></nav></header>
+<div class="jah-hero-banner"><img src="assets/hero.jpg" alt="The Signature AI Robot Matcher hero banner" style="display:block;width:100%;max-width:100%;height:auto"></div>
+
 <div class="wrap">
 <div class="hero" id="hero">
 <h1>🤖 The Signature AI Robot Matcher</h1>
@@ -117,6 +118,7 @@ body{font-size:16px}
 <main id="app"><div class="card loadcard"><h2><span class="spin" aria-hidden="true"></span>Loading…</h2><p>Fetching the pair index.</p></div></main>
 </div>
 <div id="floatbar"><span id="fb-t">Reading…</span><button id="fb-p" aria-label="Pause or resume" title="Pause/resume" style="display:none">⏸</button><button id="fb-x" aria-label="Stop">⏹</button></div>
+<div class="sig-stamp" style="text-align:center;margin:18px 8px 6px"><img src="assets/signature-stamp.jpg" alt="Official Signature stamp of Justin Addam Higgins" style="width:150px;max-width:40%;height:auto;border-radius:8px" loading="lazy"><div style="font-size:.72em;opacity:.75">Official Signature stamp</div></div>
 <footer>
 <nav class="jahnet" id="jahnet2" style="justify-content:center;margin-bottom:12px" aria-label="JAH Network Global Ecosystem" role="navigation"></nav>
 The Signature AI Robot Matcher · all AIs, bodies, pairs and text are original Signature creations · marches to 1,000,000 pairs<br>
@@ -144,7 +146,7 @@ const SITES = [
 const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true,"signature-ai-song-maker":true,"signature-math":true,"signature-fixit":true};
 /* Site label renders dynamically from JAH-NETWORK-MANIFEST.json (site_count handled); static text stays as fallback. */
 let netLabel='SITE 20 OF 27 · AI Robot Matcher ★ YOU ARE HERE';
-function netPaint(){document.querySelectorAll('#jahnet a.here,#jahnet2 a.here').forEach(function(a){a.textContent=netLabel;});}
+function netPaint(){document.querySelectorAll('#jahnet2 a.here').forEach(function(a){a.textContent=netLabel;});}
 fetch('JAH-NETWORK-MANIFEST.json').then(function(r){return r.ok?r.json():null;}).then(function(m){
  if(m&&m.site_number){const sc=m.site_count||SITES.length;
   let nm='AI Robot Matcher';
@@ -158,7 +160,6 @@ function navHTML(){
   const soon=(n>=18&&!LIVE18[s[0]]);
   h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
  return h;}
-document.getElementById('jahnet').innerHTML=navHTML();
 document.getElementById('jahnet2').innerHTML=navHTML();
 if(window.innerWidth<768){var sc=document.querySelector('.statscoll');if(sc)sc.removeAttribute('open');}
 /* sibling liveness verified server-side at push time; "(soon)" badge marks not-yet-live */
