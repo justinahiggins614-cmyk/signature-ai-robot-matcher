@@ -31,7 +31,7 @@ def main():
     bodies = json.load(open(os.path.join(ROOT, "data/bodies.json")))
 
     core = [("", "1.0"), ("#/pairs", "0.8"), ("#/bodies", "0.8"), ("#/mix", "0.8"),
-            ("pairs-index.html", "0.8"), ("methodology.html", "0.7"),
+            ("browse.html", "0.9"), ("pairs-index.html", "0.8"), ("methodology.html", "0.7"),
             ("matcher-manifest.json", "0.6"), ("api.json", "0.6"),
             ("llms.txt", "0.6"), ("ai-manifest.json", "0.6")]
     n = 1

@@ -115,7 +115,7 @@ def main():
     # refresh machine-readable feed, modular sitemaps, static bot tables,
     # and the authoritative manifest (counts) — all must stay in sync
     for script in ("build_pairs_feed.py", "build_sitemap.py",
-                   "build_pairs_table.py", "build_manifest.py"):
+                   "build_pairs_table.py", "build_manifest.py", "build_az.py"):
         r = subprocess.run([sys.executable, os.path.join(HERE, script)],
                            capture_output=True, text=True)
         if r.returncode != 0:
