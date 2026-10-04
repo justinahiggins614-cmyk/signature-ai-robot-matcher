@@ -27,7 +27,7 @@ a{color:var(--amber2)}header.top{border-bottom:1px solid var(--line);padding:10p
 .jahnet .t{color:var(--dim);font-weight:700;letter-spacing:1px;margin-right:6px}
 .jahnet a{color:var(--dim);text-decoration:none;padding:3px 8px;border:1px solid var(--line);border-radius:20px}
 .jahnet a:hover{color:var(--amber2);border-color:var(--amber)}
-.jahnet a.here{color:#0a0e14;background:var(--amber);border-color:var(--amber);font-weight:700}
+.jahnet a.here,.jahnet span.here{color:#0a0e14;background:var(--amber);border-color:var(--amber);font-weight:700}
 .jahnet a.soon{opacity:.55;border-style:dashed}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
 .hero{padding:34px 0 10px;text-align:center}
@@ -152,7 +152,7 @@ const SITES = [
 ["signature-comics","The Signature Comic Store"],["signature-newspapers","The Signature Global Newspaper Archive"],
 ["signature-backend","The Signature AI Mad Scientist Creation Lab"],
 ["signature-boundless-generators","The Signature Boundless Generator Archive"],
-["signature-ai-mixlab","The Signature AI Mix Lab"],["signature-ai-olypics","AI Olypics"],
+["signature-ai-mixlab","The Signature AI Mix Lab"],["signature-ai-olypics","AI Olympics"],
 ["signature-chip-maker","The Signature Computer Chip Maker and Archive"],["signature-app-archive","The Signature App Archive"],
 ["signature-ai-robot-matcher","The Signature AI Robot Matcher"],["signature-experiment-solver","The Signature Experiment Solver"],
 ["signature-ai-image-video-maker","Signature AI Pixel"],["signature-ai-song-maker","Signature Music Studio"],
@@ -171,9 +171,10 @@ fetch('JAH-NETWORK-MANIFEST.json').then(function(r){return r.ok?r.json():null;})
 function navHTML(){
  let h='<span class="t">THE JAH NETWORK</span>';
  SITES.forEach((s,i)=>{const n=i+1;
-  if(n===20){h+='<a class="here" aria-current="page" href="./">'+netLabel+'</a>';return;}
+  if(n===20){return;}
   const soon=(n>=18&&!LIVE18[s[0]]);
   h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
+ h+='<span class="here" aria-current="page">20 The Signature AI Robot Matcher \u2014 YOU ARE HERE</span>';
  return h;}
 document.getElementById('jahnet2').innerHTML=navHTML();
 if(window.innerWidth<768){var sc=document.querySelector('.statscoll');if(sc)sc.removeAttribute('open');}
