@@ -837,162 +837,100 @@ addEventListener("load",function(){setTimeout(function(){
 },400)})})();
 </script>
 <style>
-/* ============ FIRST-TIME TOUR + SITE GUIDE (usability layer; theme untouched) ============ */
-#jah-guide-btn{position:fixed;bottom:14px;left:14px;z-index:99990;min-width:44px;min-height:44px;border-radius:22px;border:1px solid var(--amber);background:var(--panel,#161d27);color:var(--amber2,#ffcf6e);font-weight:700;font-size:15px;padding:10px 16px;cursor:pointer}
-#jah-guide-btn:hover{background:var(--amber);color:#0a0e14}
-#jah-tour{position:fixed;inset:0;z-index:99995;pointer-events:none}
-.jah-tour-tip{pointer-events:auto;position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:min(560px,calc(100vw - 28px));max-height:44vh;overflow:auto;background:var(--panel,#161d27);border:2px solid var(--amber,#f5a623);border-radius:14px;padding:14px 16px;box-shadow:0 8px 40px rgba(0,0,0,.6)}
-.jah-tour-tip h3{margin:0 0 6px;color:var(--amber2,#ffcf6e);font-size:17px}
-.jah-tour-k{font-size:12px;color:var(--dim,#9aa7ba);letter-spacing:1px;margin-bottom:4px}
-.jah-tour-tip p{margin:6px 0;font-size:14px}
-.jah-tour-nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.jah-tour-hl{outline:3px solid var(--amber,#f5a623)!important;outline-offset:3px;border-radius:8px}
-#jah-guide{position:fixed;inset:0;z-index:99996;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;padding:16px}
-#jah-guide[hidden]{display:none}
-.jah-guide-card{background:var(--panel,#161d27);border:2px solid var(--amber,#f5a623);border-radius:16px;max-width:680px;width:100%;max-height:86vh;overflow:auto;padding:20px 22px}
-.jah-guide-card h2{margin:0 0 8px;color:var(--amber2,#ffcf6e)}
-.jah-guide-card h3{margin:14px 0 4px;color:var(--amber2,#ffcf6e);font-size:15px}
-.jah-guide-card p,.jah-guide-card li{font-size:14px;color:var(--txt,#e8edf4)}
-.jah-guide-card ul{margin:4px 0;padding-left:20px}
+/* ============ FIRST-visit WELCOME overlay (2026-10-04 standard: centered modal, no scroll, no spotlight) ============ */
+#jahGuideBtn{position:fixed;top:14px;right:14px;z-index:99900;min-width:48px;min-height:48px;border-radius:24px;border:1px solid var(--amber,#f5a623);background:var(--panel,#161d27);color:var(--amber2,#ffcf6e);font-weight:700;font-size:18px;padding:10px 16px;cursor:pointer}
+#jahGuideBtn:hover{background:var(--amber,#f5a623);color:#0a0e14}
+#jahWelcome{position:fixed;inset:0;z-index:100000;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.75)}
+#jahWelcome.show{display:flex}
+#jahWelcomeCard{background:var(--panel,#161d27);border:2px solid var(--amber,#f5a623);border-radius:14px;padding:22px 20px;max-width:540px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.6);color:var(--txt,#e8edf4)}
+#jahWelcomeCard h2{margin:0 0 4px;color:var(--amber2,#ffcf6e);font-size:20px}
+#jahWelcomeCard .wsub{margin:4px 0 0;color:var(--dim,#9aa7ba);font-size:14px}
+#jahWelcomeCard ol{margin:10px 0 0;padding-left:22px;font-size:14px;line-height:1.55}
+#jahWelcomeCard ol li{margin:8px 0}
+#jahWelcomeCard ol li b{color:var(--amber2,#ffcf6e)}
+#jahWelcomeCard .wbtnrow{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+#jahGuide .btn,#jahWelcome .btn{min-height:48px;min-width:48px;font-size:15px;padding:12px 22px;border-radius:10px;border:1px solid var(--amber,#f5a623);background:transparent;color:var(--amber2,#ffcf6e);cursor:pointer;font-family:inherit}
+#jahWelcomeOk{font-weight:700;background:var(--amber,#f5a623)!important;color:#0a0e14!important;border:none!important}
+#jahGuide{position:fixed;inset:0;z-index:99900;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.7)}
+#jahGuide.show{display:flex}
+#jahGuideCard{background:var(--panel,#161d27);border:1px solid var(--amber,#f5a623);border-radius:14px;max-width:680px;width:100%;max-height:86vh;overflow:auto;padding:20px 22px;color:var(--txt,#e8edf4)}
+#jahGuideCard h2{margin-top:0;color:var(--amber2,#ffcf6e)}
+#jahGuideCard .gfeat{margin:0 0 14px;padding:10px 12px;background:#10151d;border:1px solid var(--line,#2a3444);border-radius:10px}
+#jahGuideCard .gfeat b{color:var(--amber2,#ffcf6e)}
+#jahGuideCard .gfeat p{margin:4px 0 0;font-size:14px;line-height:1.5;color:var(--txt,#e8edf4)}
+#jahGuideCard .gfeat p b{color:var(--amber2,#ffcf6e)}
+#jahGuideCard .gfeat ul{margin:4px 0;padding-left:20px}
+#jahGuideCloseRow{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
 </style>
-<button id="jah-guide-btn" aria-label="Open the site guide" title="How to use this site — every feature, in plain language">❓ Guide</button>
-<div id="jah-tour" hidden>
- <div class="jah-tour-tip" role="dialog" aria-live="polite" aria-label="Site tour">
-  <div class="jah-tour-k" id="jah-tour-k"></div>
-  <h3 id="jah-tour-t"></h3>
-  <div id="jah-tour-b"></div>
-  <div class="jah-tour-nav">
-   <button id="jah-tour-back" class="btn sm ghost">← Back</button>
-   <button id="jah-tour-skip" class="btn sm ghost">Skip tour</button>
-   <button id="jah-tour-next" class="btn sm">Next →</button>
+<button id="jahGuideBtn" aria-label="Open the site guide" title="How to use this site — every feature, in plain language">?</button>
+<!-- first-visit WELCOME overlay (2026-10-04 standard: centered modal, no scroll, no spotlight) -->
+<div id="jahWelcome" aria-hidden="true">
+  <div id="jahWelcomeCard" role="dialog" aria-modal="true" aria-label="Welcome to the AI Robot Matcher">
+    <h2>Welcome to the AI Robot Matcher</h2>
+    <p class="wsub">Every Signature AI documented with its best-matching robot body &mdash; documented concept pairings, marching to 1,000,000 pairs. Here&rsquo;s how to use it:</p>
+    <ol>
+      <li><b>Find your match.</b> Type plain words like &ldquo;gentle helper for grandma&rdquo; in the finder and press Find my match &mdash; or type an exact ID like JAH-PAIR-000123 to jump to that record.</li>
+      <li><b>Browse the tabs.</b> Pairs A&ndash;Z browses every pair by letter; Robot Bodies shows the 120 original bodies; Mix Lab lets you forge your own pair from any AI + any body + any mission.</li>
+      <li><b>Open a pair record.</b> Match score dial, written rationale, best-fit breakdown &mdash; plus a shell-aware demo where the AI answers aware of the body it runs in (honestly badged SIMULATION).</li>
+      <li><b>Listen and save.</b> Every record offers Read aloud, Copy, Download .txt / .json, and Share.</li>
+    </ol>
+    <div class="wbtnrow">
+      <button class="btn" id="jahWelcomeOk" type="button">OK &mdash; Got it &#10003;</button>
+      <button class="btn" id="jahWelcomeFull" type="button">Full how-to guide</button>
+    </div>
   </div>
- </div>
 </div>
-<div id="jah-guide" hidden>
- <div class="jah-guide-card" role="dialog" aria-label="Site guide — how to use this site">
-  <h2>❓ How to use the AI Robot Matcher</h2>
-  <p style="color:var(--dim)">Every pair is a <b>documented concept</b>: a Signature AI matched with a Signature robot body, with a match score (0–100, concept fit only — never an engineering recommendation), a written rationale, a live demo, and downloads. 1,000,000 pairs is the goal.</p>
-  <h3>🔎 Find my match</h3>
-  <p>Type plain words ("gentle helper for grandma", "warehouse lifter") and press <b>Find my match</b> — the top 5 archived pairs are shown. Type an exact ID like <b>JAH-PAIR-000123</b> to jump straight to that record.</p>
-  <h3>🎲 Random pair</h3>
-  <p>Opens one real forged pair at random — every tap resolves to a genuine record, never an empty or invented one.</p>
-  <h3>🔗 Pairs A–Z</h3>
-  <p>Browse every pair by the AI's first letter. The <b>filter box</b> searches pair ID, AI name, body, and mission live (type a full pair ID to jump to it). Page through results with <b>← Prev / Next →</b>. If nothing matches, the page says so plainly — never a blank screen.</p>
-  <h3>🦾 Robot Bodies</h3>
-  <p>The 120 original Signature robot bodies, grouped by class. Open one for the full spec sheet: dimensions, mass and payload, materials, actuators, sensors, power, compute, mobility, interfaces, operating limits, safety assumptions, and human supervision — plus <b>Copy / Download .txt / Download .json / Read aloud</b>.</p>
-  <h3>🧪 Mix Lab</h3>
-  <p>Pick any AI, any body, and any mission, then <b>Forge pair</b> — the same combination always forges the same pair (deterministic). Custom pairs get a <b>JAH-MIX-XXXXXX</b> ID and are not stored in the archive.</p>
-  <h3>🧬 Pair records</h3>
-  <ul>
-   <li><b>Match score dial</b> = base 55 + capability-overlap bonus + deterministic pair factor, capped at 100. Documented concept fit only.</li>
-   <li><b>Match rationale</b> — capability fit, temperament fit, task fit — plus a <b>best-fit breakdown</b> showing the shared capability tags and the score math.</li>
-   <li><b>Match criteria &amp; limitations</b> — what the score does and does not mean (DOCUMENTED concept, NOT_CALCULATED technical compatibility, NOT_TESTED physical validation).</li>
-   <li><b>Related pairs</b> — same AI or same body.</li>
-  </ul>
-  <h3>🎙️ Shell-aware demo</h3>
-  <p>Talk to the pair — the AI answers <i>aware of the body it runs in</i>. Replies come from the on-board demo instantly (honestly badged <b>SIMULATION</b>); the live Signature Backend is used only when it has already loaded. The <b>Pair helper</b> answers questions from the pair's own record.</p>
-  <h3>🔊 Read aloud, copy, download, share</h3>
-  <p>Every record panel offers <b>Read aloud</b> (tiered speech: device voice, then audio), <b>Copy</b> (record, ID, or URL), <b>Download .txt / .json</b>, <b>Share</b>, and <b>Open</b>. The floating bar's ⏸ pauses device-voice reading; ⏹ stops everything.</p>
-  <h3>📖 Trust &amp; methodology</h3>
-  <p><b>Methodology</b> explains how matching works. <b>Matcher manifest</b> and <b>AI manifest</b> are the authoritative machine-readable counts; <b>schemas</b> documents the record format; <b>llms.txt</b> is the AI-agent summary. If data ever fails to load, the page says which part failed with a <b>Reload index</b> button — never an endless spinner.</p>
-  <h3>⌨️ Keyboard</h3>
-  <p>Inside this tour: <b>→</b> next, <b>←</b> back, <b>Esc</b> end. Everywhere else: buttons are full keyboard-focusable.</p>
-  <p><button class="btn" id="jah-guide-close">Close</button> <button class="btn ghost" id="jah-guide-tour">▶ Replay the 1-minute tour</button></p>
- </div>
+<div id="jahGuide" aria-hidden="true">
+  <div id="jahGuideCard" role="dialog" aria-modal="true" aria-label="How to use the AI Robot Matcher">
+    <div id="jahGuideCloseRow">
+      <h2 style="margin:0">How to use this site</h2>
+      <button class="btn" id="jahGuideClose" type="button">&#10005; Close</button>
+    </div>
+    <div class="gfeat"><b>&#128269; Find my match</b><p><b>What:</b> the finder box. <b>Does:</b> matches your plain words against all archived pairs and shows the top 5. <b>How:</b> type e.g. &ldquo;warehouse lifter&rdquo; and press Find my match; type an exact JAH-PAIR-000123 to jump straight to it.</p></div>
+    <div class="gfeat"><b>&#127922; Random pair</b><p><b>What:</b> the dice button beside the finder. <b>Does:</b> opens one real forged pair at random. <b>How:</b> tap it &mdash; every tap resolves to a genuine record, never an invented one.</p></div>
+    <div class="gfeat"><b>&#128279; Pairs A&ndash;Z</b><p><b>What:</b> the Pairs A&ndash;Z tab. <b>Does:</b> browses every pair by the AI&rsquo;s first letter, with a live filter (ID, AI, body, mission) and Prev/Next paging. <b>How:</b> tap the tab, pick a letter, or type in the filter. If nothing matches, the page says so plainly.</p></div>
+    <div class="gfeat"><b>&#129422; Robot Bodies</b><p><b>What:</b> the Robot Bodies tab. <b>Does:</b> the 120 original Signature robot bodies, grouped by class, each with a full spec sheet: dimensions, mass and payload, materials, actuators, sensors, power, compute, mobility, interfaces, operating limits, safety assumptions. <b>How:</b> tap the tab, open a body; Copy / Download / Read aloud on every sheet.</p></div>
+    <div class="gfeat"><b>&#129514; Mix Lab</b><p><b>What:</b> the Mix Lab tab. <b>Does:</b> pick any AI, any body, any mission and forge your own pair &mdash; deterministic, so the same combo always forges the same pair. <b>How:</b> choose, press Forge pair. Custom pairs get a JAH-MIX-XXXXXX ID and are not stored in the archive.</p></div>
+    <div class="gfeat"><b>&#129516; Pair records</b><p><b>What:</b> a full pair record. <b>Does:</b> match score dial (0&ndash;100, concept fit only &mdash; never an engineering recommendation), written rationale (capability, temperament, task fit), best-fit breakdown with the score math, match criteria &amp; limitations, and related pairs (same AI or same body). <b>How:</b> tap any pair to open it.</p></div>
+    <div class="gfeat"><b>&#127908; Shell-aware demo</b><p><b>What:</b> the demo chat on the pair record. <b>Does:</b> the AI answers <i>aware of the body it runs in</i> &mdash; replies come from the on-board demo instantly, honestly badged SIMULATION. <b>How:</b> type a question (e.g. &ldquo;what&rsquo;s your mission?&rdquo;) and press Send. The Pair helper answers from the pair&rsquo;s own record.</p></div>
+    <div class="gfeat"><b>&#128266; Read aloud, copy, download, share</b><p><b>What:</b> the record panel buttons. <b>Does:</b> Read aloud (tiered speech: device voice, then audio); Copy (record, ID, or URL); Download .txt / .json; Share; Open. <b>How:</b> the buttons on any open record; the floating bar pauses or stops reading.</p></div>
+    <div class="gfeat"><b>&#128214; Trust &amp; methodology</b><p><b>What:</b> the methodology and manifest links. <b>Does:</b> Methodology explains how matching works; Matcher manifest and AI manifest are the authoritative machine-readable counts; schemas documents the record format; llms.txt is the AI-agent summary. <b>How:</b> the links in the footer. If data ever fails to load, the page says which part failed with a Reload index button.</p></div>
+    <div class="gfeat"><b>Show the welcome guide</b><p><b>What:</b> the short welcome overlay from your first visit. <b>Does:</b> the 4-step quick start &mdash; the page stays put, the overlay teaches. <b>How:</b> press the button below, or the ? button top-right any time.</p></div>
+    <div class="btnrow" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+      <button class="btn" id="jahGuideTour" type="button">&#9654; Show the welcome guide</button>
+      <button class="btn" id="jahGuideClose2" type="button">&#10005; Close guide</button>
+    </div>
+  </div>
 </div>
-<script>
-"use strict";
-/* ============ FIRST-TIME TOUR + GUIDE PANEL ============ */
-const TOUR_SEEN='jah-tour-seen-robots',TOUR_STEP='jah-tour-step-robots';
-const TOUR=[
- {t:'🤖 Welcome to the AI Robot Matcher',b:'<b>WHAT:</b> every Signature AI documented with its best-matching robot body — a <b>concept pairing</b>, not an engineering blueprint.<br><b>WHAT IT DOES:</b> each pair gets a match score (0–100, concept fit only), a written rationale, a live demo, and downloads.<br><b>HOW:</b> this 1-minute tour walks you through it. Next/Back (or arrow keys); Esc or Skip ends it any time.'},
- {sel:'#fq',t:'🔎 Find my match',b:'<b>WHAT:</b> the finder box.<br><b>WHAT IT DOES:</b> matches your plain words — "gentle helper for grandma", "warehouse lifter" — against all pairs and shows the top 5.<br><b>HOW:</b> type and press <b>Find my match</b>, or type an exact ID like JAH-PAIR-000123 to jump straight to that record.'},
- {sel:'#frand',t:'🎲 Random pair',b:'<b>WHAT:</b> the dice button beside the finder.<br><b>WHAT IT DOES:</b> opens one real forged pair at random.<br><b>HOW:</b> tap it — every tap resolves to a genuine record.'},
- {sel:'a[data-v="pairs"]',t:'🔗 Pairs A–Z',b:'<b>WHAT:</b> the Pairs A–Z tab.<br><b>WHAT IT DOES:</b> browses every pair by the AI\u2019s first letter, with a live filter (ID, AI, body, mission) and Prev/Next paging.<br><b>HOW:</b> tap the tab, pick a letter, or type in the filter.'},
- {sel:'a[data-v="bodies"]',t:'🦾 Robot Bodies',b:'<b>WHAT:</b> the Robot Bodies tab.<br><b>WHAT IT DOES:</b> the 120 original Signature robot bodies, grouped by class.<br><b>HOW:</b> tap the tab, open a body for the full spec sheet — dimensions, actuators, sensors, power, limits.'},
- {sel:'a[data-v="mix"]',t:'🧪 Mix Lab',b:'<b>WHAT:</b> the Mix Lab tab.<br><b>WHAT IT DOES:</b> pick any AI + any body + any mission and forge your own pair — deterministic, so the same combo always forges the same pair.<br><b>HOW:</b> tap the tab, choose, press <b>Forge pair</b>.'},
- {nav:'pair',t:'🧬 Pair records',b:'<b>WHAT:</b> a full pair record — score dial, rationale, best-fit breakdown, demo, read-aloud, downloads.<br><b>WHAT IT DOES:</b> everything documented about one pairing, honestly labeled.<br><b>HOW:</b> press <b>Continue</b> and we\u2019ll open one real pair together.'},
- {sel:'#din',t:'🎙️ Shell-aware demo',b:'<b>WHAT:</b> the demo chat on the pair record.<br><b>WHAT IT DOES:</b> the AI answers <i>aware of the body it runs in</i> — replies are on-board simulations, honestly badged SIMULATION.<br><b>HOW:</b> type a question ("what\u2019s your mission?") and press Send.'},
- {sel:'#rp',t:'🔊 Read aloud + downloads',b:'<b>WHAT:</b> the Record panel buttons.<br><b>WHAT IT DOES:</b> reads the record aloud (tiered speech), copies it, downloads .txt/.json, shares the link.<br><b>HOW:</b> press <b>Read aloud</b>, or Copy / Download / Share.'},
- {sel:'#jah-guide-btn',t:'❓ The Guide button',b:'<b>WHAT:</b> this button, always bottom-left.<br><b>WHAT IT DOES:</b> opens a plain-language manual of every feature on the site.<br><b>HOW:</b> tap it any time you\u2019re unsure. That\u2019s the whole tour — happy matching!'}
-];
-let tourIdx=-1;
-function tourEl(){return document.getElementById('jah-tour');}
-function tourClearHl(){document.querySelectorAll('.jah-tour-hl').forEach(e=>e.classList.remove('jah-tour-hl'));}
-function tourEnd(save){
- tourClearHl();tourEl().hidden=true;tourIdx=-1;
- document.removeEventListener('keydown',tourKeys,true);
- if(save!==false){try{localStorage.setItem(TOUR_SEEN,'1');}catch(e){}}
- try{localStorage.removeItem(TOUR_STEP);}catch(e){}
-}
-function tourKeys(e){
- if(tourIdx<0)return;
- if(e.key==='Escape'){e.preventDefault();tourEnd();}
- else if(e.key==='ArrowRight'){e.preventDefault();tourNext();}
- else if(e.key==='ArrowLeft'){e.preventDefault();tourBack();}
-}
-function tourShow(i){
- const steps=TOUR;let guard=0;
- while(guard++<steps.length){
-  const s=steps[i];
-  if(s.nav){break;} /* nav step always shown */
-  if(s.sel&&!document.querySelector(s.sel)){i=(i+1)%steps.length;continue;}
-  break;
- }
- tourIdx=i;const s=TOUR[i];
- tourClearHl();
- const box=tourEl();box.hidden=false;
- document.getElementById('jah-tour-k').textContent='STEP '+(i+1)+' OF '+TOUR.length+' · AI ROBOT MATCHER TOUR';
- document.getElementById('jah-tour-t').textContent=s.t;
- document.getElementById('jah-tour-b').innerHTML='<p>'+s.b+'</p>';
- document.getElementById('jah-tour-back').disabled=(i===0);
- document.getElementById('jah-tour-next').textContent=(s.nav?'Continue in a pair record →':(i===TOUR.length-1?'Finish ✓':'Next →'));
- let el=null;
- if(s.sel){el=document.querySelector(s.sel);}
- if(el){el.classList.add('jah-tour-hl');try{el.scrollIntoView({block:'center',behavior:'smooth'});}catch(e){}}
-}
-function tourNext(){
- const s=TOUR[tourIdx];
- if(s&&s.nav){
-  try{localStorage.setItem(TOUR_STEP,String(tourIdx+1));}catch(e){}
-  location.href='?pair=JAH-PAIR-000001';
-  return;
- }
- if(tourIdx>=TOUR.length-1){tourEnd();return;}
- tourShow(tourIdx+1);
-}
-function tourBack(){if(tourIdx>0)tourShow(tourIdx-1);}
-function tourStart(i){
- document.addEventListener('keydown',tourKeys,true);
- document.getElementById('jah-tour-back').onclick=tourBack;
- document.getElementById('jah-tour-skip').onclick=function(){tourEnd();};
- document.getElementById('jah-tour-next').onclick=tourNext;
- tourShow(i||0);
-}
-function tourBoot(){
- let pending=-1;
- try{pending=parseInt(localStorage.getItem(TOUR_STEP)||'-1',10);}catch(e){}
- let seen=false;
- try{seen=!!localStorage.getItem(TOUR_SEEN);}catch(e){}
- if(pending>=0&&pending<TOUR.length){
-  try{localStorage.removeItem(TOUR_STEP);}catch(e){}
-  tourStart(pending);
-  return;
- }
- if(seen)return;
- const qs=new URLSearchParams(location.search);
- if(qs.get('pair')||qs.get('body'))return; /* don't auto-start inside a record */
- tourStart(0);
-}
-document.getElementById('jah-tour-back').onclick=tourBack;
-document.getElementById('jah-tour-skip').onclick=function(){tourEnd();};
-document.getElementById('jah-tour-next').onclick=tourNext;
-document.getElementById('jah-guide-btn').onclick=function(){document.getElementById('jah-guide').hidden=false;};
-document.getElementById('jah-guide-close').onclick=function(){document.getElementById('jah-guide').hidden=true;};
-document.getElementById('jah-guide-tour').onclick=function(){document.getElementById('jah-guide').hidden=true;tourStart(0);};
-document.getElementById('jah-guide').addEventListener('click',function(e){if(e.target===this)this.hidden=true;});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!document.getElementById('jah-guide').hidden)document.getElementById('jah-guide').hidden=true;});
-</script>
+<script>(function(){try{
+/* ---------- first-visit WELCOME overlay (2026-10-04 standard): centered modal.
+   NO auto-scroll, NO spotlight, NO section jumps — the page stays put, the overlay teaches. ---------- */
+var FLAG="jah-tour-seen-robots";
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+var w=document.getElementById("jahWelcome"),
+    guide=document.getElementById("jahGuide"),
+    guideCard=document.getElementById("jahGuideCard"),
+    guideBtn=document.getElementById("jahGuideBtn");
+function openWelcome(){w.classList.add("show");w.setAttribute("aria-hidden","false");
+  try{document.getElementById("jahWelcomeOk").focus({preventScroll:true})}catch(e){}}
+function closeWelcome(){w.classList.remove("show");w.setAttribute("aria-hidden","true");ls(FLAG,"1")}
+document.getElementById("jahWelcomeOk").onclick=closeWelcome;
+document.getElementById("jahWelcomeFull").onclick=function(){closeWelcome();openGuide()};
+w.addEventListener("click",function(e){if(e.target===w)closeWelcome()});
+document.addEventListener("keydown",function(e){
+  if(w.classList.contains("show")&&e.key==="Escape"){closeWelcome();e.preventDefault()}});
+function openGuide(){guide.classList.add("show");guide.setAttribute("aria-hidden","false");
+  try{guideCard.scrollTop=0;document.getElementById("jahGuideClose").focus({preventScroll:true})}catch(e){}}
+function closeGuide(){guide.classList.remove("show");guide.setAttribute("aria-hidden","true");
+  try{guideBtn.focus({preventScroll:true})}catch(e){}}
+guideBtn.onclick=openWelcome;
+document.getElementById("jahGuideClose").onclick=closeGuide;
+document.getElementById("jahGuideClose2").onclick=closeGuide;
+document.getElementById("jahGuideTour").onclick=function(){closeGuide();openWelcome()};
+guide.addEventListener("click",function(e){if(e.target===guide)closeGuide()});
+var __qs="";try{__qs=location.search}catch(e){}
+if(!ls(FLAG)&&__qs.indexOf("pair=")<0&&__qs.indexOf("body=")<0){setTimeout(openWelcome,900)}
+}catch(e){}})();</script>
 
 </body>
 </html>
