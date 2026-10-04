@@ -15,7 +15,7 @@
  "for_bots": "Pair deep links: ?pair=JAH-PAIR-###### (crawler-readable query URLs listed in sitemap.xml). Body deep links: ?body=JAH-BOT-######. Compact pair index at data/index/pairs.idx.json.gz rows [pair_id, ai_name, body_name, mission, chunk_n]. Modular pair sitemap batches: sitemap-pairs-N.xml (1000/batch) via sitemap-index.xml. Standardized feed at data/pairs-catalog.json (id, AI, body, class, mission, score, url). Pre-rendered static pair tables at pairs-index.html.",
  "goal": 1000000,
  "pair_id_scheme": "JAH-PAIR-###### (catalog) / JAH-MIX-XXXXXX (user-forged)",
- "pairs_seeded": 22000,
+ "pairs_seeded": 23000,
  "site": "The Signature AI Robot Matcher (title provisional)",
  "site_url": "https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/",
  "sitemap": "sitemap-index.xml",
