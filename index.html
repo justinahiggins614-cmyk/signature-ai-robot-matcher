@@ -122,7 +122,7 @@ body{font-size:16px}
 <footer>
 <nav class="jahnet" id="jahnet2" style="justify-content:center;margin-bottom:12px" aria-label="JAH Network Global Ecosystem" role="navigation"></nav>
 The Signature AI Robot Matcher · all AIs, bodies, pairs and text are original Signature creations · marches to 1,000,000 pairs<br>
-Sister sites: <a href="https://justinahiggins614-cmyk.github.io/jah-ai-models/">AI Phone Book</a> (parent AIs) · <a href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">3D Print Depository</a> (printable shells)<br>
+Sister sites: <a href="https://justinahiggins614-cmyk.github.io/jah-ai-models/">AI Phone Book</a> (parent AIs) · <a href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">3D Print Mega Mall</a> (printable shells)<br>
 📖 <a href="methodology.html">Methodology</a> · <a href="llms.txt">llms.txt</a> · <a href="matcher-manifest.json">Matcher manifest</a> · <a href="ai-manifest.json">AI manifest</a> · <a href="data/schemas/pair.schema.json">schemas</a>
 </footer>
 <script>
@@ -142,7 +142,7 @@ const SITES = [
 ["signature-ai-robot-matcher","The Signature AI Robot Matcher"],["signature-experiment-solver","The Signature Experiment Solver"],
 ["signature-ai-image-video-maker","Signature AI Pixel"],["signature-ai-song-maker","Signature Music Studio"],
 ["signature-fixit","The Signature Mr Fix-It"],["signature-university","The Signature University"],
-["signature-cyber-mega-mall","The Signature Cyber Mega-Mall"],["signature-3d-print","The Signature 3D Print Depository"]];
+["signature-cyber-mega-mall","The Signature Cyber Mega-Mall"],["signature-3d-print","The Signature 3D Print Mega Mall"]];
 const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true,"signature-ai-song-maker":true,"signature-math":true,"signature-fixit":true};
 /* Site label renders dynamically from JAH-NETWORK-MANIFEST.json (site_count handled); static text stays as fallback. */
 let netLabel='SITE 20 OF 27 · AI Robot Matcher ★ YOU ARE HERE';
@@ -386,7 +386,7 @@ function vPairs(){
 }
 function vBodies(){
  const cls=[...new Set(DB.bodies.map(b=>b.class))];
- app.innerHTML='<h2>Robot Body Catalog <span class="pill">'+DB.bodies.length+' bodies</span></h2><p style="color:var(--dim)">Original Signature robot bodies. Open one for full specs — no printable shell record for these bodies yet (the 3D Print Depository link opens the depository homepage).</p>'
+ app.innerHTML='<h2>Robot Body Catalog <span class="pill">'+DB.bodies.length+' bodies</span></h2><p style="color:var(--dim)">Original Signature robot bodies. Open one for full specs — no printable shell record for these bodies yet (the 3D Print Mega Mall link opens the depository homepage).</p>'
  +cls.map(c=>'<h3 style="color:var(--amber2);margin-top:22px">'+esc(c.replace(/-/g,' '))+'</h3><div class="grid">'
   +DB.bodies.filter(b=>b.class===c).map(b=>'<div class="card" style="text-align:center">'+bodySVG(b,150)+'<h3>'+esc(b.name)+'</h3><div><span class="pill">'+b.id+'</span><span class="pill">'+b.height_cm+' cm</span><span class="pill">'+b.mass_kg+' kg</span></div><a class="btn sm" href="?body='+b.id+'">Full specs →</a></div>').join('')+'</div>').join('');
 }
@@ -432,7 +432,7 @@ async function vPair(id){
  +'<h3 style="margin:6px 0">🦾 '+esc(p.body_name)+' <span class="pill">'+esc(b['class'])+'</span> <span class="pill">'+p.body_id+'</span></h3>'
  +'<div><span class="pill">🎯 mission: '+esc(p.mission)+'</span></div></div></div>'
  +'<h3>Match rationale</h3><p><b>Capability fit.</b> '+esc(p.rationale.capability)+'</p><p><b>Temperament fit.</b> '+esc(p.rationale.temperament)+'</p><p><b>Task fit.</b> '+esc(p.rationale.task)+'</p>'
- +'<p><a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">🖨️ 3D Print Depository →</a><br><small style="color:var(--dim)">no printable shell record for this body yet</small></p></div>'
+ +'<p><a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">🖨️ 3D Print Mega Mall →</a><br><small style="color:var(--dim)">no printable shell record for this body yet</small></p></div>'
  +'<div class="card"><h3>🧠 AI profile — matches the Phone Book exactly</h3>'
  +'<p><b>'+esc(ai.name)+'</b> <span class="pill">'+esc(p.ai_id)+'</span> <span class="pill">'+esc(p.ai_family)+'</span>'+(ai.role?'<span class="pill">'+esc(ai.role)+'</span>':'')+'</p>'
  +(ai.description?'<p>'+esc(ai.description)+'</p>':'')
@@ -499,7 +499,7 @@ function vBody(id){
   return;}
  document.title=b.id+' — '+b.name+' | The Signature AI Robot Matcher';
  const pairs=DB.idx.filter(r=>r[2]===b.name).slice(0,6);
- app.innerHTML='<div class="card"><a href="#/bodies">← all bodies</a><div style="display:flex;gap:20px;flex-wrap:wrap"><div>'+bodySVG(b,260)+'</div><div style="flex:1;min-width:260px"><h2>'+esc(b.name)+' <span class="pill">'+b.id+'</span> <span class="pill stat st-orig">SIGNATURE ORIGINAL</span></h2><p>'+esc(b.blurb)+'</p><p><a class="btn sm" href="#/mix?body='+b.id+'">🧪 Match an AI to this body →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">🖨️ 3D Print Depository →</a><br><small style="color:var(--dim)">no printable shell record for this body yet</small></p></div></div>'
+ app.innerHTML='<div class="card"><a href="#/bodies">← all bodies</a><div style="display:flex;gap:20px;flex-wrap:wrap"><div>'+bodySVG(b,260)+'</div><div style="flex:1;min-width:260px"><h2>'+esc(b.name)+' <span class="pill">'+b.id+'</span> <span class="pill stat st-orig">SIGNATURE ORIGINAL</span></h2><p>'+esc(b.blurb)+'</p><p><a class="btn sm" href="#/mix?body='+b.id+'">🧪 Match an AI to this body →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">🖨️ 3D Print Mega Mall →</a><br><small style="color:var(--dim)">no printable shell record for this body yet</small></p></div></div>'
  +'<div class="recpanel" aria-label="Record panel">'
  +'<span class="rp"><b>STATUS</b> <span class="pill stat st-orig">SIGNATURE ORIGINAL</span></span>'
  +'<span class="rp"><b>ID</b> '+esc(b.id)+'</span>'
@@ -664,7 +664,7 @@ function wirePair(p,b){
   else if(/mission|do|job|task/.test(q))a='Mission: '+p.mission+'. '+p.rationale.task;
   else if(/body|robot|shell|spec/.test(q)&&b)a=b.name+' ('+b.id+', '+b['class']+'): '+b.height_cm+' cm, '+b.mass_kg+' kg, powered by '+b.power+', moves via '+b.mobility+'.';
   else if(/ai|brain|mind/.test(q))a=p.ai_name+' is a '+p.ai_family+'-family Signature AI (ID '+p.ai_id+'). '+p.rationale.temperament;
-  else if(/print|3d/.test(q))a='Robot bodies have no printable shell record yet — the "3D Print Depository" link above opens the depository homepage.';
+  else if(/print|3d/.test(q))a='Robot bodies have no printable shell record yet — the "3D Print Mega Mall" link above opens the depository homepage.';
   else if(/real|actually work/.test(q))a='Pairs are documented match concepts: the rationale, demo and specs describe the pairing honestly. The demo runs in your browser.';
   else a='From this pair\u2019s record: '+p.ai_name+' × '+p.body_name+', mission "'+p.mission+'", score '+p.score+'/100. Ask about the score, mission, body, or AI.';
   d2.textContent='A: '+a;ql.appendChild(d2);
@@ -745,7 +745,7 @@ function vMix(pre){
   +'<span class="rp"><b>DOWNLOAD</b> <button class="btn sm ghost" id="mdj">⬇ .json</button></span>'
   +'<span class="rp"><b>READ ALOUD</b> <button class="btn sm ghost" id="mrd">🔊 Read aloud</button></span></div>'
   +'<p class="prov">⚙️ <b>Provenance:</b> forged by you in the Mix Lab on '+esc(p.created)+' · deterministic from this exact AI + body + mission — forging the same combo again always forges this same pair. Custom pairs are not stored in the archive.</p>'
-  +'<p><a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/jah-ai-models/#'+encodeURIComponent(ai.id)+'">🧠 AI in the Phone Book →</a> <a class="btn sm ghost" href="?body='+body.id+'">🦾 Body page →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">🖨️ 3D Print Depository →</a> <small style="color:var(--dim)">no printable shell record for this body yet</small></p></div>';
+  +'<p><a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/jah-ai-models/#'+encodeURIComponent(ai.id)+'">🧠 AI in the Phone Book →</a> <a class="btn sm ghost" href="?body='+body.id+'">🦾 Body page →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">🖨️ 3D Print Mega Mall →</a> <small style="color:var(--dim)">no printable shell record for this body yet</small></p></div>';
   const t=pairText(p,body);
   document.getElementById('mcp').onclick=()=>{navigator.clipboard.writeText(t);toast('Pair copied');};
   document.getElementById('msh').onclick=()=>{if(navigator.share){try{navigator.share({title:p.id+' — custom Mix Lab pair',text:t});}catch(e){}}else{navigator.clipboard.writeText(t).then(function(){toast('Custom pair copied — paste it anywhere to share.');});}};
