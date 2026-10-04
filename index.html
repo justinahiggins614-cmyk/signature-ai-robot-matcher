@@ -101,10 +101,25 @@ body{font-size:16px}
 <div class="hero" id="hero">
 <h1>🤖 The Signature AI Robot Matcher</h1>
 <p>Every Signature AI is documented with its best-fit robot body. These are documented <b>engineering pairings</b> of <b>Signature AIs</b> and <b>Signature robot bodies</b> — each with full body specs, a fit score, a written best-fit rationale, and a live demo where the AI speaks <i>aware of its own body</i>. Match scores measure documented concept fit only, never a real-world engineering recommendation. Marching to <b>1,000,000 pairs</b>.</p>
-<details class="statscoll" open><summary>Archive statistics</summary><div class="counter"><b id="paircount">26,000</b> / <b id="pairgoal">1,000,000</b> pairs matched <span class="pill stat st-gen" id="bootstatus">LOADING</span></div><div class="prov" id="boothealth" style="text-align:center;max-width:760px;margin:8px auto 0">Loading archive status…</div></details>
+<details class="statscoll"><summary>Archive statistics</summary><div class="counter"><b id="paircount">26,000</b> / <b id="pairgoal">1,000,000</b> pairs matched <span class="pill stat st-gen" id="bootstatus">LOADING</span></div><div class="prov" id="boothealth" style="text-align:center;max-width:760px;margin:8px auto 0">Loading archive status…</div></details>
 <div class="notice">⚠️ <b>Title provisional</b> — "The Signature AI Robot Matcher" is a working title until Manon confirms the final name.</div>
 <p style="margin:12px 0"><a class="btn" href="browse.html">📚 Browse the full pair archive A–Z →</a></p>
 </div>
+<!-- JAH TAB BAR — Manon's 2026-10-04 order (calculator screenshot as spec).
+     Paste right after </header> (or after the hero/title block) on index.html AND on the archive page.
+     On index.html: "Front Door" carries class "on". On the archive page: "1 Million Archive" carries "on".
+     Replace <a class="jtab" href="methodology.html">Methodology</a><a class="jtab" href="pairs-index.html">Pairs Index</a> with <a class="jtab" href="...">Label</a> items (may be empty). -->
+<style>
+.jtabbar{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;border-bottom:1px solid rgba(128,128,128,.25)}
+.jtabbar a.jtab{flex:0 0 auto;text-decoration:none;border:1px solid rgba(160,160,160,.45);border-radius:999px;padding:9px 16px;font-size:.92em;color:inherit;background:rgba(127,127,127,.08);white-space:nowrap;font-family:inherit}
+.jtabbar a.jtab.on{background:#f5c518;border-color:#f5c518;color:#191919;font-weight:700}
+</style>
+<nav class="jtabbar" aria-label="Site sections">
+<a class="jtab on" href="index.html">🏠 Front Door</a>
+<a class="jtab" href="browse.html">📚 1 Million Archive</a>
+<a class="jtab" href="methodology.html">Methodology</a><a class="jtab" href="pairs-index.html">Pairs Index</a>
+</nav>
+
 <div class="tabs" id="tabs">
 <a href="#/" data-v="home">🏠 Home</a>
 <a href="#/pairs" data-v="pairs">🔗 Pairs A–Z</a>
