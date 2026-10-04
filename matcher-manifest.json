@@ -6,9 +6,9 @@
  "site_version": "1.0",
  "archive_version": "2026-10-03",
  "schema_version": "JAH-PAIR-RECORD/1.0",
- "total_pairs": 26000,
+ "total_pairs": 27000,
  "earliest_pair_id": "JAH-PAIR-000001",
- "latest_pair_id": "JAH-PAIR-026000",
+ "latest_pair_id": "JAH-PAIR-027000",
  "pair_id_scheme": "JAH-PAIR-###### (catalog) / JAH-MIX-XXXXXX (user-forged)",
  "total_ais": 441,
  "ai_id_scheme": "JAH-AI-###-### (canonical Signature AI Phone Book IDs)",
@@ -33,10 +33,10 @@
   "security-sentinel": 12
  },
  "goal_pairs": 1000000,
- "pairs_remaining": 974000,
+ "pairs_remaining": 973000,
  "index_version": "pairs.idx/1.0",
- "index_hash": "c7ea57592ae20875edaf4867b9298df07a8e78c2cf152105344bffcd205522c8",
- "index_rows": 26000,
+ "index_hash": "520686829b35a759eed7e1c66c1b5015ae20daad280319cfad5a6aa7461a8b79",
+ "index_rows": 27000,
  "matcher_version": "pair-engine/1.0",
  "generator_version": "gen_pairs/1.0",
  "score_method": {
@@ -64,5 +64,5 @@
  ],
  "concept_fit_boundary": "A high concept-fit score is never approval to build, deploy, or certify a robot. Concept match, technical compatibility, and physical validation are independent statuses.",
  "last_updated": "2026-10-04",
- "generated_at": "2026-10-04T16:14:54+00:00"
+ "generated_at": "2026-10-04T18:14:58+00:00"
 }
