@@ -46,6 +46,12 @@ CSS = (
     ".loading{color:var(--dim);padding:12px 0}"
     ".nav{margin:14px 0;display:flex;flex-wrap:wrap;gap:10px}"
     "footer{color:var(--dim);font-size:13px;margin:26px 0 10px;text-align:center}"
+    ".jahnet{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;font-size:12px;margin:22px 8px 10px}"
+    ".jahnet .t{color:#9aa7ba;font-weight:700;letter-spacing:1px;margin-right:6px}"
+    ".jahnet a{color:#9aa7ba;text-decoration:none;padding:3px 8px;border:1px solid #2a3444;border-radius:20px}"
+    ".jahnet a:hover{color:#ffcf6e;border-color:#f5a623}"
+    ".jahnet span.here{color:#0a0e14;background:#f5a623;border-color:#f5a623;font-weight:700;padding:3px 8px;border-radius:20px}"
+    ".jahnet a.soon{opacity:.55;border-style:dashed}"
 )
 
 JS = r"""
@@ -116,6 +122,51 @@ function doSearch(){
 }
 sgo.onclick=doSearch;
 sq.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();doSearch();}});
+"""
+
+# --- NAV SWEEP (2026-10-04): THE JAH NETWORK block, one instance per page, at the
+#     bottom directly above the footer. Same content/behavior as index.html's nav.
+NAV_HTML = ('<nav class="jahnet" id="jahnet2" aria-label="JAH Network Global Ecosystem" '
+            'role="navigation"></nav>')
+NAV_JS = r"""<script>
+"use strict";
+/* ============ JAH NETWORK NAV (bottom, one instance per page) ============ */
+const SITES = [
+["signature-math","Signature Math"],["jah-calculator","Signature Universal Paradox Immune Calculator"],
+["jah-dictionary","The Signature Dictionary"],["jah-wiki","JAH Wiki"],["jah-n-wiki-leaks","JAH-N Wiki Leaks"],
+["signature-llama","Signature Llama: The Fully Cyber Utilizable AI"],["jah-ai-models","The Signature AI Phone Book"],
+["cyber-patent-catalog","Globally Rejustered Patent Catalog"],["signature-one-archive/specs.html","Signature Spec Catalog Pending Patents"],
+["jah-computer-systems","The Signature PC System Depository"],["signature-books","The Signature Book Depository"],
+["signature-comics","The Signature Comic Store"],["signature-newspapers","The Signature Global Newspaper Archive"],
+["signature-backend","The Signature AI Mad Scientist Creation Lab"],
+["signature-boundless-generators","The Signature Boundless Generator Archive"],
+["signature-ai-mixlab","The Signature AI Mix Lab"],["signature-ai-olypics","AI Olympics"],
+["signature-chip-maker","The Signature Computer Chip Maker and Archive"],["signature-app-archive","The Signature App Archive"],
+["signature-ai-robot-matcher","The Signature AI Robot Matcher"],["signature-experiment-solver","The Signature Experiment Solver"],
+["signature-ai-image-video-maker","Signature AI Pixel"],["signature-ai-song-maker","Signature Music Studio"],
+["signature-fixit","The Signature Mr Fix-It"],["signature-university","The Signature University"],
+["signature-cyber-mega-mall","The Signature Cyber Mega-Mall"],["signature-3d-print","The Signature 3D Print Mega Mall"]];
+const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true,"signature-ai-song-maker":true,"signature-math":true,"signature-fixit":true};
+/* Site label renders dynamically from JAH-NETWORK-MANIFEST.json (site_count handled); static text stays as fallback. */
+let netLabel='SITE 20 OF 27 · AI Robot Matcher ★ YOU ARE HERE';
+function netPaint(){document.querySelectorAll('#jahnet2 a.here').forEach(function(a){a.textContent=netLabel;});}
+fetch('JAH-NETWORK-MANIFEST.json').then(function(r){return r.ok?r.json():null;}).then(function(m){
+ if(m&&m.site_number){const sc=m.site_count||SITES.length;
+  let nm='AI Robot Matcher';
+  if(m.official_name)nm=m.official_name.replace(/^The Signature /,'');
+  netLabel='SITE '+m.site_number+' OF '+sc+' · '+nm+' ★ YOU ARE HERE';netPaint();}
+}).catch(function(){});
+function navHTML(){
+ let h='<span class="t">THE JAH NETWORK</span>';
+ SITES.forEach((s,i)=>{const n=i+1;
+  if(n===20){return;}
+  const soon=(n>=18&&!LIVE18[s[0]]);
+  h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
+ h+='<span class="here" aria-current="page">20 The Signature AI Robot Matcher \u2014 YOU ARE HERE</span>';
+ return h;}
+document.getElementById('jahnet2').innerHTML=navHTML();
+/* sibling liveness verified server-side at push time; "(soon)" badge marks not-yet-live */
+</script>
 """
 
 
@@ -297,6 +348,7 @@ def main():
             "<button class=\"btn ghost\" id=\"cx\" style=\"display:none\">&#10005; Clear</button></div>"
             "<div id=\"hits\"></div>"
             "%s"
+            + NAV_HTML + NAV_JS +
             "<footer>The Signature AI Robot Matcher &middot; <a href=\"./\">matcher home</a> &middot; "
             "<a href=\"methodology.html\">methodology</a></footer>"
             "</div><script>" + JS + "</script></body></html>") % (f"{total:,}", '<div id="jah-askai-scope">' + "\n".join(det) + '</div>')
