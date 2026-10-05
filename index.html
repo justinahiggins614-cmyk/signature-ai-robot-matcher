@@ -907,7 +907,6 @@ window.addEventListener('hashchange',route);
  await loadAll(); /* subsystems fail independently — the counter can never stick on "…" */
  preloadBackend(); /* background only — never blocks */
  route();
- tourBoot(); /* first-time tour / pending tour step, if any */
 })();
 </script>
 <style>
