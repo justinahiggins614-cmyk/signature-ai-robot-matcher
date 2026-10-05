@@ -3,7 +3,7 @@
   "official_name": "The Signature AI Robot Matcher",
   "repo": "signature-ai-robot-matcher",
   "site_number": 20,
-  "site_count": 33,
+  "site_count": 35,
   "sites": [
     {
       "n": 1,
@@ -169,6 +169,16 @@
       "n": 33,
       "name": "The Signature OS Updater",
       "url": "https://justinahiggins614-cmyk.github.io/signature-os-updater/"
+    },
+    {
+      "n": 34,
+      "name": "Signature Space Mapping",
+      "url": "https://justinahiggins614-cmyk.github.io/signature-space-mapping/"
+    },
+    {
+      "n": 35,
+      "name": "The Signature Cookbook",
+      "url": "https://justinahiggins614-cmyk.github.io/signature-cookbook/"
     }
   ]
 }
