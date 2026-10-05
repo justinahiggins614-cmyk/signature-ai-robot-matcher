@@ -347,11 +347,51 @@ function scoreDial(s){const c=2*Math.PI*44,off=c*(1-s/100);
 const app=document.getElementById('app');
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function pairCard(r){return '<div class="card"><h3>'+esc(r[0])+' · '+r[2]+'</h3><div><span class="pill stat st-gen">GENERATED</span><span class="pill">🧠 '+esc(r[1])+'</span><span class="pill">🦾 '+esc(r[2])+'</span><span class="pill">🎯 '+esc(r[3])+'</span></div><a class="btn sm" href="?pair='+r[0]+'">Open pair →</a></div>';}
-/* ---- batch-E: share helper for record panels ---- */
-function shareRec(qs,title){
+/* ---- batch-E: share helper for record panels ----
+   Robust chain: native share -> clipboard -> legacy execCommand copy ->
+   visible toast with the URL. Every path ends with visible feedback;
+   the button can never die silently (headless/automation browsers have
+   no navigator.share and often no working clipboard). */
+function shareRec(qs,title,text){
  var url=location.origin+location.pathname+qs;
- if(navigator.share){try{navigator.share({title:title,url:url});}catch(e){}return;}
- if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){toast('Link copied — share it anywhere.');});}
+ var payload=text||url; /* what the clipboard/legacy path copies */
+ var shareData=text?{title:title,text:text}:{title:title,url:url};
+ var copiedMsg=text?'Pair text copied — paste it anywhere to share.':'Link copied — share it anywhere.';
+ function copied(){toast(copiedMsg);}
+ function showPayload(){
+  var p=payload.length>140?payload.slice(0,140)+'…':payload;
+  toast((text?'Copy this text to share: ':'Copy this link to share: ')+p);
+ }
+ function legacyCopy(){
+  try{
+   var ta=document.createElement('textarea');
+   ta.value=payload;ta.style.position='fixed';ta.style.opacity='0';ta.setAttribute('readonly','');
+   document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,payload.length);
+   var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+   document.body.removeChild(ta);
+   if(ok){copied();}else{showPayload();}
+  }catch(e){showPayload();}
+ }
+ function clipboardCopy(){
+  try{
+   if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(payload).then(copied,function(){legacyCopy();});
+   }else{legacyCopy();}
+  }catch(e){legacyCopy();}
+ }
+ if(navigator.share){
+  try{
+   var r=navigator.share(shareData);
+   if(r&&typeof r.then==='function'){
+    r.then(function(){toast('Shared.');},function(err){
+     if(err&&err.name==='AbortError'){return;} /* user dismissed the sheet: stay quiet */
+     clipboardCopy();
+    });
+   }else{toast('Shared.');}
+   return;
+  }catch(e){/* native share threw synchronously: fall through to clipboard */}
+ }
+ clipboardCopy();
 }
 function vHome(){
  const feat=[DB.idx[0],DB.idx[499],DB.idx[1499],DB.idx[2999]].filter(Boolean);
@@ -811,7 +851,7 @@ function vMix(pre){
   +'<p><a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/jah-ai-models/#'+encodeURIComponent(ai.id)+'">🧠 AI in the Phone Book →</a> <a class="btn sm ghost" href="?body='+body.id+'">🦾 Body page →</a> <a class="btn sm ghost" href="https://justinahiggins614-cmyk.github.io/signature-3d-print/">🖨️ 3D Print Mega Mall →</a> <small style="color:var(--dim)">no printable shell record for this body yet</small></p></div>';
   const t=pairText(p,body);
   document.getElementById('mcp').onclick=()=>{navigator.clipboard.writeText(t);toast('Pair copied');};
-  document.getElementById('msh').onclick=()=>{if(navigator.share){try{navigator.share({title:p.id+' — custom Mix Lab pair',text:t});}catch(e){}}else{navigator.clipboard.writeText(t).then(function(){toast('Custom pair copied — paste it anywhere to share.');});}};
+  document.getElementById('msh').onclick=()=>shareRec('',p.id+' — custom Mix Lab pair',t);
   document.getElementById('mdj').onclick=()=>dl(p.id+'.json',JSON.stringify(p,null,2));
   document.getElementById('mrd').onclick=()=>speak(p.id+'. '+p.ai_name+' matched with '+p.body_name+' at '+p.score+' of 100. '+p.rationale.capability+' '+p.rationale.task);
   out.scrollIntoView({behavior:'smooth'});
