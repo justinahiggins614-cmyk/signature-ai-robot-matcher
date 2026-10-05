@@ -156,10 +156,10 @@ const SITES = [
 ["signature-ai-robot-matcher","The Signature AI Robot Matcher"],["signature-experiment-solver","The Signature Experiment Solver"],
 ["signature-ai-image-video-maker","Signature AI Pixel"],["signature-ai-song-maker","Signature Music Studio"],
 ["signature-fixit","The Signature Mr Fix-It"],["signature-university","The Signature University"],
-["signature-cyber-mega-mall","The Signature Cyber Mega-Mall"],["signature-3d-print","The Signature 3D Print Mega Mall"]];
-const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true,"signature-ai-song-maker":true,"signature-math":true,"signature-fixit":true};
+["signature-cyber-mega-mall","The Signature Cyber Mega-Mall"],["signature-3d-print","The Signature 3D Print Mega Mall"],["signature-earth","Signature Earth"],["signature-flight-school","The Signature Flight School"],["signature-game-store","The Signature Game Store"],["signature-website-creator","The Signature Website Creator"],["signature-antivirus","The Signature Antivirus"],["signature-os-updater","The Signature OS Updater"]];
+const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true,"signature-ai-song-maker":true,"signature-math":true,"signature-fixit":true,"signature-earth":true,"signature-flight-school":true,"signature-game-store":true,"signature-website-creator":true,"signature-antivirus":true,"signature-os-updater":true};
 /* Site label renders dynamically from JAH-NETWORK-MANIFEST.json (site_count handled); static text stays as fallback. */
-let netLabel='SITE 20 OF 31 · AI Robot Matcher ★ YOU ARE HERE';
+let netLabel='SITE 20 OF 33 · AI Robot Matcher ★ YOU ARE HERE';
 function netPaint(){document.querySelectorAll('#jahnet2 a.here').forEach(function(a){a.textContent=netLabel;});}
 fetch('JAH-NETWORK-MANIFEST.json').then(function(r){return r.ok?r.json():null;}).then(function(m){
  if(m&&m.site_number){const sc=m.site_count||SITES.length;
