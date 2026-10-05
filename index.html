@@ -535,6 +535,7 @@ function vBody(id){
  document.getElementById('jb2').onclick=()=>dl(b.id+'-specs.json',JSON.stringify(b,null,2));
 }
 </script>
+<script src="js/jah-talk-fallback.js"></script>
 <script>
 "use strict";
 /* ==== JAH global read-aloud controller (one per page): no stacked voices, no orphan audio ==== */
@@ -685,8 +686,26 @@ function wirePair(p,b){
  function say(who,txt){const d=document.createElement('div');d.className=who;const s=document.createElement('span');s.textContent=txt;d.appendChild(s);log.appendChild(d);log.scrollTop=log.scrollHeight;}
  say('a',p.demo_lines[0]);
  let li=1;
+ function pairProfile(){
+  return {name:ai.name||p.ai_name,id:p.ai_id,
+   description:ai.description||(p.ai_name+', a '+p.ai_family+'-family Signature AI, paired here with the '+p.body_name+' robot body.'),
+   abilities:['Talk about this AI-robot pairing','Explain the match score and rationale','Describe the robot body and its specs','Point you around the JAH network'],
+   domain:'AI-robot pairing',kind:'domain'};
+ }
+ /* v2.1: social + ecosystem intents get the conversational engine (with
+    memory); pair-grounded questions keep the demo / live-backend path. */
+ function pairSocial(q){
+  var t=' '+String(q||'').toLowerCase()+' ';
+  if(/^(hi|hii+|hey|hello|yo|thanks|thank you|thx|ty|bye|goodbye)\b/.test(t.trim()))return true;
+  return t.indexOf('who are you')>=0||t.indexOf('your duties')>=0||t.indexOf('what can you do')>=0||
+   t.indexOf('jah network')>=0||t.indexOf('ecosystem')>=0||t.indexOf('all the sites')>=0||
+   t.indexOf('which site')>=0||t.indexOf('what sites')>=0;
+ }
  async function ask(){
   const inp=document.getElementById('din'),q=inp.value.trim();if(!q)return;inp.value='';say('u',q);
+  try{
+   if(typeof JAHtalk!=='undefined'&&pairSocial(q)){say('a',JAHtalk.chatFor(pairProfile(),'pair:'+p.id).reply(q));return;}
+  }catch(e){}
   say('a','…');const dots=log.lastChild;
   const btn=document.getElementById('dgo');btn.disabled=true;btn.textContent='Sending…';
   const live=await backendAsk(q,p);
