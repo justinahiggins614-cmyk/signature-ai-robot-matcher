@@ -48,4 +48,15 @@ function navHTML(){
 document.getElementById('jahnet2').innerHTML=navHTML();
 /* sibling liveness verified server-side at push time; "(soon)" badge marks not-yet-live */
 </script>
-</div></body></html>
+</div><script src="js/signin.js"></script>
+<script>
+(function () {
+  var mount = document.querySelector('header .booksearch') ||
+              document.querySelector('nav.jtabbar') ||
+              document.querySelector('header nav') ||
+              document.querySelector('header') ||
+              document.body;
+  if (window.JAHProfile && JAHProfile.ui) JAHProfile.ui.renderButton(mount);
+})();
+</script>
+</body></html>

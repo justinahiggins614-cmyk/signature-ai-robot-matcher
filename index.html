@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="js/signin.js"></script>
+<script>window.PS=(function(){var s=(typeof JAHProfile!=='undefined')?JAHProfile.store:null;var l=null;try{l=localStorage}catch(_e){}return{get:function(k){try{return s?s.get(k):(l?l.getItem(k):null)}catch(e){return null}},set:function(k,v){try{if(s)s.set(k,v);else if(l)l.setItem(k,v)}catch(e){}},remove:function(k){try{if(s)s.remove(k);else if(l)l.removeItem(k)}catch(e){}},keys:function(){try{return s?s.keys():[]}catch(e){return[]}}}})();</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Signature AI Robot Matcher — Best-Match Pairs of Signature AIs &amp; Robot Bodies</title>
@@ -205,8 +207,8 @@ async function gz(url){ /* gzipped text, one automatic retry */
 }
 /* cached-manifest fallback: labeled with its verification date, never implied current */
 const MCACHE_KEY='rm-manifest-cache-v1';
-function cacheManifest(m){try{localStorage.setItem(MCACHE_KEY,JSON.stringify({data:m,verified_at:new Date().toISOString().slice(0,10)}));}catch(e){}}
-function readCachedManifest(){try{const c=JSON.parse(localStorage.getItem(MCACHE_KEY)||'null');return(c&&c.data)?c:null;}catch(e){return null;}}
+function cacheManifest(m){try{PS.set(MCACHE_KEY,JSON.stringify({data:m,verified_at:new Date().toISOString().slice(0,10)}));}catch(e){}}
+function readCachedManifest(){try{const c=JSON.parse(PS.get(MCACHE_KEY)||'null');return(c&&c.data)?c:null;}catch(e){return null;}}
 function setCounterStatus(st){
  const el=document.getElementById('bootstatus');
  if(el){el.textContent=st;el.className='pill stat '+(st==='LIVE'?'st-orig':st==='LOADING'?'st-gen':(st==='INDEX ERROR'||st==='OFFLINE')?'sim':'');}
@@ -744,7 +746,7 @@ function wirePair(p,b){
  async function ask(){
   const inp=document.getElementById('din'),q=inp.value.trim();if(!q)return;inp.value='';say('u',q);
   try{
-   if(typeof JAHtalk!=='undefined'&&pairSocial(q)){say('a',JAHtalk.chatFor(pairProfile(),'pair:'+p.id).reply(q));return;}
+   if(typeof JAHtalk!=='undefined'&&pairSocial(q)){var _cb='pair:'+p.id;var _ck=(typeof JAHProfile!=='undefined')?JAHProfile.chatKey(_cb):_cb;say('a',JAHtalk.chatFor(pairProfile(),_ck).reply(q));return;}
   }catch(e){}
   say('a','…');const dots=log.lastChild;
   const btn=document.getElementById('dgo');btn.disabled=true;btn.textContent='Sending…';
@@ -918,11 +920,11 @@ html[data-theme="dark"] img,html[data-theme="dark"] video,html[data-theme="dark"
 <button id="jah-theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#127769;</button>
 <script>
 /* dark-mode toggle: opt-in, default look unchanged */
-(function(){var b=document.getElementById("jah-theme-toggle");function paint(){b.innerHTML=document.documentElement.getAttribute("data-theme")==="dark"?"&#9728;&#65039;":"&#127769;"}b.addEventListener("click",function(){var dark=document.documentElement.getAttribute("data-theme")==="dark";try{if(dark){document.documentElement.removeAttribute("data-theme");localStorage.setItem("jah-theme","light")}else{document.documentElement.setAttribute("data-theme","dark");localStorage.setItem("jah-theme","dark")}}catch(e){}paint()});paint()})();
+(function(){var b=document.getElementById("jah-theme-toggle");function paint(){b.innerHTML=document.documentElement.getAttribute("data-theme")==="dark"?"&#9728;&#65039;":"&#127769;"}b.addEventListener("click",function(){var dark=document.documentElement.getAttribute("data-theme")==="dark";try{if(dark){document.documentElement.removeAttribute("data-theme");PS.set("jah-theme","light")}else{document.documentElement.setAttribute("data-theme","dark");PS.set("jah-theme","dark")}}catch(e){}paint()});paint()})();
 /* session restore: scroll + tabs + last-opened record, localStorage only */
 (function(){var KEY="jah-sr:"+location.pathname,PARAMS=["pair","body"];
-function rd(){try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){return{}}}
-function wr(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+function rd(){try{return JSON.parse(PS.get(KEY)||"{}")}catch(e){return{}}}
+function wr(o){try{PS.set(KEY,JSON.stringify(o))}catch(e){}}
 var S=rd(),q=new URLSearchParams(location.search);
 var deep=PARAMS.some(function(p){return q.has(p)});
 var t;addEventListener("scroll",function(){clearTimeout(t);t=setTimeout(function(){S.y=window.scrollY;wr(S)},300)},{passive:true});
@@ -1008,7 +1010,7 @@ addEventListener("load",function(){setTimeout(function(){
 /* ---------- first-visit WELCOME overlay (2026-10-04 standard): centered modal.
    NO auto-scroll, NO spotlight, NO section jumps — the page stays put, the overlay teaches. ---------- */
 var FLAG="jah-tour-seen-robots";
-function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+function ls(k,v){try{if(v===undefined)return PS.get(k);PS.set(k,v)}catch(e){return null}}
 var w=document.getElementById("jahWelcome"),
     guide=document.getElementById("jahGuide"),
     guideCard=document.getElementById("jahGuideCard"),
@@ -1034,5 +1036,15 @@ var __qs="";try{__qs=location.search}catch(e){}
 if(!ls(FLAG)&&__qs.indexOf("pair=")<0&&__qs.indexOf("body=")<0){setTimeout(openWelcome,900)}
 }catch(e){}})();</script>
 
+<script>
+(function () {
+  var mount = document.querySelector('header .booksearch') ||
+              document.querySelector('nav.jtabbar') ||
+              document.querySelector('header nav') ||
+              document.querySelector('header') ||
+              document.body;
+  if (window.JAHProfile && JAHProfile.ui) JAHProfile.ui.renderButton(mount);
+})();
+</script>
 </body>
 </html>

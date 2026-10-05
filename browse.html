@@ -246,4 +246,15 @@ function doSearch(){
 }
 sgo.onclick=doSearch;
 sq.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();doSearch();}});
-</script></body></html>
+</script><script src="js/signin.js"></script>
+<script>
+(function () {
+  var mount = document.querySelector('header .booksearch') ||
+              document.querySelector('nav.jtabbar') ||
+              document.querySelector('header nav') ||
+              document.querySelector('header') ||
+              document.body;
+  if (window.JAHProfile && JAHProfile.ui) JAHProfile.ui.renderButton(mount);
+})();
+</script>
+</body></html>
