@@ -74,7 +74,7 @@ const SITES = [
 ["cyber-patent-catalog","Globally Rejustered Patent Catalog"],["signature-one-archive/specs.html","Signature Spec Catalog Pending Patents"],
 ["jah-computer-systems","The Signature PC System Depository"],["signature-books","The Signature Book Depository"],
 ["signature-comics","The Signature Comic Store"],["signature-newspapers","The Signature Global Newspaper Archive"],
-["signature-backend","The Signature AI Mad Scientist Creation Lab"],
+["signature-backend","The Signature AI Mix and Match Generator"],
 ["signature-boundless-generators","The Signature Boundless Generator Archive"],
 ["signature-ai-mixlab","The Signature AI Mix Lab"],["signature-ai-olypics","AI Olympics"],
 ["signature-chip-maker","The Signature Computer Chip Maker and Archive"],["signature-app-archive","The Signature App Archive"],
