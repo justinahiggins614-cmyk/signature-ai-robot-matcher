@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""QA build gates for the Signature AI Robot Matcher. Exit 1 on ANY failure.
+"""QA build gates for the Signature AI to Robot Matcher. Exit 1 on ANY failure.
 Run: python3 code/qa/check_all.py
 """
 import gzip

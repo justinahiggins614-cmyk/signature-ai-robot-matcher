@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build matcher-manifest.json — the ONE authoritative count source for the
-Signature AI Robot Matcher — and refresh the count fields of api.json.
+Signature AI to Robot Matcher — and refresh the count fields of api.json.
 
 Every visible count on the site must read the manifest. Rebuilt by the pair
 drip after every run (see code/drip_pairs.py). Fails loudly on any
@@ -54,7 +54,7 @@ def main():
     manifest = {
         "manifest": "matcher-manifest",
         "site_id": "SIGNATURE-AI-ROBOT-MATCHER",
-        "site_name": "The Signature AI Robot Matcher",
+        "site_name": "The Signature AI to Robot Matcher",
         "site_url": BASE,
         "site_version": "1.0",
         "archive_version": "2026-10-03",

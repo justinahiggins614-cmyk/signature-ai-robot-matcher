@@ -1,4 +1,4 @@
-# The Signature AI Robot Matcher — AI access manifest (llms.txt)
+# The Signature AI to Robot Matcher — AI access manifest (llms.txt)
 
 Site: https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/
 Title is provisional. Site 20 of 27 in THE JAH NETWORK.

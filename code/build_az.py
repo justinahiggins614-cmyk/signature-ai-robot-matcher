@@ -142,17 +142,17 @@ const SITES = [
 ["signature-boundless-generators","The Signature Boundless Generator Archive"],
 ["signature-ai-mixlab","The Signature AI Mix Lab"],["signature-ai-olypics","AI Olympics"],
 ["signature-chip-maker","The Signature Computer Chip Maker and Archive"],["signature-app-archive","The Signature App Archive"],
-["signature-ai-robot-matcher","The Signature AI Robot Matcher"],["signature-experiment-solver","The Signature Experiment Solver"],
+["signature-ai-robot-matcher","The Signature AI to Robot Matcher"],["signature-experiment-solver","The Signature Experiment Solver"],
 ["signature-ai-image-video-maker","Signature AI Pixel"],["signature-ai-song-maker","Signature Music Studio"],
 ["signature-fixit","The Signature Mr Fix-It"],["signature-university","The Signature University"],
 ["signature-cyber-mega-mall","The Signature Cyber Mega-Mall"],["signature-3d-print","The Signature 3D Print Mega Mall"],["signature-earth","Signature Earth"],["signature-flight-school","The Signature Flight School"],["signature-game-store","The Signature Game Store"],["signature-website-creator","The Signature Website Creator"],["signature-antivirus","The Signature Antivirus"],["signature-os-updater","The Signature OS Updater"],["signature-space-mapping","Signature Space Mapping"],["signature-cookbook","The Signature Cookbook"]];
 const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true,"signature-ai-song-maker":true,"signature-math":true,"signature-fixit":true,"signature-earth":true,"signature-flight-school":true,"signature-game-store":true,"signature-website-creator":true,"signature-antivirus":true,"signature-os-updater":true,"signature-space-mapping":true,"signature-cookbook":true};
 /* Site label renders dynamically from JAH-NETWORK-MANIFEST.json (site_count handled); static text stays as fallback. */
-let netLabel='SITE 20 OF 33 · AI Robot Matcher ★ YOU ARE HERE';
+let netLabel='SITE 20 OF 33 · AI to Robot Matcher ★ YOU ARE HERE';
 function netPaint(){document.querySelectorAll('#jahnet2 a.here').forEach(function(a){a.textContent=netLabel;});}
 fetch('JAH-NETWORK-MANIFEST.json').then(function(r){return r.ok?r.json():null;}).then(function(m){
  if(m&&m.site_number){const sc=m.site_count||SITES.length;
-  let nm='AI Robot Matcher';
+  let nm='AI to Robot Matcher';
   if(m.official_name)nm=m.official_name.replace(/^The Signature /,'');
   netLabel='SITE '+m.site_number+' OF '+sc+' · '+nm+' ★ YOU ARE HERE';netPaint();}
 }).catch(function(){});
@@ -162,7 +162,7 @@ function navHTML(){
   if(n===20){return;}
   const soon=(n>=18&&!LIVE18[s[0]]);
   h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
- h+='<span class="here" aria-current="page">20 The Signature AI Robot Matcher \u2014 YOU ARE HERE</span>';
+ h+='<span class="here" aria-current="page">20 The Signature AI to Robot Matcher \u2014 YOU ARE HERE</span>';
  return h;}
 document.getElementById('jahnet2').innerHTML=navHTML();
 /* sibling liveness verified server-side at push time; "(soon)" badge marks not-yet-live */
@@ -190,7 +190,7 @@ ASKAI_RM = r"""<!-- ASK THE AI — Manon's 2026-10-04 order. Paste on the archiv
      search/filter area (or at the top of the archive section if there is no search box).
      It FINDS records by scanning the page's own archive list, and ANSWERS with his real
      Signature Llama (same loader as the phone book). Never fake: if the Llama can't load,
-     the found records are still shown honestly. Replace The Signature AI Robot Matcher and the AI-robot pair archive. -->
+     the found records are still shown honestly. Replace The Signature AI to Robot Matcher and the AI-robot pair archive. -->
 <div class="jah-askai" id="jah-askai">
 <style>
 .jah-askai{border:1px solid rgba(160,160,160,.4);border-radius:12px;padding:14px;margin:14px 0;background:rgba(127,127,127,.06)}
@@ -213,7 +213,7 @@ ASKAI_RM = r"""<!-- ASK THE AI — Manon's 2026-10-04 order. Paste on the archiv
 <div id="jah-askai-out" aria-live="polite"></div>
 <script>
 (function(){
-var SITE="The Signature AI Robot Matcher", DESC="the AI-robot pair archive";
+var SITE="The Signature AI to Robot Matcher", DESC="the AI-robot pair archive";
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 /* Real Signature Llama loader — same pattern as the phone book. */
 var LLAMA_BASE="https://justinahiggins614-cmyk.github.io/signature-backend/sigllama/";
@@ -332,7 +332,7 @@ def main():
 
     page = ("<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\">"
             "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">"
-            "<title>Pair archive A&ndash;Z | The Signature AI Robot Matcher</title>"
+            "<title>Pair archive A&ndash;Z | The Signature AI to Robot Matcher</title>"
             "<meta name=\"description\" content=\"The full A-Z archive of documented best-match pairs "
             "of Signature AIs and Signature robot bodies.\">"
             "<style>" + CSS + "</style></head><body><div class=\"w\">"
@@ -349,7 +349,7 @@ def main():
             "<div id=\"hits\"></div>"
             "%s"
             + NAV_HTML + NAV_JS +
-            "<footer>The Signature AI Robot Matcher &middot; <a href=\"./\">matcher home</a> &middot; "
+            "<footer>The Signature AI to Robot Matcher &middot; <a href=\"./\">matcher home</a> &middot; "
             "<a href=\"methodology.html\">methodology</a></footer>"
             "</div><script>" + JS + "</script></body></html>") % (f"{total:,}", '<div id="jah-askai-scope">' + "\n".join(det) + '</div>')
 

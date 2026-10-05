@@ -39,7 +39,7 @@ CSS = ("body{margin:0;background:#0d1117;color:#e8edf4;font-family:system-ui,-ap
 
 HEAD = ("<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\">"
         "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">"
-        "<title>{t} | The Signature AI Robot Matcher</title>"
+        "<title>{t} | The Signature AI to Robot Matcher</title>"
         "<style>" + CSS + "</style></head><body><div class=\"w\">")
 
 
@@ -78,17 +78,17 @@ const SITES = [
 ["signature-boundless-generators","The Signature Boundless Generator Archive"],
 ["signature-ai-mixlab","The Signature AI Mix Lab"],["signature-ai-olypics","AI Olympics"],
 ["signature-chip-maker","The Signature Computer Chip Maker and Archive"],["signature-app-archive","The Signature App Archive"],
-["signature-ai-robot-matcher","The Signature AI Robot Matcher"],["signature-experiment-solver","The Signature Experiment Solver"],
+["signature-ai-robot-matcher","The Signature AI to Robot Matcher"],["signature-experiment-solver","The Signature Experiment Solver"],
 ["signature-ai-image-video-maker","Signature AI Pixel"],["signature-ai-song-maker","Signature Music Studio"],
 ["signature-fixit","The Signature Mr Fix-It"],["signature-university","The Signature University"],
 ["signature-cyber-mega-mall","The Signature Cyber Mega-Mall"],["signature-3d-print","The Signature 3D Print Mega Mall"],["signature-earth","Signature Earth"],["signature-flight-school","The Signature Flight School"],["signature-game-store","The Signature Game Store"],["signature-website-creator","The Signature Website Creator"],["signature-antivirus","The Signature Antivirus"],["signature-os-updater","The Signature OS Updater"],["signature-space-mapping","Signature Space Mapping"],["signature-cookbook","The Signature Cookbook"]];
 const LIVE18={"signature-ai-mixlab":true,"signature-ai-olypics":true,"signature-chip-maker":true,"signature-app-archive":true,"signature-ai-robot-matcher":true,"signature-experiment-solver":true,"signature-ai-image-video-maker":true,"signature-ai-video-maker":true,"signature-ai-song-maker":true,"signature-math":true,"signature-fixit":true,"signature-earth":true,"signature-flight-school":true,"signature-game-store":true,"signature-website-creator":true,"signature-antivirus":true,"signature-os-updater":true,"signature-space-mapping":true,"signature-cookbook":true};
 /* Site label renders dynamically from JAH-NETWORK-MANIFEST.json (site_count handled); static text stays as fallback. */
-let netLabel='SITE 20 OF 33 · AI Robot Matcher ★ YOU ARE HERE';
+let netLabel='SITE 20 OF 33 · AI to Robot Matcher ★ YOU ARE HERE';
 function netPaint(){document.querySelectorAll('#jahnet2 a.here').forEach(function(a){a.textContent=netLabel;});}
 fetch('JAH-NETWORK-MANIFEST.json').then(function(r){return r.ok?r.json():null;}).then(function(m){
  if(m&&m.site_number){const sc=m.site_count||SITES.length;
-  let nm='AI Robot Matcher';
+  let nm='AI to Robot Matcher';
   if(m.official_name)nm=m.official_name.replace(/^The Signature /,'');
   netLabel='SITE '+m.site_number+' OF '+sc+' · '+nm+' ★ YOU ARE HERE';netPaint();}
 }).catch(function(){});
@@ -98,7 +98,7 @@ function navHTML(){
   if(n===20){return;}
   const soon=(n>=18&&!LIVE18[s[0]]);
   h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
- h+='<span class="here" aria-current="page">20 The Signature AI Robot Matcher \u2014 YOU ARE HERE</span>';
+ h+='<span class="here" aria-current="page">20 The Signature AI to Robot Matcher \u2014 YOU ARE HERE</span>';
  return h;}
 document.getElementById('jahnet2').innerHTML=navHTML();
 /* sibling liveness verified server-side at push time; "(soon)" badge marks not-yet-live */
@@ -120,7 +120,7 @@ def main():
         n += 1
 
     pages = (len(pairs) + PAGE_SIZE - 1) // PAGE_SIZE
-    idx = HEAD.replace("{t}", "Pair tables") + "<h1>The Signature AI Robot Matcher — static pair tables</h1>"
+    idx = HEAD.replace("{t}", "Pair tables") + "<h1>The Signature AI to Robot Matcher — static pair tables</h1>"
     idx += ("<p>" + str(len(pairs)) + " documented best-match pairs of Signature AIs and "
             "Signature robot bodies, marching to 1,000,000. Pre-rendered static tables for "
             "bots and scrapers.</p>" + tabbar("pairs-index") + "<div class=\"nav\">")

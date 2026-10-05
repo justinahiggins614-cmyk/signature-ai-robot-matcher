@@ -16,7 +16,7 @@
  "goal": 1000000,
  "pair_id_scheme": "JAH-PAIR-###### (catalog) / JAH-MIX-XXXXXX (user-forged)",
  "pairs_seeded": 32000,
- "site": "The Signature AI Robot Matcher (title provisional)",
+ "site": "The Signature AI to Robot Matcher",
  "site_url": "https://justinahiggins614-cmyk.github.io/signature-ai-robot-matcher/",
  "sitemap": "sitemap-index.xml",
  "manifest": "matcher-manifest.json",

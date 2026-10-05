@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build sitemaps for the Signature AI Robot Matcher.
+"""Build sitemaps for the Signature AI to Robot Matcher.
 
   sitemap.xml          -> core pages + body deep links + static pair tables (back-compat)
   sitemap-pairs-N.xml  -> pair deep links (?pair=JAH-PAIR-######), 1000 per file

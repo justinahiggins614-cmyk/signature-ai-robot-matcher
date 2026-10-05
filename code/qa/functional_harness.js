@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Functional harness for the Signature AI Robot Matcher.
+/* Functional harness for the Signature AI to Robot Matcher.
  * Drives the REAL shipped page code (extracted verbatim from index.html)
  * inside a DOM stub, against the REAL shipped data files.
  * Usage: node code/qa/functional_harness.js
@@ -333,7 +333,7 @@ async function waitFor(fn, ms, what) {
   ok("Esc ends tour", el("jah-tour").hidden === true);
   el("jah-guide-btn").onclick();
   ok("guide panel opens", el("jah-guide").hidden === false);
-  ok("guide documents features (static HTML verified)", html.includes("How to use the AI Robot Matcher") && html.includes("Mix Lab") && html.includes("Shell-aware demo") && html.includes("Read aloud") && html.includes("tiered speech") && html.includes("concept fit"));
+  ok("guide documents features (static HTML verified)", html.includes("How to use the AI to Robot Matcher") && html.includes("Mix Lab") && html.includes("Shell-aware demo") && html.includes("Read aloud") && html.includes("tiered speech") && html.includes("concept fit"));
   el("jah-guide-close").onclick();
   ok("guide panel closes", el("jah-guide").hidden === true);
 
