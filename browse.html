@@ -139,7 +139,7 @@ document.getElementById("jah-askai-q").addEventListener("keydown",function(e){if
 <details class="az" data-l="U"><summary><span>U</span><span class="n">228 pairs</span></summary><div class="body"><p class="loading">Open to load this letter&rsquo;s pairs.</p></div></details>
 <details class="az" data-l="V"><summary><span>V</span><span class="n">458 pairs</span></summary><div class="body"><p class="loading">Open to load this letter&rsquo;s pairs.</p></div></details>
 <details class="az" data-l="W"><summary><span>W</span><span class="n">1,181 pairs</span></summary><div class="body"><p class="loading">Open to load this letter&rsquo;s pairs.</p></div></details>
-<details class="az" data-l="Y"><summary><span>Y</span><span class="n">116 pairs</span></summary><div class="body"><p class="loading">Open to load this letter&rsquo;s pairs.</p></div></details></div><nav class="jahnet" id="jahnet2" aria-label="JAH Network Global Ecosystem" role="navigation"></nav><script>
+<details class="az" data-l="Y"><summary><span>Y</span><span class="n">116 pairs</span></summary><div class="body"><p class="loading">Open to load this letter&rsquo;s pairs.</p></div></details></div><script>
 "use strict";
 /* ============ JAH NETWORK NAV (bottom, one instance per page) ============ */
 const SITES = [
@@ -175,7 +175,7 @@ function navHTML(){
   h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
  h+='<span class="here" aria-current="page">20 The Signature AI to Robot Matcher \u2014 YOU ARE HERE</span>';
  return h;}
-document.getElementById('jahnet2').innerHTML=navHTML();
+var _jn=document.getElementById('jahnet2');if(_jn)_jn.innerHTML=navHTML();
 /* sibling liveness verified server-side at push time; "(soon)" badge marks not-yet-live */
 </script>
 <footer>The Signature AI to Robot Matcher &middot; <a href="./">matcher home</a> &middot; <a href="methodology.html">methodology</a></footer></div><script>

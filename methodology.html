@@ -62,7 +62,6 @@
 Manifest: <a href="matcher-manifest.json">matcher-manifest.json</a> (authoritative counts) · <a href="api.json">api.json</a> · <a href="llms.txt">llms.txt</a> · <a href="ai-manifest.json">ai-manifest.json</a></p>
 
 <p><a href="./">← Back to the Matcher</a></p>
-<nav class="jahnet" id="jahnet2" aria-label="JAH Network Global Ecosystem" role="navigation"></nav>
 <script>
 "use strict";
 /* ============ JAH NETWORK NAV (bottom, one instance per page) ============ */
@@ -99,7 +98,7 @@ function navHTML(){
   h+='<a class="'+(soon?'soon':'')+'" href="https://justinahiggins614-cmyk.github.io/'+s[0]+'/">'+n+' '+s[1]+(soon?' (soon)':'')+'</a>';});
  h+='<span class="here" aria-current="page">20 The Signature AI to Robot Matcher \u2014 YOU ARE HERE</span>';
  return h;}
-document.getElementById('jahnet2').innerHTML=navHTML();
+var _jn=document.getElementById('jahnet2');if(_jn)_jn.innerHTML=navHTML();
 /* sibling liveness verified server-side at push time; "(soon)" badge marks not-yet-live */
 </script>
 </div><script src="js/signin.js"></script>
