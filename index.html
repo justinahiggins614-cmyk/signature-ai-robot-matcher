@@ -653,7 +653,8 @@ function speak(text){
  function next(){
   if(ci>=chunks.length){stopSpeak();return;}
   const c=chunks[ci++].trim();if(!c){next();return;}
-  if('speechSynthesis' in window){try{const u=new SpeechSynthesisUtterance(c);u.onend=next;u.onerror=()=>rv(c,next);ttsSS=true;ttsShowPause(true);speechSynthesis.speak(u);return;}catch(e){}}
+  /* FIX-WAVE: Audio-only — speechSynthesis-first hung on devices with a dead
+     built-in voice (his phone's in-app browser). Straight to the audio tiers. */
   rv(c,next);
  }
  function rv(c,cb){
@@ -1069,6 +1070,7 @@ if(!ls(FLAG)&&__qs.indexOf("pair=")<0&&__qs.indexOf("body=")<0){setTimeout(openW
   if (window.JAHProfile && JAHProfile.ui) JAHProfile.ui.renderButton(mount);
 })();
 </script>
+<script>
 (function () {
   /* Profiles v2 "Make it mine": page greeting near the header; renders ONLY when personalization is live */
   if (window.JAHProfile && JAHProfile.ui && typeof JAHProfile.ui.renderGreeting === 'function') {
